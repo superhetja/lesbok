@@ -36,7 +36,32 @@ services:
     env_file: .env
     networks:
       - public
-      - private    
+      - private
+  app:
+    build:
+      context: ./app
+      args:
+        - NODE_ENV=development
+    environment:
+      - NODE_ENV=development
+      - EXPO_DEVTOOLS_LISTEN_ADDRESS=0.0.0.0
+    tty: true
+    ports:
+      - 19001:19001
+      - 19002:19002
+      - 19006:19006
+    volumes:
+      - ./app:/app/:delegated
+      - ./app/package.json:/app/package.json
+      - ./app/package-lock.json:/app/package-lock.json
+      - notused:/app/node_modules
+    env_file: .env
+    healthcheck:
+      disable: true
+    networks:
+      - public
 networks:
   public:
   private:
+volumes:
+  notused:
