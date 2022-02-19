@@ -1,0 +1,42 @@
+version: "3.5"
+
+services:
+
+  db:
+    image: ${MYSQL_IMAGE}
+    restart: always
+    hostname: ${MYSQL_HOST}
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MYSQL_DB_NAME}
+    networks:
+      - private
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+    - private
+
+  backend:
+    build: 
+      context: ./api
+      target: development
+    command: npm run start:dev
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    volumes:
+      - ./api/src:/api/src
+      - ./api/package.json:/api/package.json
+      - ./api/package-lock.json:/api/package-lock.json
+    env_file: .env
+    networks:
+      - public
+      - private    
+networks:
+  public:
+  private:
