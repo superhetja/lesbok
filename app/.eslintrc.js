@@ -20,4 +20,5 @@ module.exports = {
             { functions: true, classes: true, variables: false },
         ], // disable the rule for variables, but enable it for functions and classes
     },
+    root: true,
 };
