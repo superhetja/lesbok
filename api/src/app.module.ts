@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { User } from './Models/user.model';
 import { UsersModule } from './user.module';
 
+// TODO: use sequlize.config.js
 @Module({
   imports: [
     SequelizeModule.forRoot({

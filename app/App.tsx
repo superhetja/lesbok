@@ -23,8 +23,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Hello World!</Text>
-      <Text>{data && data[0].firstName}</Text>
-      {/* <Text>{JSON.stringify(data)}</Text> */}
+      {/* <Text>{data && data[0].firstName}</Text> */}
+      <Text>{JSON.stringify(data)}</Text>
       <StatusBar style="auto" />
     </View>
   );

@@ -35,5 +35,5 @@ COPY  ./ .
 
 
 ENTRYPOINT ["npm", "run"]
-CMD ["web"]
+CMD ["start"]
 
