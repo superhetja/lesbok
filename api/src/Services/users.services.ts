@@ -9,7 +9,7 @@ export class UsersService {
     // can use this if we have registered model using for Feature
     @InjectModel(User)
     private userModel: typeof User,
-    private sequelize: Sequelize
+    private sequelize: Sequelize,
   ) {}
 
   async findAll(): Promise<User[]> {
@@ -17,27 +17,27 @@ export class UsersService {
   }
 
   getUser(): string {
-    return "Inside User";
+    return 'Inside User';
   }
 
   async createMany() {
     try {
-      await this.sequelize.transaction(async t => {
+      await this.sequelize.transaction(async (t) => {
         const transactionHost = { transaction: t };
-  
+
         await this.userModel.create(
-            { firstName: 'Abraham', lastName: 'Lincoln' },
-            transactionHost,
+          { firstName: 'Abraham', lastName: 'Lincoln' },
+          transactionHost,
         );
         await this.userModel.create(
-            { firstName: 'John', lastName: 'Boothe' },
-            transactionHost,
+          { firstName: 'John', lastName: 'Boothe' },
+          transactionHost,
         );
       });
     } catch (err) {
       // Transaction has been rolled back
       // err is whatever rejected the promise chain returned to the transaction callback
-      console.log(err)
+      console.log(err);
     }
   }
 
