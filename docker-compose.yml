@@ -6,6 +6,7 @@ services:
     image: ${MYSQL_IMAGE}
     restart: always
     hostname: ${MYSQL_HOST}
+    container_name: ${MYSQL_HOST}
     environment:
       MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MARIADB_DATABASE: ${MYSQL_DB_NAME}
@@ -15,6 +16,7 @@ services:
   adminer:
     image: adminer
     restart: always
+    container_name: adminer
     ports:
       - 8080:8080
     networks:
@@ -24,6 +26,7 @@ services:
     build: 
       context: ./api
       target: development
+    container_name: api
     command: npm run start:dev
     depends_on:
       - db
@@ -42,6 +45,7 @@ services:
       context: ./app
       args:
         - NODE_ENV=development
+    container_name: app
     tty: true
     ports:
       - 19000:19000
