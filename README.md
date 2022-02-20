@@ -42,3 +42,24 @@ Dev tools are at
 
 Metro is at:
 - exp://<\<HOST LOCAL IP\>>:19000
+
+#### Extra tools
+
+dump_database.sh
+- Dumps the database to ./dumps folder with default name and timestamp
+   ```sh
+   ./dump_database.sh
+   ```
+
+import_database.sh
+- Imports sql file to the database. Takes 1 argument $database_path
+   ```sh
+   ./import_database.sh ./dumps/dump_2022-02-20__14.03.sql
+   ```
+
+
+## Notes
+
+### Initilizing with default database
+
+<https://stackoverflow.com/questions/65585749/how-to-import-a-mysql-dump-file-into-a-docker-mysql-container>
