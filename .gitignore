@@ -1,4 +1,5 @@
 .env
+*.env
 .idea
 database/data
 backend/yarn-error.log

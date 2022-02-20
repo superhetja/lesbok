@@ -6,6 +6,6 @@ export class AppService {
   constructor(private Sequelize: Sequelize) {}
 
   getHello(): string {
-    return 'Hello World! This works kúl jess!';
+    return 'Hello World! This works kúl jess';
   }
 }
