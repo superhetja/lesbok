@@ -3,9 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { User } from './Models/user.model';
+import { User } from './Users/user.model';
 import { UsersModule } from './user.module';
 
+// TODO: use sequlize.config.js
 @Module({
   imports: [
     SequelizeModule.forRoot({

@@ -30,8 +30,16 @@ You can setup this project locally
 
 You can access the backend, frontend and database manager through these addresses
 
+You should have following VScode extension
+- eslint 
+- Prettier - Code formatter
+
 #### Database Manager
 - <localhost:8080>
+- Host: $MYSQL_HOST
+- Username: $MYSQL_USER
+- Database: $MYSQL_DB_NAME
+- Password: $MYSQL_ROOT_PASSWORD
 
 #### Backend
 - <localhost:3000>
