@@ -11,6 +11,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
+    "enzyme": "^3.11.0",
     "eslint-config-prettier": "^8.4.0",
     "expo": "~44.0.0",
     "expo-status-bar": "~1.2.0",
