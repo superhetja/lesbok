@@ -33,6 +33,7 @@ You can access the backend, frontend and database manager through these addresse
 You should have following VScode extension
 - eslint 
 - Prettier - Code formatter
+- EditorConfig for VS Code
 
 #### Database Manager
 - <localhost:8080>
