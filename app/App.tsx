@@ -6,7 +6,7 @@ import { getUsers } from './src/services/backend';
 type User = {
   firstName: string,
   lastName: string,
-}
+};
 export default function App() {
   const [data, setData] = useState<User[]>([]);
 
