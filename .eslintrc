@@ -5,13 +5,15 @@
       "es2021": true
   },
   "root": true,
-  "extends": ["airbnb-base", "airbnb-typescript/base"],
+  "extends": ["airbnb", "airbnb-typescript", "prettier"],
 
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
       "project": "./tsconfig.json",
       "ecmaVersion": "latest"
   },
-  "plugins": ["@typescript-eslint"],
-  "rules": {}
+  "plugins": ["@typescript-eslint", "prettier"],
+  "rules": {
+    "prettier/prettier": ["error"]
+  }
 }

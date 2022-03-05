@@ -5,9 +5,19 @@ import { getUsers } from './src/services/backend';
 import BookForm from './src/modules/BookForm'
 
 type User = {
-  firstName: string,
-  lastName: string,
+  firstName: string;
+  lastName: string;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
 export default function App() {
   const [data, setData] = useState<User[]>([]);
 
@@ -25,17 +35,8 @@ export default function App() {
       <BookForm />
       {/* <Text>Hello World!</Text> */}
       {/* <Text>{data && data[0].firstName}</Text> */}
-      {/* <Text>{JSON.stringify(data)}</Text> */}
-      <StatusBar style="auto" />
+      <Text>{JSON.stringify(data)}</Text>
+      <StatusBar />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
