@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { getUsers } from './src/services/backend';
+import BookForm from './src/modules/BookForm'
 
 type User = {
   firstName: string,
@@ -21,9 +22,10 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Hello World!</Text>
+      <BookForm />
+      {/* <Text>Hello World!</Text> */}
       {/* <Text>{data && data[0].firstName}</Text> */}
-      <Text>{JSON.stringify(data)}</Text>
+      {/* <Text>{JSON.stringify(data)}</Text> */}
       <StatusBar style="auto" />
     </View>
   );
