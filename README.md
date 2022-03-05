@@ -71,3 +71,13 @@ import_database.sh
 ### Initilizing with default database
 
 <https://stackoverflow.com/questions/65585749/how-to-import-a-mysql-dump-file-into-a-docker-mysql-container>
+
+## Tests
+- We test with Jest
+- Each component should have a test file inside same folder as index.tsx. 
+- Tests are named index.test.tsx
+- To run tests we write in terminal "npm test"
+- We can see a simple text example in ./app/src/modules/TestModule/index.test.tsx
+- For more information read up on 
+  - https://www.pluralsight.com/guides/how-to-test-react-components-in-typescript
+  - https://jestjs.io/docs/tutorial-react-native
