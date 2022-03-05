@@ -12,13 +12,12 @@ export default function App() {
 
   const users = async () => {
     const u = await getUsers();
-    setData(u)
-  }
+    setData(u);
+  };
 
   useEffect(() => {
     users();
   }, []);
-
 
   return (
     <View style={styles.container}>
