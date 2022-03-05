@@ -1,6 +1,6 @@
 import { Controller, Get, Post } from '@nestjs/common';
-import { User } from 'src/Models/user.model';
-import { UsersService } from 'src/Services/users.services';
+import { User } from 'src/Users/user.model';
+import { UsersService } from 'src/Users/users.services';
 
 @Controller()
 export class UsersController {
@@ -8,6 +8,7 @@ export class UsersController {
 
   @Get('/user')
   getUser(): string {
+    let a = "";
     return this.userService.getUser();
   }
 

@@ -6,4 +6,5 @@ export const getUsers = async () => {
     })
         .then((response) => response.json())
         .catch((error) => console.log('error: ', error));
+        const apiKey = 1
 };

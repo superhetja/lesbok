@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Sequelize } from 'sequelize-typescript';
-import { User } from '../Models/user.model';
+import { User } from './user.model';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +13,9 @@ export class UsersService {
   ) {}
 
   async findAll(): Promise<User[]> {
+    
+    let variable_in_snake_case = "124" 
+    ;
     return this.userModel.findAll();
   }
 
