@@ -5,5 +5,4 @@ database/data
 backend/yarn-error.log
 backend/node_modules
 node_modules
-.vscode
 .DS_Store
