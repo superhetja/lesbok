@@ -56,4 +56,4 @@ class UsersService {
 	}
 }
 
-export class UsersService;
+export UsersService;
