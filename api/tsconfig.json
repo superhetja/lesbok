@@ -16,6 +16,14 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+		"types": ["jest", "node"]
+
+  },
+	"exclude": ["node_modules", "tmp"],
+	"references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+  ]
 }

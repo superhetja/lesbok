@@ -165,27 +165,15 @@ The program architecture is setup like this
 
 
 
-Forritun
-Íslenska
-Þýðing
-student
-nemandi
-sá sem les og fær einkunn í kerfinu
-teacher
-kennari
-sá sem sér um einkunnargjöf, yfirferð og almenna yfirsýn á kerfinu
-guardian
-forráðamaður
-sá sem sér um að skrá og hlusta á nemandan heima
-group
-bekkur
-hópur/bekkur sem nemandi tilheyrir og kennari hefur umsýslu með.
-entry
-færsla
-Ein skráning á lestri
-comment
-athugasemd
-Ein athugasemd á færslu
+| Program  | Icelandic    | Meaning                                                            |
+|----------|--------------|--------------------------------------------------------------------|
+| student  | nemandi      | sá sem les og fær einkunn í kerfinu                                |
+| teacher  | kennari      | sá sem sér um einkunnargjöf, yfirferð og almenna yfirsýn á kerfinu |
+| guardian | forráðamaður | sá sem sér um að skrá og hlusta á nemandan heima                   |
+| group    | bekkur       | hópur/bekkur sem nemandi tilheyrir og kennari hefur umsýslu með.   |
+| entry    | færsla       | Ein skráning á lestri                                              |
+| comment  | ummæli       | Ein athugasemd á færslu                                            |
+| school   | skóli        | The school that owns all the groups                                |
 
 
 
