@@ -9,20 +9,22 @@ ENV NODE_ENV $NODE_ENV
 ARG PORT=19006
 ENV PORT $PORT
 EXPOSE $PORT 19001 19002
+RUN mkdir /app && chown node:node /app
 
 # install global packages
+USER node
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 ENV PATH /home/node/.npm-global/bin:$PATH
-RUN npm i --unsafe-perm -g npm@latest expo-cli@latest
+RUN npm i -g --unsafe-perm=true --allow-root npm@latest expo-cli@latest
 
 
 # install dependencies first, in a different location for easier app bind mounting for local development
 # due to default /opt permissions we have to create the dir with root and change perms
-# RUN mkdir /opt/app && chown node:node /opt/app
+
 # ENV PATH /opt/app/.bin:$PATH
 WORKDIR /app
 # WORKDIR /opt/app
-COPY ./package.json ./package-lock.json /app
+COPY --chown=node:node ./package.json ./package-lock.json /app 
 # when running for production 
 #RUN npm ci --only=production
 RUN npm install
