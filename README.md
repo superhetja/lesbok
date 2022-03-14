@@ -186,3 +186,20 @@ The program architecture is setup like this
 ### React Typescript Cheatsheet
 
 https://github.com/typescript-cheatsheets/react#reacttypescript-cheatsheets
+
+
+### Sequelize
+
+To use sequlize for keeping db syncronized:
+
+Install: 
+``` sh
+npm install --save sequelize-cli
+```
+
+Let's create a model named User.
+```
+npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+```
+
+npx sequelize-cli model:generate --name School --attributes name:string,active:boolean,phoneNumber:string,email:string,location:string

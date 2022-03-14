@@ -1,4 +1,6 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+/* eslint-disable import/no-cycle */
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
+import { EntryModel } from './entry.model';
 
 @Table({
 	tableName: 'book',
@@ -18,4 +20,7 @@ export class BookModel extends Model {
 		allowNull: false,
 	})
 	name: string;
+
+	@HasMany(() => EntryModel)
+	entries: EntryModel[];
 }

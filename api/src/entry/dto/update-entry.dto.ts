@@ -1,7 +1,7 @@
 export class UpdateEntryDto {
 	readonly student_id: string;
 
-	readonly book_id: string;
+	readonly book_name: string;
 
 	readonly page_from: string;
 

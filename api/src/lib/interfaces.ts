@@ -6,3 +6,8 @@ export interface School {
 	email?: string;
 	location?: string;
 }
+
+export interface Book {
+	id: string;
+	name: string;
+}

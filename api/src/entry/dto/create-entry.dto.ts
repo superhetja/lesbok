@@ -1,7 +1,7 @@
 export class CreateEntryDto {
 	student_id: string;
 
-	book_id: string;
+	book_name: string;
 
 	registered_by: string;
 

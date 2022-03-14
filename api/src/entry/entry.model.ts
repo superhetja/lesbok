@@ -1,13 +1,12 @@
+/* eslint-disable import/no-cycle */
 import {
 	Column,
 	CreatedAt,
 	DataType,
-	ForeignKey,
 	Model,
 	Table,
 	UpdatedAt,
 } from 'sequelize-typescript';
-import { BookModel } from './book.model';
 
 @Table({
 	tableName: 'entry',
@@ -28,12 +27,8 @@ export class EntryModel extends Model {
 	})
 	student_id: string;
 
-	@ForeignKey(() => BookModel)
-	@Column({
-		type: DataType.UUID,
-		allowNull: false,
-	})
-	book_id: string;
+	@Column
+	book_name: string;
 
 	@Column({
 		type: DataType.UUID,
@@ -42,16 +37,16 @@ export class EntryModel extends Model {
 	registered_by: string;
 
 	@Column({
-		type: DataType.NUMBER,
+		type: DataType.STRING,
 		allowNull: false,
 	})
-	page_from: number;
+	page_from: string;
 
 	@Column({
-		type: DataType.NUMBER,
+		type: DataType.STRING,
 		allowNull: false,
 	})
-	page_to: number;
+	page_to: string;
 
 	@Column({
 		type: DataType.DATEONLY,

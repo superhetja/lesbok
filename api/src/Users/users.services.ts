@@ -4,7 +4,7 @@ import { Sequelize } from 'sequelize-typescript';
 import { User } from './user.model';
 
 @Injectable()
-class UsersService {
+export class UsersService {
 	constructor(
 		// can use this if we have registered model using for Feature
 		@InjectModel(User)
@@ -13,7 +13,6 @@ class UsersService {
 	) {}
 
 	async findAll(): Promise<User[]> {
-		const variable_in_snake_case = '124';
 		return this.userModel.findAll();
 	}
 
@@ -55,5 +54,3 @@ class UsersService {
 		await user.destroy();
 	}
 }
-
-export UsersService;
