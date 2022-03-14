@@ -84,20 +84,10 @@ import_database.sh
    ```
 ---
 
-## Notes
-
-### Initilizing with default database
-
-<https://stackoverflow.com/questions/65585749/how-to-import-a-mysql-dump-file-into-a-docker-mysql-container>
-
-### React Typescript Cheatsheet
-
-https://github.com/typescript-cheatsheets/react#reacttypescript-cheatsheets
-
 ## Tests
 - We test with Jest
-- Each component should have a test file inside same folder as index.tsx. 
-- Tests are named index.test.tsx
+- Tests should be written in the ./test folder. 
+- Tests are named component.test.tsx
 - To run tests we write in terminal "npm test"
 - We can see a simple text example in ./app/src/modules/TestModule/index.test.tsx
 - For more information read up on 
@@ -115,29 +105,37 @@ Inside this project we have 2 main folders, api and app, inside api we have the 
 The program architecture is setup like this
 
 ```
-src
-	- assets (static files, images & fonts)
-		- fonts
-		- images
+- src/
+	- assets/ (static files, images & fonts)
+		- fonts/
+		- images/
 	- components 
-		- component1 (1 component per sub folder)
-			- index.tsx
-			- styles.ts
-			- types.ts
-		- component2
-	- containers (screen-based components in here)
-	- screens (for multiple screens)
-	- i18n (translation files if any)
-	- navigation (stack navigator)
-	- store 
-		- services
-		- actions
-		- reducers
-		- services
-	- utils (for global)
-		- hooks
-		- styles
-		- theme 
+		- button/ (1 component per sub folder)
+			- Button.tsx
+			- Button.styles.ts
+			- Button.types.ts
+			- index.ts (used for export)
+		- component2/
+	- containers/ (screen-based components in here?)
+	- screens/ (for multiple screens fx. Home, SignIn, Dashboard)
+	- i18n/ (translation files if any)
+	- navigation/ (stack navigator)
+	- api/
+		- endpoints.ts
+		- services.ts
+		- urls.ts
+	- store/
+		- services/
+		- actions/
+		- reducers/
+		- services/
+		- store.ts
+		- actionTypes.ts
+	- utils/ (for global)
+		- hooks/
+		- styles/
+		- theme/ 
+- test/
 ```
 
 ### api
@@ -156,4 +154,52 @@ src
   - store
     - store.controller.ts
     - store.model.ts
+- test
 ```
+---
+
+## Notes
+
+### Vocabulary
+
+
+
+
+| Program  | Icelandic    | Meaning                                                            |
+|----------|--------------|--------------------------------------------------------------------|
+| student  | nemandi      | sá sem les og fær einkunn í kerfinu                                |
+| teacher  | kennari      | sá sem sér um einkunnargjöf, yfirferð og almenna yfirsýn á kerfinu |
+| guardian | forráðamaður | sá sem sér um að skrá og hlusta á nemandan heima                   |
+| group    | bekkur       | hópur/bekkur sem nemandi tilheyrir og kennari hefur umsýslu með.   |
+| entry    | færsla       | Ein skráning á lestri                                              |
+| comment  | ummæli       | Ein athugasemd á færslu                                            |
+| school   | skóli        | The school that owns all the groups                                |
+
+
+
+
+
+### Initilizing with default database
+
+<https://stackoverflow.com/questions/65585749/how-to-import-a-mysql-dump-file-into-a-docker-mysql-container>
+
+### React Typescript Cheatsheet
+
+https://github.com/typescript-cheatsheets/react#reacttypescript-cheatsheets
+
+
+### Sequelize
+
+To use sequlize for keeping db syncronized:
+
+Install: 
+``` sh
+npm install --save sequelize-cli
+```
+
+Let's create a model named User.
+```
+npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+```
+
+npx sequelize-cli model:generate --name School --attributes name:string,active:boolean,phoneNumber:string,email:string,location:string

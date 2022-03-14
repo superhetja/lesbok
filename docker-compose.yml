@@ -12,6 +12,8 @@ services:
       MARIADB_DATABASE: ${MYSQL_DB_NAME}
     networks:
       - private
+    ports:
+      - 3006:3006
 
   adminer:
     image: adminer
@@ -23,7 +25,7 @@ services:
     - private
 
   backend:
-    build: 
+    build:
       context: ./api
       target: development
     container_name: api
