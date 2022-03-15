@@ -93,6 +93,7 @@ import_database.sh
 - For more information read up on 
   - https://www.pluralsight.com/guides/how-to-test-react-components-in-typescript
   - https://jestjs.io/docs/tutorial-react-native
+- docker run --name mariadbtest -e MYSQL_ROOT_PASSWORD=mypass -p 3306:3306 -d docker.io/library/mariadb:10.3
 ---
 
 ## Project Structure

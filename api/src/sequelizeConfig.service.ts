@@ -3,6 +3,7 @@ import {
 	SequelizeModuleOptions,
 	SequelizeOptionsFactory,
 } from '@nestjs/sequelize';
+import { SchoolModel } from 'Schools/school.model';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore

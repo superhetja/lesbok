@@ -4,7 +4,7 @@ module.exports = {
 	// globalSetup: './test/globalSetup.ts',
 	// globalTeardown: './test/globalTeardown.ts',
 	moduleFileExtensions: ['ts', 'js', 'html', 'json'],
-	rootDir: 'src',
+	rootDir: '.',
 	testRegex: '.*\\.spec.ts$',
 	transform: {
 		'^.+\\.(t|j)s$': 'ts-jest',
