@@ -1,7 +1,6 @@
-import { getModelToken } from '@nestjs/sequelize';
-import { Test } from '@nestjs/testing';
 import { SchoolModel } from '../school.model';
 import { SchoolsService } from '../schools.services';
+import { createTestingSchoolModule } from './createTestingSchoolModule';
 
 const testSchool = {
 	name: 'Sunnulækjarskóli',
@@ -12,35 +11,36 @@ const testSchool = {
 };
 
 describe('SchoolService', () => {
-	let service: SchoolsService;
-	let model: typeof SchoolModel;
+	let schoolService: SchoolsService;
+	let schoolModel: typeof SchoolModel;
 
 	beforeEach(async () => {
-		const modRef = await Test.createTestingModule({
-			providers: [
-				SchoolsService,
-				{
-					provide: getModelToken(SchoolModel),
-					useValue: {
-						findAll: jest.fn(() => [testSchool]),
-						findOne: jest.fn(),
-						create: jest.fn(() => testSchool),
-						update: jest.fn(),
-					},
-				},
-			],
-		}).compile();
-		service = modRef.get(SchoolsService);
-		model = modRef.get<typeof SchoolModel>(getModelToken(SchoolModel));
+		// const modRef = await Test.createTestingModule({
+		// 	providers: [
+		// 		SchoolsService,
+		// 		{
+		// 			provide: getModelToken(SchoolModel),
+		// 			useValue: {
+		// 				findAll: jest.fn(() => [testSchool]),
+		// 				findOne: jest.fn(),
+		// 				create: jest.fn(() => testSchool),
+		// 				update: jest.fn(),
+		// 			},
+		// 		},
+		// 	],
+		// }).compile();
+		// service = modRef.get(SchoolsService);
+		// model = modRef.get<typeof SchoolModel>(getModelToken(SchoolModel));
+		({ schoolModel, schoolService } = await createTestingSchoolModule());
 	});
 
 	it('should get the schools', async () => {
-		expect(await service.findAll()).toEqual([testSchool]);
+		expect(await schoolService.findAll()).toEqual([testSchool]);
 	});
 
 	it('should get a single school', () => {
-		const findSpy = jest.spyOn(model, 'findOne');
-		expect(service.findById('abc'));
-		expect(findSpy).toBeCalledWith({ where: { id: 'abc' } });
+		const findSpy = jest.spyOn(schoolModel, 'findByPk');
+		expect(schoolService.findById('abc'));
+		expect(findSpy).toBeCalledWith('abc');
 	});
 });

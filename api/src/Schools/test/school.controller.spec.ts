@@ -1,21 +1,19 @@
 import SchoolsController from 'Schools/schools.controller';
-import { SchoolsService } from 'Schools/schools.services';
+// import { SchoolsService } from 'Schools/schools.services';
+import {
+	createTestingSchoolModule,
+	testSchool,
+} from './createTestingSchoolModule';
 
 describe('SchoolController', () => {
 	let schoolController: SchoolsController;
-	let schoolService: SchoolsService;
+	// let schoolService: SchoolsService;
 
-	beforeEach(() => {
-		schoolService = new SchoolsService();
-		schoolController = new SchoolsController(schoolService);
+	beforeEach(async () => {
+		({ schoolController } = await createTestingSchoolModule());
 	});
 
-	describe('findAll', () => {
-		it('should return an array of cats', async () => {
-			const result = ['test'];
-			jest.spyOn(schoolService, 'findAll').mockImplementation(() => result);
-
-			expect(await schoolController.findAll()).toBe(result);
-		});
+	it('should return an array of schools', async () => {
+		expect(await schoolController.findAll()).toEqual([testSchool]);
 	});
 });

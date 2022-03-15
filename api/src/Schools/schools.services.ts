@@ -23,7 +23,7 @@ export class SchoolsService {
 			.create({
 				name: input.name,
 				active: true,
-				phoneNumer: input.phone,
+				phoneNumer: input.phoneNumer,
 				email: input.email,
 				location: input.location,
 			})
