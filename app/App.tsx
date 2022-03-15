@@ -1,42 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { getUsers } from './src/services/backend';
-import BookForm from './src/modules/BookForm'
-
-type User = {
-  firstName: string;
-  lastName: string;
-};
+import { StyleSheet, View } from 'react-native';
+import { Provider } from 'react-redux';
+import BookForm from './src/components/BookForm';
+import store from './configureStore';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+	container: {
+		flex: 1,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
 });
 
 export default function App() {
-  const [data, setData] = useState<User[]>([]);
-
-  const users = async () => {
-    const u = await getUsers();
-    setData(u);
-  };
-
-  useEffect(() => {
-    users();
-  }, []);
-
-  return (
-    <View style={styles.container}>
-      <BookForm />
-      {/* <Text>Hello World!</Text> */}
-      {/* <Text>{data && data[0].firstName}</Text> */}
-      <Text>{JSON.stringify(data)}</Text>
-      <StatusBar />
-    </View>
-  );
+	return (
+		<Provider store={store}>
+			<View style={styles.container}>
+				<BookForm />
+				{/* <Text>Hello World!</Text> */}
+				{/* <Text>{data && data[0].firstName}</Text> */}
+				{/* <Text>{JSON.stringify(data)}</Text> */}
+				<StatusBar />
+			</View>
+		</Provider>
+	);
 }
