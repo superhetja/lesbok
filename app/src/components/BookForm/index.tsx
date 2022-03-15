@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import NumericInput from 'react-native-numeric-input';
 
-let bookFrom = 0;
-let bookTo = 0;
+// let bookFrom = 0;
+// let bookTo = 0;
 const styles = StyleSheet.create({
 	inputBook: {
 		height: 40,
@@ -27,21 +27,11 @@ const styles = StyleSheet.create({
 	},
 });
 
-const setBook = (action: string, page: number) => {
-	if (action === 'TO') {
-		bookTo = page;
-	} else if (action === 'FROM') {
-		bookFrom = page;
-	} else {
-		console.log('Invalid Action');
-	}
-};
-
 function BookForm() {
 	const [text, onChangeText] = React.useState('');
 
 	const bookPlaceHolder = 'ARI FER HEIM';
-	const initVal = 1;
+	// const initVal = 1;
 	return (
 		<SafeAreaView>
 			<TextInput
@@ -51,9 +41,9 @@ function BookForm() {
 				placeholder={bookPlaceHolder}
 			/>
 			<Text>Frá:</Text>
-			<NumericInput onChange={(value) => setBook('FROM', value)} minValue={0} />
+			<NumericInput onChange={(value) => console.log(value)} minValue={0} />
 			<Text>Til:</Text>
-			<NumericInput onChange={(value) => setBook('TO', value)} />
+			<NumericInput onChange={(value) => console.log(value)} />
 			<Button title="Submit.png" onPress={() => console.log('I am button')} />
 		</SafeAreaView>
 	);
