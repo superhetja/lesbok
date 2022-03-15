@@ -32,20 +32,10 @@ export class EntryService {
 		return entry;
 	}
 
-	async update(
-		id: string,
-		update: UpdateEntryDto
-	): Promise<{
-		numberOfAffectedRows: number;
-		updatedEntry: EntryModel;
-	}> {
-		const [numberOfAffectedRows, [updatedEntry]] = await this.entryModel.update(
-			update,
-			{
-				where: { id },
-				returning: true,
-			}
-		);
-		return { numberOfAffectedRows, updatedEntry };
+	async update(id: string, update: UpdateEntryDto): Promise<number> {
+		const [numberOfAffectedRows] = await this.entryModel.update(update, {
+			where: { id },
+		});
+		return numberOfAffectedRows;
 	}
 }

@@ -32,16 +32,16 @@ export default class EntryController {
 	async updateEntry(
 		@Param('id') id: string,
 		@Body() entryUpdateInput: UpdateEntryDto
-	): Promise<EntryModel> {
-		console.log(entryUpdateInput);
-		console.log(id);
-		const { numberOfAffectedRows, updatedEntry } =
-			await this.entryService.update(id, entryUpdateInput);
+	): Promise<number> {
+		const numberOfAffectedRows = await this.entryService.update(
+			id,
+			entryUpdateInput
+		);
 
 		if (numberOfAffectedRows === 0) {
 			throw new NotFoundException(`Entry ${id} does not exist`);
 		}
 
-		return updatedEntry;
+		return numberOfAffectedRows;
 	}
 }
