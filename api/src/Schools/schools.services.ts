@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Sequelize } from 'sequelize-typescript';
 import { CreateSchoolDto, UpdateSchoolDto } from './dto';
 import { SchoolModel } from './school.model';
 
@@ -8,8 +7,7 @@ Injectable();
 export class SchoolsService {
 	constructor(
 		@InjectModel(SchoolModel)
-		private schoolModel: typeof SchoolModel,
-		private sequlize: Sequelize
+		private schoolModel: typeof SchoolModel
 	) {}
 
 	async findAll(): Promise<SchoolModel[]> {
@@ -25,7 +23,7 @@ export class SchoolsService {
 			.create({
 				name: input.name,
 				active: true,
-				phoneNumer: input.phone,
+				phoneNumer: input.phoneNumer,
 				email: input.email,
 				location: input.location,
 			})

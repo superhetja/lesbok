@@ -5,6 +5,14 @@ import { SchoolModel } from '../school.model';
 import SchoolsController from '../schools.controller';
 import { SchoolsService } from '../schools.services';
 
+export const testSchool = {
+	name: 'Sunnulækjarskóli',
+	active: true,
+	phoneNumer: '5812345',
+	location: 'Sunnutorg 5, 800 Selfoss',
+	email: 'sunnulaekjarskoli@sunnulaek.is',
+};
+
 export const createTestingSchoolModule = async () => {
 	const schoolModule = await Test.createTestingModule({
 		imports: [],
@@ -13,10 +21,11 @@ export const createTestingSchoolModule = async () => {
 			{
 				provide: getModelToken(SchoolModel),
 				useValue: {
-					create: jest.fn(),
-					findAll: jest.fn(),
+					create: jest.fn(() => testSchool),
+					findAll: jest.fn(() => [testSchool]),
 					findOne: jest.fn(),
 					update: jest.fn(),
+					findByPk: jest.fn(() => testSchool),
 				},
 			},
 			SchoolsService,
