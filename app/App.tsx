@@ -26,7 +26,6 @@ export default function App() {
 		<Provider store={store}>
 			<View style={styles.container}>
 				<EntryList/>
-
 				<EntryForm />
 				{/* <Text>Hello World!</Text> */}
 				{/* <Text>{data && data[0].firstName}</Text> */}
