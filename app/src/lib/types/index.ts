@@ -1,4 +1,5 @@
 export interface Entry {
+	id: string;
 	student_id: string;
 	book_id: string;
 	page_from: number;
