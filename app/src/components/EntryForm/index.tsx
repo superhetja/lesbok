@@ -6,7 +6,7 @@ import {
 	StyleSheet,
 	GestureResponderEvent,
 } from 'react-native';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import BottomOverlay from '../Overlays/bottomOverlay';
 import AddButton from '../Buttons/addButton';
 import { useCreateEntryForIdMutation } from '../../services/backend';
@@ -34,11 +34,7 @@ const styles = StyleSheet.create({
 });
 
 export default function EntryForm() {
-	const {
-		control,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<FormData>({
+	const {...methods} = useForm<FormData>({
 		defaultValues: {
 			book_name: '',
 			book_from: undefined,
@@ -50,7 +46,7 @@ export default function EntryForm() {
 	const [isVisible, setIsVisible] = useState(false);
 	const [addEntry, result] = useCreateEntryForIdMutation();
 
-	const onSubmit = handleSubmit((data) => {
+	const onSubmit = methods.handleSubmit((data) => {
 		handleAddEntry(data);
 	});
 
@@ -59,6 +55,8 @@ export default function EntryForm() {
 	};
 
 	const handleAddEntry = async (entry: FormData) => {
+		console.log('submit');
+		console.log(entry);
 		try {
 			await addEntry(entry).unwrap();
 			// setPost(initialValue)
@@ -72,38 +70,37 @@ export default function EntryForm() {
 		<>
 			<BottomOverlay isVisible={isVisible}>
 				<View style={styles.container}>
-					<Text>Nafn Bókar:</Text>
-					<TextInput
-						control={control}
-						name="book_name"
-						placeHolder="Nafn Bókar"
-						rules={{ required: true }}
-						errorMessage="Nafn bókar ekki löglegt!!"
-					/>
-					<Text>Frá:</Text>
-					<NumberInput
-						control={control}
-						name="book_from"
-						minVal={0}
-						rules={{ maxLength: 3 }}
-					/>
-					<Text>Til:</Text>
-					<NumberInput
-						control={control}
-						name="book_to"
-						minVal={0}
-						rules={{ maxLength: 3 }}
-					/>
-					<Text>Athugasemd:</Text>
-					<TextInput
-						control={control}
-						name="comment"
-						placeHolder="Athugasemd"
-						errorMessage="Athugasemd ekki leyfileg!!"
-					/>
+					<FormProvider {...methods}>
+						<TextInput
+							// control={control}
+							name="book_name"
+							placeHolder="Nafn Bókar"
+							rules={{ required: true }}
+							errorMessage="Nafn bókar ekki löglegt!!"
+							/>
+						<NumberInput
+							name="book_from"
+							label="Frá:"
+						/>
+						<NumberInput
+							name="book_to"
+							label="Til:"
+							rules={{
+								validate: () => {
+									return methods.getValues("book_from") <= methods.getValues("book_to")
+								}
+							}}
+							/>
+						<TextInput
+							// control={control}
+							name="comment"
+							placeHolder="Athugasemd"
+							errorMessage="Athugasemd ekki leyfileg!!"
+							/>
 
-					<Button title="Skrá" onPress={onSubmit} />
-					<Button title="Hætta við" onPress={toggleModal} />
+						<Button title="Skrá" onPress={onSubmit} />
+						<Button title="Hætta við" onPress={toggleModal} />
+					</FormProvider>
 				</View>
 			</BottomOverlay>
 			<AddButton onPress={toggleModal} />
