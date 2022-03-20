@@ -1,18 +1,15 @@
 import { StyleSheet, TextInput as RNTextInput, View, Text } from 'react-native';
-import { Control, FieldName, FieldValues, useController, UseControllerProps, useFormContext } from 'react-hook-form';
-import { FormData } from '../EntryForm';
+import {
+	useController,
+	UseControllerProps,
+	useFormContext,
+} from 'react-hook-form';
 import styles from './styles';
 
-
 interface TextInputProps extends UseControllerProps {
-	//Control <FormData, any>
-	// control: Control<FieldValues, any>;
-	// name: FieldName<FieldValues>;
 	placeHolder?: string;
-	// rules?: {};
-	errorMessage?: string;
 	defaultValue?: string;
-};
+}
 
 const ControlledTextInput = ({
 	name,
@@ -21,30 +18,28 @@ const ControlledTextInput = ({
 	defaultValue,
 	...inputProps
 }: TextInputProps) => {
+	const formContext = useFormContext();
+	const { formState } = formContext;
 
-  const formContext = useFormContext();
-  const { formState } = formContext;
-
-  const { field } = useController({ name, rules, defaultValue });
-
-  return (
-
-  <View style={styles.container}>
-	  {placeHolder && (<Text style={styles.label}>{placeHolder}</Text>)}
+	const { field } = useController({ name, rules });
+	return (
 		<View style={styles.container}>
-	    <RNTextInput
-	      style={styles.input}
-				onChangeText={field.onChange}
-				onBlur={field.onBlur}
-				value={field.value}
-	      {...inputProps}
-	    />
-	  </View>
-	</View>
-
-  );
-}
-
+			{placeHolder && <Text style={styles.label}>{placeHolder}</Text>}
+			<View style={styles.container}>
+				<RNTextInput
+					style={styles.input}
+					onChangeText={field.onChange}
+					onBlur={field.onBlur}
+					value={field.value}
+					{...inputProps}
+				/>
+				{formState?.errors && (
+					<Text style={styles.error}>{formState?.errors[name]?.message}</Text>
+				)}
+			</View>
+		</View>
+	);
+};
 
 const TextInput = (props: TextInputProps) => {
 	const { name } = props;
@@ -56,14 +51,13 @@ const TextInput = (props: TextInputProps) => {
 		WHEN FORMCONTEXT OR NAME IS MISSING
 	*/
 	if (!formContext || !name) {
-		const msg = !formContext ? "TextInput must be wrapped by the FormProvider" : "Name must be defined"
-		console.error(msg)
-		return null
+		const msg = !formContext
+			? 'TextInput must be wrapped by the FormProvider'
+			: 'Name must be defined';
+		return null;
 	}
 
-	return (
-		<ControlledTextInput {...props}/>
-	);
+	return <ControlledTextInput {...props} />;
 };
 
 export default TextInput;
