@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	input: {
@@ -13,12 +13,14 @@ const styles = StyleSheet.create({
 		padding: 20,
 	},
 	label: {
-    margin: 20,
-    marginLeft: 0,
-  },
+		margin: 20,
+		marginLeft: 0,
+	},
 	error: {
 		color: 'red',
-	}
+		fontSize: 14,
+		fontStyle: 'italic',
+	},
 });
 
 export default styles;
