@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/sequelize';
-import { EntryModel } from 'entry/entry.model';
-import { EntryService } from 'entry/entry.service';
+import { EntryModel } from '../entry.model';
+import { EntryService } from '../entry.service';
 // import { DATE } from 'sequelize/types';
 
 const date = new Date('2019-01-16');
