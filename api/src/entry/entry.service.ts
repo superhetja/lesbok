@@ -7,8 +7,7 @@ import { EntryModel } from './entry.model';
 export class EntryService {
 	constructor(
 		@InjectModel(EntryModel)
-		private entryModel: typeof EntryModel,
-		private sequlize: Sequelize
+		private entryModel: typeof EntryModel
 	) {}
 
 	async findAll(): Promise<EntryModel[]> {
