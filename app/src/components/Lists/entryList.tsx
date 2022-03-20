@@ -50,7 +50,6 @@ const EntryList = () => {
 	const { data: entries, isLoading } = useGetEntriesQuery()
 
 	const renderItem = ({ item }: any) => {
-		console.log(item);
 		return (
     <Item title={item.book_name} from={item.page_from} to={item.page_to} comment={item.comment} />
   )};
