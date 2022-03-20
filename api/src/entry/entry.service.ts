@@ -26,7 +26,7 @@ export class EntryService {
 
 	async create(input: CreateEntryDto): Promise<EntryModel> {
 		const entry = await this.entryModel.create({ ...input }).catch(() => {
-			throw new BadRequestException('Cannot create entry');
+			throw new BadRequestException('Cannot create entry!');
 		});
 
 		return entry;

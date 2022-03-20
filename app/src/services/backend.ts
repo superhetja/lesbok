@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../constants';
 import { Entry } from '../lib/types';
+import { CreateEntryDto, UpdateEntryDto } from './dto';
 
 
 // Create our baseQuery instance
@@ -34,26 +35,27 @@ export const entryApi = createApi({
 			result
 			? // successful query
 			[
-				...result.map(({ id }) => ({ type: 'Entries', id } as const)),
+				...result.map(({ id }) => ({ type: 'Entries' as const, id })),
 				{ type: 'Entries', id: 'LIST' },
 			]
 		: // an error occurred, but we still want to refetch this query when `{ type: 'Posts', id: 'LIST' }` is invalidated
 			[{ type: 'Entries', id: 'LIST' }],
 		}),
-		createEntryForId: build.mutation<Entry, Partial<Entry>>({
+		getEntryById: build.query<Entry, string>({
+			query: (id) => `entries/${id}`,
+			providesTags: (result, error, id) => [{ type: 'Entries', id}]
+		}),
+		createEntryForId: build.mutation<Entry, CreateEntryDto>({
 			query: (body) => ({
 				url: '/entries',
 				method: 'POST',
 				body: {
-					student_id: '5',
-					registered_by: '5',
-					date_of_entry: "2022-03-19",
-					...body
+					...body,
 				},
 			}),
 			invalidatesTags: [{ type: 'Entries', id: 'LIST' }],
 		}),
-		editEntryById: build.mutation<Entry, Partial<Entry>>({
+		editEntryById: build.mutation<Entry, UpdateEntryDto>({
 			query: ({ id, ...body }) => ({
 				url: `/entries/${id}`,
 				method: 'PUT',
@@ -67,4 +69,5 @@ export const {
 	useGetEntriesQuery,
 	useCreateEntryForIdMutation,
 	useEditEntryByIdMutation,
+	useGetEntryByIdQuery,
 } = entryApi;

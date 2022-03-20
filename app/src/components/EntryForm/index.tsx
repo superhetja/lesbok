@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 export default function EntryForm() {
 	const {...methods} = useForm<FormData>({
 		defaultValues: {
-			book_name: '',
+			book_name: 'Halló',
 			book_from: undefined,
 			book_to: undefined,
 			comment: '',
@@ -46,8 +46,8 @@ export default function EntryForm() {
 	const [isVisible, setIsVisible] = useState(false);
 	const [addEntry, result] = useCreateEntryForIdMutation();
 
-	const onSubmit = methods.handleSubmit((data) => {
-		handleAddEntry(data);
+	const onSubmit = methods.handleSubmit(async (data) => {
+		await handleAddEntry(data);
 	});
 
 	const toggleModal = (e: GestureResponderEvent) => {
@@ -57,8 +57,16 @@ export default function EntryForm() {
 	const handleAddEntry = async (entry: FormData) => {
 		console.log('submit');
 		console.log(entry);
+		const obj = {
+			book_name: entry.book_name,
+			page_from: entry.book_from,
+			page_to: entry.book_to,
+			student_id: '123',
+			registered_by: 'abc',
+			date_of_entry: "2022-03-19",
+		};
 		try {
-			await addEntry(entry).unwrap();
+			await addEntry(obj).unwrap();
 			// setPost(initialValue)
 		} catch {
 			console.log('ERROR');
