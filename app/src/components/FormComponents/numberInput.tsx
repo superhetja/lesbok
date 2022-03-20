@@ -1,8 +1,11 @@
 import { Text, View } from 'react-native';
-import { useController, UseControllerProps, useFormContext } from 'react-hook-form';
+import {
+	useController,
+	UseControllerProps,
+	useFormContext,
+} from 'react-hook-form';
 import NumericInput from 'react-native-numeric-input';
 import styles from './styles';
-
 
 interface NumericInputProps extends UseControllerProps {
 	minVal?: number;
@@ -17,46 +20,48 @@ const ControlledNumberInput = ({
 	rules,
 	minVal,
 	maxVal,
-	errorMessage,
-	defaultValue=0,
-	label = ''
-}: NumericInputProps ) => {
+	defaultValue = 0,
+	label = '',
+}: NumericInputProps) => {
 	//hook will allow us to access the form's context, its methods, and state
 	const formContext = useFormContext();
 	const { formState } = formContext;
 
 	// establishes the instance of our controlled input and stores its value to the form
-	const { field } = useController({ name, rules, defaultValue});
+	const { field } = useController({ name, rules, defaultValue });
 
+	console.log(formState.errors);
 	return (
 		<View style={styles.container}>
-			{ label && (<Text style={styles.label}>{label}</Text>)}
+			{label && <Text style={styles.label}>{label}</Text>}
 			<View style={styles.container}>
 				<NumericInput
 					onChange={field.onChange}
 					value={field.value}
 					minValue={minVal}
+					maxValue={maxVal}
 				/>
-				{formState.errors && <Text style={styles.error}>Til má ekki vera hærri en frá</Text>}
+				{formState.errors && (
+					<Text style={styles.error}>{formState?.errors[name]?.message}</Text>
+				)}
 			</View>
 		</View>
-	)
-}
+	);
+};
 
 const NumberInput = (props: NumericInputProps) => {
 	const { name } = props;
-
 	const formContext = useFormContext();
 
-	if(!formContext || !name) {
-		const msg = !formContext ? "TextInput must be wrapped by the FormProvider" : "Name must be defined"
-		console.error(msg)
-		return null
+	if (!formContext || !name) {
+		const msg = !formContext
+			? 'TextInput must be wrapped by the FormProvider'
+			: 'Name must be defined';
+		console.error(msg);
+		return null;
 	}
 
-	return (
-		<ControlledNumberInput {...props} />
-	);
+	return <ControlledNumberInput {...props} />;
 };
 
 export default NumberInput;

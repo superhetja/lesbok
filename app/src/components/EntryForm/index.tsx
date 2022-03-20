@@ -34,11 +34,11 @@ const styles = StyleSheet.create({
 });
 
 export default function EntryForm() {
-	const {...methods} = useForm<FormData>({
+	const { ...methods } = useForm<FormData>({
 		defaultValues: {
-			book_name: 'Halló',
-			book_from: undefined,
-			book_to: undefined,
+			book_name: '',
+			book_from: 0,
+			book_to: 0,
 			comment: '',
 		},
 	});
@@ -82,29 +82,35 @@ export default function EntryForm() {
 						<TextInput
 							// control={control}
 							name="book_name"
-							placeHolder="Nafn Bókar"
-							rules={{ required: true }}
-							errorMessage="Nafn bókar ekki löglegt!!"
-							/>
+							placeHolder="Bók"
+							rules={{ required: 'This is required message' }}
+						/>
 						<NumberInput
 							name="book_from"
 							label="Frá:"
+							minVal={0}
+							maxVal={9999}
 						/>
 						<NumberInput
 							name="book_to"
 							label="Til:"
+							minVal={0}
+							maxVal={9999}
 							rules={{
 								validate: () => {
-									return methods.getValues("book_from") <= methods.getValues("book_to")
-								}
+									return (
+										methods.getValues('book_from') <=
+											methods.getValues('book_to') ||
+										'Frá má ekki vera hærra en til'
+									);
+								},
 							}}
-							/>
+						/>
 						<TextInput
 							// control={control}
 							name="comment"
 							placeHolder="Athugasemd"
-							errorMessage="Athugasemd ekki leyfileg!!"
-							/>
+						/>
 
 						<Button title="Skrá" onPress={onSubmit} />
 						<Button title="Hætta við" onPress={toggleModal} />
