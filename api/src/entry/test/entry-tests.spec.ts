@@ -39,6 +39,6 @@ describe('EntryService', () => {
 	});
 
 	it('should add the testEntry', async () => {
-		expect(await service.create(testEntry)).toEqual(testEntry);
+		expect(await service.create(testEntry)).toEqual(model);
 	});
 });
