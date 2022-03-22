@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Text,
 	View,
@@ -9,8 +9,12 @@ import {
 import { FormProvider, useForm } from 'react-hook-form';
 import BottomOverlay from '../Overlays/bottomOverlay';
 import AddButton from '../Buttons/addButton';
-import { useCreateEntryForIdMutation } from '../../services/backend';
+import { entryApi, useCreateEntryForIdMutation, useEditEntryByIdMutation, useGetEntryByIdQuery } from '../../services/backend';
 import { TextInput, NumberInput } from '../FormComponents';
+import GenericEntryForm from './genericEntryForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearSelectedEntry, selectedEntryId, selectedEntryValues } from '../../slices/globalSlice';
+import { getDateNow } from '../../utils/helpers';
 
 export type FormData = {
 	book_name: string;
@@ -33,91 +37,82 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default function EntryForm() {
-	const { ...methods } = useForm<FormData>({
-		defaultValues: {
-			book_name: '',
-			book_from: 0,
-			book_to: 0,
-			comment: '',
-		},
-	});
+
+const EntryForm = () => {
+
+	const entryValues = useSelector(selectedEntryValues);
+	const selectedId = useSelector(selectedEntryId);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		if(selectedId) {
+			toggleModal();
+		}
+	},[selectedId]);
 
 	const [isVisible, setIsVisible] = useState(false);
-	const [addEntry, result] = useCreateEntryForIdMutation();
+	const [addEntry, addResult] = useCreateEntryForIdMutation();
+	const [editEntry, editResult] = useEditEntryByIdMutation();
 
-	const onSubmit = methods.handleSubmit(async (data) => {
-		await handleAddEntry(data);
-	});
-
-	const toggleModal = (e: GestureResponderEvent) => {
+	const toggleModal = () => {
+		// clear selected values if we are canceling
+		if(selectedId && isVisible) {
+			dispatch(clearSelectedEntry());
+		}
 		setIsVisible(!isVisible);
 	};
 
 	const handleAddEntry = async (entry: FormData) => {
-		console.log('submit');
-		console.log(entry);
 		const obj = {
 			book_name: entry.book_name,
 			page_from: entry.book_from,
 			page_to: entry.book_to,
 			student_id: '123',
 			registered_by: 'abc',
-			date_of_entry: "2022-03-19",
+			date_of_entry: getDateNow(),
+			comment: entry.comment,
 		};
 		try {
+			toggleModal()
 			await addEntry(obj).unwrap();
 			// setPost(initialValue)
 		} catch {
 			console.log('ERROR');
-			console.log(result);
+			console.log(addResult);
+		}
+	};
+
+	const handleEditEntry = async (entry: FormData) => {
+		const obj = {
+			id: selectedId,
+			book_name: entry.book_name,
+			page_from: entry.book_from,
+			page_to: entry.book_to,
+			student_id: '123',
+			registered_by: 'abc',
+			date_of_entry: getDateNow(),
+			comment: entry.comment,
+		};
+		try {
+			toggleModal();
+			await editEntry(obj).unwrap();
+		} catch {
+			console.log('ERROR');
+			console.log(editResult);
 		}
 	};
 
 	return (
 		<>
-			<BottomOverlay isVisible={isVisible}>
-				<View style={styles.container}>
-					<FormProvider {...methods}>
-						<TextInput
-							// control={control}
-							name="book_name"
-							placeHolder="Bók"
-							rules={{ required: 'This is required message' }}
-						/>
-						<NumberInput
-							name="book_from"
-							label="Frá:"
-							minVal={0}
-							maxVal={9999}
-						/>
-						<NumberInput
-							name="book_to"
-							label="Til:"
-							minVal={0}
-							maxVal={9999}
-							rules={{
-								validate: () => {
-									return (
-										methods.getValues('book_from') <=
-											methods.getValues('book_to') ||
-										'Frá má ekki vera hærra en til'
-									);
-								},
-							}}
-						/>
-						<TextInput
-							// control={control}
-							name="comment"
-							placeHolder="Athugasemd"
-						/>
-
-						<Button title="Skrá" onPress={onSubmit} />
-						<Button title="Hætta við" onPress={toggleModal} />
-					</FormProvider>
-				</View>
-			</BottomOverlay>
+			<GenericEntryForm
+				defaultValues={entryValues}
+				submitHandler={selectedId? handleEditEntry : handleAddEntry}
+				submitLabel={selectedId? 'Breyta': 'Skrá'}
+				isVisible={isVisible}
+				toggleModal={toggleModal}
+			/>
 			<AddButton onPress={toggleModal} />
 		</>
 	);
 }
+
+export default EntryForm;

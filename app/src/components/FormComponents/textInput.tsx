@@ -5,6 +5,8 @@ import {
 	useFormContext,
 } from 'react-hook-form';
 import styles from './styles';
+import { useMemo } from 'react';
+import { Input } from '@ui-kitten/components';
 
 interface TextInputProps extends UseControllerProps {
 	placeHolder?: string;
@@ -21,12 +23,20 @@ const ControlledTextInput = ({
 	const formContext = useFormContext();
 	const { formState } = formContext;
 
-	const { field } = useController({ name, rules });
+	const { field } = useController({
+		name,
+		rules,
+		// defaultValue: useMemo(() => {
+		// 	console.log('Textinput')
+		// 	console.log(defaultValue)
+		// 	return defaultValue;
+		// }, [defaultValue])
+	});
 	return (
 		<View style={styles.container}>
-			{placeHolder && <Text style={styles.label}>{placeHolder}</Text>}
 			<View style={styles.container}>
-				<RNTextInput
+				<Input
+					label={placeHolder}
 					style={styles.input}
 					onChangeText={field.onChange}
 					onBlur={field.onBlur}
