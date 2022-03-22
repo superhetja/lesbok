@@ -30,7 +30,6 @@ const ControlledNumberInput = ({
 	// establishes the instance of our controlled input and stores its value to the form
 	const { field } = useController({ name, rules, defaultValue });
 
-	console.log(formState.errors);
 	return (
 		<View style={styles.container}>
 			{label && <Text style={styles.label}>{label}</Text>}
