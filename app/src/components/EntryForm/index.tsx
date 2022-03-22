@@ -55,20 +55,21 @@ export default function EntryForm() {
 	};
 
 	const handleAddEntry = async (entry: FormData) => {
+		let date = new Date();
 		console.log('submit');
 		console.log(entry);
 		const obj = {
 			book_name: entry.book_name,
 			page_from: entry.book_from,
 			page_to: entry.book_to,
-			student_id: '123',
-			registered_by: 'abc',
-			date_of_entry: "2022-03-19",
+			student_id: 'student',
+			registered_by: 'user',
+			date_of_entry: date.toISOString().split('T')[0],
 		};
 		try {
 			await addEntry(obj).unwrap();
-			// setPost(initialValue)
 		} catch {
+
 			console.log('ERROR');
 			console.log(result);
 		}
