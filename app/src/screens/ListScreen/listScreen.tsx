@@ -1,4 +1,4 @@
-import { BottomNavigation } from '@ui-kitten/components';
+import { BottomNavigation, Datepicker } from '@ui-kitten/components';
 import React from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import EntryForm from '../../components/EntryForm';

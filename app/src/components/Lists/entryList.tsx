@@ -11,7 +11,7 @@ import styles from './styles';
 const EntryList = () => {
 	const { data: entries, isLoading } = useGetEntriesQuery();
 	const dispatch = useDispatch();
-
+	// console.log(entrie)
 	return (
     <>
 			{
@@ -27,8 +27,8 @@ const EntryList = () => {
 								from={item.page_from}
 								to={item.page_to}
 								comment={item.comment}
-								date={item.date_time}
-								onEdit={() => dispatch(selectEntry({selectedEntryId: item.id, formData: {book_name: item.book_name, book_to: parseInt(item.page_to), book_from: parseInt(item.page_from), comment: item.comment? item.comment : ''}}))}
+								date={item.date_of_entry}
+								onEdit={() => dispatch(selectEntry({selectedEntryId: item.id, formData: {book_name: item.book_name, book_to: parseInt(item.page_to), book_from: parseInt(item.page_from), date_of_entry: item.date_of_entry, comment: item.comment? item.comment : ''}}))}
 								id={item.id}
 							/>
 						)}

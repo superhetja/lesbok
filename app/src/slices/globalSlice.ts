@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../../configureStore';
 import { FormData } from '../components/EntryForm';
+import { getDateNow } from '../utils/helpers';
 
 interface GlobalState {
   selectedEntryId: string;
@@ -12,6 +13,7 @@ const emptyValues: FormData= {
 	book_from: 1,
 	book_to: 1,
 	comment: '',
+	date_of_entry: getDateNow(),
 }
 
 const initialState = {

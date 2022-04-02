@@ -14,13 +14,13 @@ import { TextInput, NumberInput } from '../FormComponents';
 import GenericEntryForm from './genericEntryForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearSelectedEntry, selectedEntryId, selectedEntryValues } from '../../slices/globalSlice';
-import { getDateNow } from '../../utils/helpers';
 
 export type FormData = {
 	book_name: string;
 	book_from: number;
 	book_to: number;
 	comment: string;
+	date_of_entry: string;
 };
 
 const styles = StyleSheet.create({
@@ -68,14 +68,14 @@ const EntryForm = () => {
 			page_to: entry.book_to,
 			student_id: '123',
 			registered_by: 'abc',
-			date_of_entry: getDateNow(),
+			date_of_entry: entry.date_of_entry,
 			comment: entry.comment,
 		};
 		try {
 			toggleModal()
 			await addEntry(obj).unwrap();
-			// setPost(initialValue)
 		} catch {
+
 			console.log('ERROR');
 			console.log(addResult);
 		}
@@ -89,7 +89,7 @@ const EntryForm = () => {
 			page_to: entry.book_to,
 			student_id: '123',
 			registered_by: 'abc',
-			date_of_entry: getDateNow(),
+			date_of_entry: entry.date_of_entry,
 			comment: entry.comment,
 		};
 		try {
@@ -104,7 +104,7 @@ const EntryForm = () => {
 	return (
 		<>
 			<GenericEntryForm
-				defaultValues={entryValues}
+				defaultValues={{...entryValues, date_of_entry: new Date(entryValues.date_of_entry)}}
 				submitHandler={selectedId? handleEditEntry : handleAddEntry}
 				submitLabel={selectedId? 'Breyta': 'Skrá'}
 				isVisible={isVisible}
