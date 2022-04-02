@@ -12,4 +12,10 @@ export class User extends Model {
 
 	@Column({ defaultValue: true })
 	isActive: boolean;
+
+	@Column
+	email: string;
+
+	@Column
+	SSN: string;
 }
