@@ -18,18 +18,18 @@ export interface CreateEntryDto {
 
 export interface UpdateEntryDto {
 	id: string;
-	
-	student_id: string;
 
-	book_name: string;
+	student_id?: string;
 
-	page_from: string;
+	book_name?: string;
 
-	page_to: string;
+	page_from?: number;
 
-	date_of_entry: string;
+	page_to?: number;
 
-	comment: string;
+	date_of_entry?: string;
 
-	time_spent: number;
+	comment?: string;
+
+	time_spent?: number;
 }

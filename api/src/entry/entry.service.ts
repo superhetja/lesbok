@@ -1,6 +1,5 @@
 import { BadRequestException, NotImplementedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Sequelize } from 'sequelize-typescript';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
 import { EntryModel } from './entry.model';
 
@@ -11,7 +10,9 @@ export class EntryService {
 	) {}
 
 	async findAll(): Promise<EntryModel[]> {
-		return this.entryModel.findAll();
+		return this.entryModel.findAll({
+			order: [['date_of_entry', 'DESC']],
+		});
 	}
 
 	async findById(id: string): Promise<EntryModel> {

@@ -1,11 +1,11 @@
 export interface Entry {
 	id: string;
 	student_id: string;
-	book_id: string;
-	page_from: number;
-	page_to: number;
+	book_name: string;
+	page_from: string;
+	page_to: string;
 	comment?: string;
-	date_time: Number;
+	date_time: string;
 	time_spent?: string;
 	registered_by: string;
 }

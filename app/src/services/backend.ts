@@ -41,7 +41,7 @@ export const entryApi = createApi({
 		: // an error occurred, but we still want to refetch this query when `{ type: 'Posts', id: 'LIST' }` is invalidated
 			[{ type: 'Entries', id: 'LIST' }],
 		}),
-		getEntryById: build.query<Entry, string>({
+		getEntryById: build.query<Entry[], string>({
 			query: (id) => `entries/${id}`,
 			providesTags: (result, error, id) => [{ type: 'Entries', id}]
 		}),
@@ -61,6 +61,7 @@ export const entryApi = createApi({
 				method: 'PUT',
 				body,
 			}),
+			invalidatesTags: (result, error, {id}) => [{type: 'Entries', id}]
 		}),
 	}),
 });
