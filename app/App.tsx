@@ -9,6 +9,8 @@ import { useGetEntriesQuery } from './src/services/backend';
 import { AddButton } from './src/components/Buttons';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, Layout } from '@ui-kitten/components';
+import { NavigationContainer } from '@react-navigation/native';
+import { AppNavigator } from './src/navigation';
 
 const styles = StyleSheet.create({
 	container: {
@@ -25,14 +27,15 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<ApplicationProvider {...eva} theme={eva.light}>
-				<SafeAreaView style={styles.container}>
+					<AppNavigator />
+				{/* <SafeAreaView style={styles.container}>
 
 
 
 					<EntryList />
 					<EntryForm />
 					<StatusBar />
-				</SafeAreaView>
+				</SafeAreaView> */}
 			</ApplicationProvider>
 		</Provider>
 	);
