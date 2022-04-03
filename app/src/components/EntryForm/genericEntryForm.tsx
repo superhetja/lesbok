@@ -1,9 +1,10 @@
-import { Button, Layout } from "@ui-kitten/components";
+import { Button, Datepicker, Layout } from "@ui-kitten/components";
 import { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { GestureResponderEvent, StyleSheet, View } from "react-native";
 import { FormData } from ".";
 import { NumberInput, TextInput } from "../FormComponents";
+import DatepickerInput from "../FormComponents/datePicker";
 import BottomOverlay from "../Overlays/bottomOverlay";
 
 
@@ -26,8 +27,16 @@ const styles = StyleSheet.create({
 	}
 });
 
+type formDataWithDate = {
+	book_name: string;
+	book_from: number;
+	book_to: number;
+	comment: string;
+	date_of_entry: Date;
+}
+
 type GenericEntryFormProps = {
-	defaultValues: FormData;
+	defaultValues: formDataWithDate;
 	submitHandler: (entry: FormData) => Promise<void>;
 	submitLabel: string;
 	isVisible: boolean;
@@ -37,7 +46,7 @@ type GenericEntryFormProps = {
 const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible, toggleModal}: GenericEntryFormProps) => {
 	// const [isVisible, setIsVisible] = useState(true);
 
-	const {...methods} = useForm<FormData>({
+	const {...methods} = useForm<formDataWithDate>({
 		defaultValues: useMemo(() => {
 			return defaultValues;
 		}, [defaultValues])
@@ -53,6 +62,7 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 
 	return (
 		<>
+
 			<BottomOverlay isVisible={isVisible}>
 				<Layout style={styles.container}>
 					<FormProvider {...methods}>
@@ -81,6 +91,11 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 									);
 								},
 							}}
+						/>
+						<DatepickerInput
+							name="date_of_entry"
+							label="Dagsetning:"
+							placeHolder="Veldu dagsetningu"
 						/>
 						<TextInput
 							name="comment"

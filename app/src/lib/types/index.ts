@@ -8,4 +8,5 @@ export interface Entry {
 	date_time: string;
 	time_spent?: string;
 	registered_by: string;
+	date_of_entry: string;
 }

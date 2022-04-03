@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		fontStyle: 'italic',
 	},
+	datePicker: {
+		minHeight: 1,
+	},
 });
 
 export default styles;
