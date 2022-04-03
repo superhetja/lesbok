@@ -6,19 +6,19 @@ import {
 } from 'react-hook-form';
 import styles from './styles';
 import { useMemo } from 'react';
-import { Input } from '@ui-kitten/components';
+import { Autocomplete, Input } from '@ui-kitten/components';
 
 interface TextInputProps extends UseControllerProps {
 	placeHolder?: string;
 	defaultValue?: string;
-	autoComplete?: boolean;
+	label?: string;
 }
 
 const ControlledTextInput = ({
 	name,
 	placeHolder,
+	label,
 	rules,
-	autoComplete = false,
 	defaultValue,
 	...inputProps
 }: TextInputProps) => {
@@ -34,13 +34,15 @@ const ControlledTextInput = ({
 		// 	return defaultValue;
 		// }, [defaultValue])
 	});
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.container}>
 				<Input
-					label={placeHolder}
+					label={label}
+					placeholder={placeHolder}
 					style={styles.input}
-					onChangeText={!autoComplete? field.onChange : (text) => field.onChange({ query: text})}
+					onChangeText={field.onChange}
 					onBlur={field.onBlur}
 					value={field.value}
 					{...inputProps}
