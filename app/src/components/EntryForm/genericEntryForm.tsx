@@ -6,6 +6,8 @@ import { FormData } from ".";
 import { NumberInput, TextInput } from "../FormComponents";
 import DatepickerInput from "../FormComponents/datePicker";
 import BottomOverlay from "../Overlays/bottomOverlay";
+import AutocompleteTextInput from "../FormComponents/autoTextInput";
+import AutoTextInput from "../FormComponents/autoTextInput";
 
 
 const styles = StyleSheet.create({
@@ -56,32 +58,36 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 	}, [defaultValues])
 
 	const onSubmit = methods.handleSubmit(async (data) => {
+		console.log(defaultValues)
 		methods.reset(defaultValues);
 		await submitHandler(data);
 	});
 	const today = new Date();
-
-
-
-
-
 	return (
 		<>
 
 			<BottomOverlay isVisible={isVisible}>
 				<Layout style={styles.container}>
 					<FormProvider {...methods}>
-						<TextInput
+							<AutoTextInput
 							name="book_name"
-							placeHolder="Bók"
-							rules={{ required: 'Verður að fylla út' }}
-						/>
+							label="Bók"
+							placeHolder="Skráðu nafn bókar"
+							rules={{ required: 'Verður að fylla út'}}
+							list={[
+								{ title: 'Star Wars' },
+								{ title: 'Back to the Future' },
+								{ title: 'The Matrix' },
+								{ title: 'Inception' },
+								{ title: 'Interstellar' },
+							]}
+							/>
 						<NumberInput
 							name="book_from"
 							label="Frá:"
 							minVal={0}
 							maxVal={9999}
-						/>
+							/>
 						<NumberInput
 							name="book_to"
 							label="Til:"
@@ -91,12 +97,12 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 								validate: () => {
 									return (
 										methods.getValues('book_from') <=
-											methods.getValues('book_to') ||
+										methods.getValues('book_to') ||
 										'Frá má ekki vera hærra en til'
-									);
-								},
-							}}
-						/>
+										);
+									},
+								}}
+								/>
 						<DatepickerInput
 							name="date_of_entry"
 							label="Dagsetning:"
@@ -105,7 +111,7 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 						/>
 						<TextInput
 							name="comment"
-							placeHolder="Athugasemd"
+							label="Athugasemd"
 						/>
 						<Layout style={styles.actionWrapper}>
 							<Button onPress={onSubmit} >{submitLabel}</Button>
