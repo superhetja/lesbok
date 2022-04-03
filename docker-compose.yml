@@ -42,28 +42,6 @@ services:
     networks:
       - public
       - private
-  app:
-    build:
-      context: ./app
-      args:
-        - NODE_ENV=development
-    container_name: app
-    tty: true
-    ports:
-      - 19000:19000
-      - 19001:19001
-      - 19002:19002
-      - 19006:19006
-    volumes:
-      - ./app:/app/:delegated
-      - ./app/package.json:/app/package.json
-      - ./app/package-lock.json:/app/package-lock.json
-      - notused:/app/node_modules
-    env_file: app.env
-    healthcheck:
-      disable: true
-    networks:
-      - public
 networks:
   public:
   private:

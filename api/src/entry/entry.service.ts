@@ -1,5 +1,10 @@
-import { BadRequestException, NotImplementedException } from '@nestjs/common';
+import {
+	BadRequestException,
+	NotFoundException,
+	NotImplementedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { BookModel } from './book.model';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
 import { EntryModel } from './entry.model';
 
@@ -11,12 +16,24 @@ export class EntryService {
 
 	async findAll(): Promise<EntryModel[]> {
 		return this.entryModel.findAll({
-			order: [['date_of_entry', 'DESC']],
+			order: [
+				['date_of_entry', 'DESC'],
+				['created', 'DESC'],
+			],
+			include: [{ model: BookModel, as: 'book' }],
 		});
 	}
 
 	async findById(id: string): Promise<EntryModel> {
-		return this.entryModel.findByPk(id);
+		const entry = this.entryModel.findOne({
+			where: { id },
+			include: [{ model: BookModel, as: 'book' }],
+		});
+		if (!entry) {
+			throw new NotFoundException(`Entry ${id} does not exist`);
+		}
+
+		return entry;
 	}
 
 	// eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
@@ -25,9 +42,21 @@ export class EntryService {
 	}
 
 	async create(input: CreateEntryDto): Promise<EntryModel> {
-		const entry = await this.entryModel.create({ ...input }).catch(() => {
-			throw new BadRequestException('Cannot create entry!');
-		});
+		const entry = await this.entryModel
+			.create(
+				{
+					...input,
+					book: {
+						name: input.book_name,
+					},
+				},
+				{
+					include: [{ model: BookModel, as: 'book' }],
+				}
+			)
+			.catch(() => {
+				throw new BadRequestException('Cannot create entry!');
+			});
 
 		return entry;
 	}

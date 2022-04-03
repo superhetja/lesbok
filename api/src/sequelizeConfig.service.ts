@@ -20,6 +20,7 @@ const getOptions = (): SequelizeModuleOptions => ({
 	},
 	autoLoadModels: true,
 	synchronize: true,
+	// models: [__dirname + '/**/*.model.ts']
 });
 
 @Injectable()
