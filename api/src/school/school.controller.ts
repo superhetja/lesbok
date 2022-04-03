@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { CreateSchoolDto, UpdateSchoolDto } from './dto';
 import { SchoolModel } from './school.model';
-import { SchoolsService } from './schools.services';
+import { SchoolsService } from './school.services';
 
 @Controller('schools')
 export default class SchoolsController {

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 // import { AppController } from './app.controller';
 // import AppService from './app.service';
-import { SchoolModule } from './Schools/schools.module';
+import { SchoolModule } from './school/school.module';
 import { EntryModule } from './entry/entry.module';
 import { SequelizeConfigService } from './sequelizeConfig.service';
 
