@@ -1,16 +1,22 @@
 import { Text, } from "react-native";
-import { useGetEntriesQuery } from "../../services/backend";
-import { useDispatch } from "react-redux";
 import { selectEntry } from "../../slices/globalSlice";
 import { List } from "@ui-kitten/components";
 import EntryListItem from "./entryListItem";
 import styles from './styles';
+import { Entry } from "../../lib/types";
+import { Dispatch } from "react";
 
+type EntryListProps = {
+	entries: Entry[]|undefined,
+	isLoading: boolean,
+	dispatch:Dispatch<any>
+}
 
-
-const EntryList = () => {
-	const { data: entries, isLoading } = useGetEntriesQuery();
-	const dispatch = useDispatch();
+const EntryList = ({
+	entries,
+	isLoading,
+	dispatch
+}: EntryListProps) => {
 
 	return (
     <>
