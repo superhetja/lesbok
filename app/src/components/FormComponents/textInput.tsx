@@ -11,12 +11,14 @@ import { Input } from '@ui-kitten/components';
 interface TextInputProps extends UseControllerProps {
 	placeHolder?: string;
 	defaultValue?: string;
+	autoComplete?: boolean;
 }
 
 const ControlledTextInput = ({
 	name,
 	placeHolder,
 	rules,
+	autoComplete = false,
 	defaultValue,
 	...inputProps
 }: TextInputProps) => {
@@ -38,7 +40,7 @@ const ControlledTextInput = ({
 				<Input
 					label={placeHolder}
 					style={styles.input}
-					onChangeText={field.onChange}
+					onChangeText={!autoComplete? field.onChange : (text) => field.onChange({ query: text})}
 					onBlur={field.onBlur}
 					value={field.value}
 					{...inputProps}

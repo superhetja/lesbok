@@ -59,6 +59,11 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 		methods.reset(defaultValues);
 		await submitHandler(data);
 	});
+	const today = new Date();
+
+
+
+
 
 	return (
 		<>
@@ -96,6 +101,7 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 							name="date_of_entry"
 							label="Dagsetning:"
 							placeHolder="Veldu dagsetningu"
+							maxDate={today}
 						/>
 						<TextInput
 							name="comment"
