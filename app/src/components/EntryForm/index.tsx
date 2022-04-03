@@ -1,19 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
-	Text,
-	View,
-	Button,
 	StyleSheet,
-	GestureResponderEvent,
 } from 'react-native';
-import { FormProvider, useForm } from 'react-hook-form';
-import BottomOverlay from '../Overlays/bottomOverlay';
-import AddButton from '../Buttons/addButton';
-import { entryApi, useCreateEntryForIdMutation, useEditEntryByIdMutation, useGetEntryByIdQuery } from '../../services/backend';
-import { TextInput, NumberInput } from '../FormComponents';
+import { useCreateEntryForIdMutation, useEditEntryByIdMutation } from '../../services/backend';
 import GenericEntryForm from './genericEntryForm';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearSelectedEntry, selectedEntryId, selectedEntryValues } from '../../slices/globalSlice';
+import { useSelector } from 'react-redux';
+import { selectedEntryValues } from '../../slices/globalSlice';
+import { getDateNow } from '../../utils/helpers';
 
 export type FormData = {
 	book_name: string;
@@ -37,29 +30,25 @@ const styles = StyleSheet.create({
 	},
 });
 
+type EntryFormProps = {
+	isVisible: boolean;
+	setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+	selectedId: string;
+	toggleModal: () => void;
+}
 
-const EntryForm = () => {
+const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryFormProps) => {
 
 	const entryValues = useSelector(selectedEntryValues);
-	const selectedId = useSelector(selectedEntryId);
-	const dispatch = useDispatch();
 	useEffect(() => {
 		if(selectedId) {
 			toggleModal();
 		}
 	},[selectedId]);
 
-	const [isVisible, setIsVisible] = useState(false);
 	const [addEntry, addResult] = useCreateEntryForIdMutation();
 	const [editEntry, editResult] = useEditEntryByIdMutation();
 
-	const toggleModal = () => {
-		// clear selected values if we are canceling
-		if(selectedId && isVisible) {
-			dispatch(clearSelectedEntry());
-		}
-		setIsVisible(!isVisible);
-	};
 
 	const handleAddEntry = async (entry: FormData) => {
 		const obj = {
@@ -110,7 +99,6 @@ const EntryForm = () => {
 				isVisible={isVisible}
 				toggleModal={toggleModal}
 			/>
-			<AddButton onPress={toggleModal} />
 		</>
 	);
 }
