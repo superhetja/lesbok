@@ -23,9 +23,9 @@ const styles = StyleSheet.create({
 		padding: 20,
 	},
 	actionWrapper: {
-		alignSelf: 'stretch',
+		// alignSelf: 'stretch',
 		flexDirection: 'row',
-		alignItems: 'center'
+		justifyContent: 'space-around'
 	}
 });
 
