@@ -1,3 +1,4 @@
+import { GroupModel } from 'group/group.model';
 import {
 	Table,
 	Model,
@@ -5,6 +6,7 @@ import {
 	DataType,
 	CreatedAt,
 	UpdatedAt,
+	HasMany,
 } from 'sequelize-typescript';
 
 @Table({
@@ -55,4 +57,7 @@ export class SchoolModel extends Model {
 		allowNull: true,
 	})
 	email: string;
+
+	@HasMany(() => GroupModel)
+	groups: GroupModel[];
 }

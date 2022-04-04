@@ -1,17 +1,20 @@
+import { SchoolModel } from 'school/school.model';
 import {
+	BelongsTo,
 	Column,
 	CreatedAt,
 	DataType,
+	ForeignKey,
 	Model,
 	Table,
 	UpdatedAt,
 } from 'sequelize-typescript';
 
 @Table({
-	tableName: 'user',
+	tableName: 'group',
 	timestamps: true,
 })
-export class UserModel extends Model {
+export class GroupModel extends Model {
 	@Column({
 		type: DataType.UUID,
 		primaryKey: true,
@@ -29,15 +32,17 @@ export class UserModel extends Model {
 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
-		unique: true,
 	})
-	national_id!: string;
+	description: string;
 
+	@ForeignKey(() => SchoolModel)
 	@Column({
-		type: DataType.STRING,
-		allowNull: false,
+		type: DataType.UUID,
 	})
-	email!: string;
+	school_id: string;
+
+	@BelongsTo(() => SchoolModel)
+	school: SchoolModel;
 
 	@CreatedAt
 	created: Date;

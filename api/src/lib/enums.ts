@@ -5,3 +5,9 @@ export enum Roles {
 	ASSISTANT = 'Assistant',
 	GUARDIAN = 'guardian',
 }
+
+export enum Gender {
+	MALE = 'Male',
+	FEMALE = 'Female',
+	OTHER = 'Other',
+}
