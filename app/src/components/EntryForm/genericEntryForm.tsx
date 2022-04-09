@@ -5,6 +5,8 @@ import { NumberInput, TextInput, DatePickerInput, AutoTextInput } from "../FormC
 import BottomOverlay from "../Overlays/bottomOverlay";
 import { Book } from "../../utils/types";
 import styles from "./styles";
+import { showMessage, hideMessage } from 'react-native-flash-message';
+
 
 type FormDataWithDate = {
 	book_name: string;
@@ -43,7 +45,12 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 	const onSubmit = methods.handleSubmit(async (data) => {
 		console.log(defaultValues)
 		methods.reset(defaultValues);
-		await submitHandler(data);
+
+		showMessage({
+			message: "Bók skráð.",
+			type: "success"
+		})
+		await submitHandler(data)
 	});
 
 	const today = new Date();
