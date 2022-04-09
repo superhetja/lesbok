@@ -40,7 +40,7 @@ const ControlledNumberInput = ({
 
 	useEffect(() => {
 		console.log('watch')
-		
+		console.log(watch)
 	}, [watch])
 
 	render ++;
