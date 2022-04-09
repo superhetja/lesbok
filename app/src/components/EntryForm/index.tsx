@@ -1,19 +1,12 @@
 import React, { useEffect, useMemo } from 'react';
 import { useCreateEntryForIdMutation, useEditEntryByIdMutation, useGetEntriesQuery } from '../../services/backend';
 import GenericEntryForm from './genericEntryForm';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectedEntryValues, updateForm } from '../../slices/globalSlice';
+import { useSelector } from 'react-redux';
+import { selectedEntryValues } from '../../slices/globalSlice';
 import { createSelector } from '@reduxjs/toolkit';
-import { Book, EntryResponse } from '../../utils/types';
-
-export type FormData = {
-	book_name: string;
-	book_from: number;
-	book_to: number;
-	comment: string;
-	date_of_entry: string;
-	book_id?: string;
-};
+import { BookWithLastPage, EntryResponse, FormDataWithDate } from '../../utils/types';
+import { showMessage } from 'react-native-flash-message';
+import { Set } from 'typescript';
 
 type EntryFormProps = {
 	isVisible: boolean;
@@ -25,7 +18,10 @@ type EntryFormProps = {
 const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryFormProps) => {
 
 	const entryValues = useSelector(selectedEntryValues);
-	const dispatch = useDispatch();
+
+	/**
+	 * Open the form if we select a entry.
+	 */
 	useEffect(() => {
 		if(selectedId) {
 			toggleModal();
@@ -36,6 +32,9 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 	const [editEntry, editResult] = useEditEntryByIdMutation();
 
 
+	/**
+	 * Selector for selecting unique book names with last page attached.
+	 */
 	const selectBooks = useMemo(() => {
 		const emptyArray: never[] = []
 		const set = new Set<string>();
@@ -44,49 +43,31 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 		console.log('inside useMemo')
 		return createSelector(
 			(			res: { data?: EntryResponse[]; }) => res.data?? emptyArray,
-			(data: EntryResponse[]) => data?.map((entry: EntryResponse) => entry.book)
-				.filter(function({id, name}){
+			(data: EntryResponse[]) => data?.map((entry: EntryResponse):BookWithLastPage => ({...entry.book, 'last_page': entry.page_to}))
+				.filter(function(this: Set<string>, {id, name}){
 					let key = `${id}`;
 					return !this.has(key) && this?.add(key);
 			}, set) ?? emptyArray
 		);
-	}, []);
+	}, [toggleModal]);
 
+	/**
+	 * Gets the latest book for autocomplete on form.
+	 */
 	const { books } = useGetEntriesQuery(undefined, {
 		selectFromResult: result => ({
 			books: selectBooks(result)
 		})
-	})
+	});
 
 	console.log(books)
 
-	// const { books } = useGetEntriesQuery(undefined, {
-	// 	selectFromResult: ({data}) => ({
-	// 		books: data?.map(b => (b.book))
-	// 			.filter(({id, title}) => {
-	// 			var key = `${id}`;
-	// 			return this?? && !this.has(key) && this?.add(key);
-	// 		}, new Set<string>())
-	// 	})
-	// })
 
 	/**
-	 * Sets the from value to last entry of the read book + 1 and from value to + 2
-	 *
-	 * @param book The selected book object
+	 * Handles create of Entry
+	 * @param entry the form data
 	 */
-	const handleSelectedBook = async (book: Book) => {
-		const data = {
-			...entryValues,
-			book_name: book.name,
-			book_id: book.id,
-			book_from: 3,
-			book_to: 4,
-		}
-		dispatch(updateForm({formData: data}))
-	}
-
-	const handleAddEntry = async (entry: FormData) => {
+	const handleAddEntry = async (entry: FormDataWithDate) => {
 		const obj = {
 			book_name: entry.book_name,
 			page_from: entry.book_from,
@@ -95,7 +76,9 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 			registered_by: 'abc',
 			date_of_entry: entry.date_of_entry,
 			comment: entry.comment,
+			book_id: entry.book_id
 		};
+
 		try {
 			toggleModal()
 			await addEntry(obj).unwrap();
@@ -106,7 +89,11 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 		}
 	};
 
-	const handleEditEntry = async (entry: FormData) => {
+	/**
+	 * Handles edit of entry.
+	 * @param entry the form data
+	 */
+	const handleEditEntry = async (entry: FormDataWithDate) => {
 		const obj = {
 			id: selectedId,
 			book_name: entry.book_name,
@@ -116,10 +103,15 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 			registered_by: 'abc',
 			date_of_entry: entry.date_of_entry,
 			comment: entry.comment,
+			book_id: entry.book_id
 		};
 		try {
 			toggleModal();
 			await editEntry(obj).unwrap();
+			showMessage({
+				message: "Bók skráð.",
+				type: "success"
+			})
 		} catch {
 			console.log('ERROR');
 			console.log(editResult);

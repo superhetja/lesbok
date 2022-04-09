@@ -22,6 +22,10 @@ export interface Book {
 	modified: string;
 }
 
+export interface BookWithLastPage extends Book {
+	last_page: string;
+}
+
 export interface EntryResponse {
 	id: string;
 	student_id: string;
@@ -38,4 +42,13 @@ export interface EntryResponse {
 	book: Book;
 }
 
+
+export type FormDataWithDate = {
+	book_name: string;
+	book_from: number;
+	book_to: number;
+	comment: string;
+	date_of_entry: any;
+	book_id: string;
+}
 

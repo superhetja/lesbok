@@ -3,6 +3,19 @@ import { BASE_URL } from '../utils/constants';
 import { Entry, EntryResponse } from '../utils/types';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
 
+function providesList<R extends { id: string | number }[], T extends string>(
+  resultsWithIds: R | undefined,
+  tagType: T
+) {
+	console.log('-------------------------- provideList: ')
+	console.log(resultsWithIds);
+  return resultsWithIds
+    ? [
+        { type: tagType, id: 'LIST' },
+        ...resultsWithIds.map(({ id }) => ({ type: tagType, id })),
+      ]
+    : [{ type: tagType, id: 'LIST' }]
+}
 
 // Create our baseQuery instance
 // const baseQuery = fetchBaseQuery({
@@ -30,16 +43,7 @@ export const entryApi = createApi({
 			// Provides a list of `Posts` by `id`.
       // If any mutation is executed that `invalidate`s any of these tags, this query will re-run to be always up-to-date.
       // The `LIST` id is a "virtual id" we just made up to be able to invalidate this query specifically if a new `Posts` element was added.
-			providesTags: (result) =>
-			// is result available?
-			result
-			? // successful query
-			[
-				...result.map(({ id }) => ({ type: 'Entries' as const, id })),
-				{ type: 'Entries', id: 'LIST' },
-			]
-		: // an error occurred, but we still want to refetch this query when `{ type: 'Posts', id: 'LIST' }` is invalidated
-			[{ type: 'Entries', id: 'LIST' }],
+			providesTags: (result) => providesList(result, 'Entries'),
 		}),
 		getEntryById: build.query<Entry[], string>({
 			query: (id) => `entries/${id}`,

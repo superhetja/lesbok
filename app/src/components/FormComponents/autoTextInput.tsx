@@ -3,7 +3,7 @@ import { Keyboard, KeyboardEventName, Platform, View } from 'react-native';
 import { Autocomplete, AutocompleteItem, Text } from '@ui-kitten/components';
 import styles from './styles';
 import { UseControllerProps, useFormContext, useController } from 'react-hook-form';
-import { Book } from '../../utils/types';
+import { Book, BookWithLastPage } from '../../utils/types';
 
 const showEvent: KeyboardEventName = Platform.select({
 	android: 'keyboardDidShow',
@@ -19,8 +19,8 @@ interface AutoTextInputProps extends UseControllerProps {
 	placeHolder?: string;
 	defaultValue?: string;
 	label?: string;
-	list: Book[];
-	onSelectCallbackFn?: (book: Book) => void;
+	list: BookWithLastPage[];
+	onSelectCallbackFn?: (book: BookWithLastPage) => void;
 }
 
 const AutoControlledTextInput = ({
@@ -59,8 +59,8 @@ const AutoControlledTextInput = ({
   });
 
   const onSelect = (index : any) => {
+		console.log(typeof(onSelectCallbackFn))
 		onSelectCallbackFn && onSelectCallbackFn(list[index])
-		from_field.onChange(8)
 		field.onChange(list[index].name)
   };
 

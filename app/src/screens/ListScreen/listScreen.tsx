@@ -13,7 +13,6 @@ const ListScreen = () => {
 	const { data: entries, isLoading } = useGetEntriesQuery();
 	const dispatch = useDispatch();
 
-	console.log(entries)
 
 	return(
 		<SafeAreaView style={styles.container}>

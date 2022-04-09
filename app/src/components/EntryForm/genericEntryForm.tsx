@@ -3,18 +3,12 @@ import { useEffect, useMemo } from "react";
 import { FormProvider, useController, useForm } from "react-hook-form";
 import { NumberInput, TextInput, DatePickerInput, AutoTextInput } from "../FormComponents";
 import BottomOverlay from "../Overlays/bottomOverlay";
-import { Book } from "../../utils/types";
+import { Book, BookWithLastPage, FormDataWithDate } from "../../utils/types";
 import styles from "./styles";
 import { showMessage, hideMessage } from 'react-native-flash-message';
 
 
-type FormDataWithDate = {
-	book_name: string;
-	book_from: number;
-	book_to: number;
-	comment: string;
-	date_of_entry: any;
-}
+
 
 type GenericEntryFormProps = {
 	defaultValues: FormDataWithDate;
@@ -22,7 +16,7 @@ type GenericEntryFormProps = {
 	submitLabel: string;
 	isVisible: boolean;
 	toggleModal: () => void;
-	recentBooks: Book[]
+	recentBooks: BookWithLastPage[]
 }
 
 const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible, toggleModal, recentBooks}: GenericEntryFormProps) => {
@@ -33,23 +27,32 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 		}, [defaultValues])
 	});
 
+	/**
+	 * Reset the form values if defaultValues changes
+	 */
 	useEffect(() => {
 		methods.reset(defaultValues);
 	}, [defaultValues])
 
-	const onSelectedBook = (book) => {
-		console.log('setting..')
-		methods.setValue('book_from', 8);
+	/**
+	 * Sets the from value to last entry of the read book + 1 and from value to + 2
+	 *
+	 * @param book The selected book object
+	 */
+	const onSelectedBook = (book: BookWithLastPage) => {
+		methods.resetField('book_from', {defaultValue: parseInt(book.last_page) + 1});
+		methods.resetField('book_to', {defaultValue: parseInt(book.last_page) + 2});
+		methods.setValue('book_id', book.id);
 	}
 
+	/**
+	 * Handle the submit of the book entry.
+	 * Resets the form data and sends the data to submitHandler
+	 *
+	 * @param data the form data
+	 */
 	const onSubmit = methods.handleSubmit(async (data) => {
-		console.log(defaultValues)
 		methods.reset(defaultValues);
-
-		showMessage({
-			message: "Bók skráð.",
-			type: "success"
-		})
 		await submitHandler(data)
 	});
 
