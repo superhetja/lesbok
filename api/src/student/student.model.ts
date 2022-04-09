@@ -1,17 +1,20 @@
+import { GroupModel } from 'group/group.model';
+import { Gender } from 'lib/enums';
 import {
-	Column,
-	CreatedAt,
-	DataType,
-	Model,
 	Table,
+	Model,
+	Column,
+	DataType,
+	CreatedAt,
 	UpdatedAt,
+	ForeignKey,
 } from 'sequelize-typescript';
 
 @Table({
-	tableName: 'user',
+	tableName: 'student',
 	timestamps: true,
 })
-export class UserModel extends Model {
+export class StudentModel extends Model {
 	@Column({
 		type: DataType.UUID,
 		primaryKey: true,
@@ -29,15 +32,21 @@ export class UserModel extends Model {
 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
-		unique: true,
 	})
-	national_id!: string;
+	gender: Gender;
 
 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
+		unique: true,
 	})
-	email!: string;
+	national_id!: string;
+
+	@ForeignKey(() => GroupModel)
+	@Column({
+		type: DataType.UUID,
+	})
+	group_id: GroupModel;
 
 	@CreatedAt
 	created: Date;
