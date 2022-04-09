@@ -3,11 +3,11 @@ import { selectEntry } from "../../slices/globalSlice";
 import { List } from "@ui-kitten/components";
 import EntryListItem from "./entryListItem";
 import styles from './styles';
-import { Entry } from "../../lib/types";
+import { Entry, EntryResponse } from "../../utils/types";
 import { Dispatch } from "react";
 
 type EntryListProps = {
-	entries: Entry[]|undefined,
+	entries: EntryResponse[] |undefined,
 	isLoading: boolean,
 	dispatch:Dispatch<any>
 }

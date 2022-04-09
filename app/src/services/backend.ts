@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from '../constants';
-import { Entry } from '../lib/types';
+import { BASE_URL } from '../utils/constants';
+import { Entry, EntryResponse } from '../utils/types';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
 
 
@@ -25,7 +25,7 @@ export const entryApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
 	tagTypes: ['Entries'],
 	endpoints: (build) => ({
-		getEntries: build.query<Entry[], void>({
+		getEntries: build.query<EntryResponse[], void>({
 			query: () => `entries`,
 			// Provides a list of `Posts` by `id`.
       // If any mutation is executed that `invalidate`s any of these tags, this query will re-run to be always up-to-date.

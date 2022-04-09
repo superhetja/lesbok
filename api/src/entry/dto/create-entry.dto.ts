@@ -14,4 +14,6 @@ export class CreateEntryDto {
 	comment?: string;
 
 	time_spent?: number;
+
+	book_id?: string;
 }

@@ -8,7 +8,7 @@ interface GlobalState {
 	formData: FormData;
 }
 
-const emptyValues: FormData= {
+const emptyValues: FormData = {
 	book_name: '',
 	book_from: 1,
 	book_to: 1,
@@ -25,11 +25,14 @@ const globalSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    selectEntry(state, actiton: PayloadAction<GlobalState>) {
-      state.selectedEntryId = actiton.payload.selectedEntryId;
-			state.formData = actiton.payload.formData;
+    selectEntry(state, action: PayloadAction<GlobalState>) {
+      state.selectedEntryId = action.payload.selectedEntryId;
+			state.formData = action.payload.formData;
 
     },
+		updateForm(state, action: PayloadAction<{formData: FormData}>) {
+			state.formData = action.payload.formData;
+		},
     clearSelectedEntry(state) {
       state.selectedEntryId = '';
 			state.formData = emptyValues;
@@ -44,5 +47,5 @@ const globalSlice = createSlice({
 export const selectedEntryId = (state: RootState) => state.global.selectedEntryId;
 export const selectedEntryValues = (state: RootState) => state.global.formData;
 
-export const { selectEntry, clearSelectedEntry } = globalSlice.actions
+export const { selectEntry, clearSelectedEntry, updateForm } = globalSlice.actions
 export default globalSlice.reducer

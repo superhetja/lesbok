@@ -21,7 +21,7 @@ interface DatePickerProps extends UseControllerProps {
 }
 
 
-const DatepickerInput = ({
+const DatePickerInput = ({
 	name,
 	rules,
 	defaultValue,
@@ -66,4 +66,4 @@ const DatepickerInput = ({
 			)
 		}
 
-export default DatepickerInput;
+export default DatePickerInput;

@@ -3,9 +3,11 @@ import {
 	useController,
 	UseControllerProps,
 	useFormContext,
+	useWatch,
 } from 'react-hook-form';
 import NumericInput from 'react-native-numeric-input';
 import styles from './styles';
+import { useEffect } from 'react';
 
 interface NumericInputProps extends UseControllerProps {
 	minVal?: number;
@@ -14,6 +16,8 @@ interface NumericInputProps extends UseControllerProps {
 	defaultValue?: number;
 	label: string;
 }
+
+let render = 0;
 
 const ControlledNumberInput = ({
 	name,
@@ -30,6 +34,17 @@ const ControlledNumberInput = ({
 	// establishes the instance of our controlled input and stores its value to the form
 	const { field } = useController({ name, rules, defaultValue });
 
+	const watch = useWatch({
+		name: 'book_name'
+	})
+
+	useEffect(() => {
+		console.log('watch')
+		
+	}, [watch])
+
+	render ++;
+
 	return (
 		<View style={styles.container}>
 			{label && <Text style={styles.label}>{label}</Text>}
@@ -43,6 +58,7 @@ const ControlledNumberInput = ({
 				{formState.errors && (
 					<Text style={styles.error}>{formState?.errors[name]?.message}</Text>
 				)}
+				<Text>{render}</Text>
 			</View>
 		</View>
 	);

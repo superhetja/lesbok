@@ -17,7 +17,6 @@ const ListScreen = () => {
 		<SafeAreaView style={styles.container}>
 			{/* <TopNavigation title='Seinustu færslur' /> */}
 			<EntryList entries={entries} isLoading={isLoading} dispatch={dispatch}/>
-			<EntryForm />
 			{/* <BottomNavigation /> */}
 		</SafeAreaView>
 	)

@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
-import {
-	StyleSheet,
-} from 'react-native';
-import { useCreateEntryForIdMutation, useEditEntryByIdMutation } from '../../services/backend';
+import React, { useEffect, useMemo } from 'react';
+import { useCreateEntryForIdMutation, useEditEntryByIdMutation, useGetEntriesQuery } from '../../services/backend';
 import GenericEntryForm from './genericEntryForm';
-import { useSelector } from 'react-redux';
-import { selectedEntryValues } from '../../slices/globalSlice';
-import { getDateNow } from '../../utils/helpers';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectedEntryValues, updateForm } from '../../slices/globalSlice';
+import { createSelector } from '@reduxjs/toolkit';
+import { Book, EntryResponse } from '../../utils/types';
 
 export type FormData = {
 	book_name: string;
@@ -14,21 +12,8 @@ export type FormData = {
 	book_to: number;
 	comment: string;
 	date_of_entry: string;
+	book_id?: string;
 };
-
-const styles = StyleSheet.create({
-	input: {
-		height: 40,
-		margin: 12,
-		borderWidth: 1,
-		padding: 10,
-		width: '100%',
-	},
-	container: {
-		backgroundColor: '#ffffff',
-		padding: 20,
-	},
-});
 
 type EntryFormProps = {
 	isVisible: boolean;
@@ -40,6 +25,7 @@ type EntryFormProps = {
 const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryFormProps) => {
 
 	const entryValues = useSelector(selectedEntryValues);
+	const dispatch = useDispatch();
 	useEffect(() => {
 		if(selectedId) {
 			toggleModal();
@@ -49,6 +35,56 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 	const [addEntry, addResult] = useCreateEntryForIdMutation();
 	const [editEntry, editResult] = useEditEntryByIdMutation();
 
+
+	const selectBooks = useMemo(() => {
+		const emptyArray: never[] = []
+		const set = new Set<string>();
+		// Return a unique selector instance for this page so that
+    // the filtered results are correctly memoized
+		console.log('inside useMemo')
+		return createSelector(
+			(			res: { data?: EntryResponse[]; }) => res.data?? emptyArray,
+			(data: EntryResponse[]) => data?.map((entry: EntryResponse) => entry.book)
+				.filter(function({id, name}){
+					let key = `${id}`;
+					return !this.has(key) && this?.add(key);
+			}, set) ?? emptyArray
+		);
+	}, []);
+
+	const { books } = useGetEntriesQuery(undefined, {
+		selectFromResult: result => ({
+			books: selectBooks(result)
+		})
+	})
+
+	console.log(books)
+
+	// const { books } = useGetEntriesQuery(undefined, {
+	// 	selectFromResult: ({data}) => ({
+	// 		books: data?.map(b => (b.book))
+	// 			.filter(({id, title}) => {
+	// 			var key = `${id}`;
+	// 			return this?? && !this.has(key) && this?.add(key);
+	// 		}, new Set<string>())
+	// 	})
+	// })
+
+	/**
+	 * Sets the from value to last entry of the read book + 1 and from value to + 2
+	 *
+	 * @param book The selected book object
+	 */
+	const handleSelectedBook = async (book: Book) => {
+		const data = {
+			...entryValues,
+			book_name: book.name,
+			book_id: book.id,
+			book_from: 3,
+			book_to: 4,
+		}
+		dispatch(updateForm({formData: data}))
+	}
 
 	const handleAddEntry = async (entry: FormData) => {
 		const obj = {
@@ -98,6 +134,7 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 				submitLabel={selectedId? 'Breyta': 'Skrá'}
 				isVisible={isVisible}
 				toggleModal={toggleModal}
+				recentBooks={books}
 			/>
 		</>
 	);
