@@ -12,6 +12,7 @@ interface TextInputProps extends UseControllerProps {
 	placeHolder?: string;
 	defaultValue?: string;
 	label?: string;
+	disabled?: boolean
 }
 
 const ControlledTextInput = ({
@@ -20,6 +21,7 @@ const ControlledTextInput = ({
 	label,
 	rules,
 	defaultValue,
+	disabled = false,
 	...inputProps
 }: TextInputProps) => {
 	const formContext = useFormContext();
@@ -28,11 +30,6 @@ const ControlledTextInput = ({
 	const { field } = useController({
 		name,
 		rules,
-		// defaultValue: useMemo(() => {
-		// 	console.log('Textinput')
-		// 	console.log(defaultValue)
-		// 	return defaultValue;
-		// }, [defaultValue])
 	});
 
 	return (
@@ -45,6 +42,7 @@ const ControlledTextInput = ({
 					onChangeText={field.onChange}
 					onBlur={field.onBlur}
 					value={field.value}
+					disabled={disabled}
 					{...inputProps}
 				/>
 				{formState?.errors && (
