@@ -1,5 +1,5 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
-import { Entry } from '../lib/types';
+import { Entry } from '../utils/types';
 
 const adapter = createEntityAdapter<Entry>();
 // eslint-disable-next-line import/no-mutable-exports

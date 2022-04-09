@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Keyboard, KeyboardEventName, Platform, View } from 'react-native';
 import { Autocomplete, AutocompleteItem, Text } from '@ui-kitten/components';
-import { useGetEntriesQuery } from '../../services/backend';
 import styles from './styles';
 import { UseControllerProps, useFormContext, useController } from 'react-hook-form';
+import { Book } from '../../utils/types';
 
 const showEvent: KeyboardEventName = Platform.select({
 	android: 'keyboardDidShow',
@@ -19,9 +19,8 @@ interface AutoTextInputProps extends UseControllerProps {
 	placeHolder?: string;
 	defaultValue?: string;
 	label?: string;
-	list: {
-		title: string;
-	}[];
+	list: Book[];
+	onSelectCallbackFn?: (book: Book) => void;
 }
 
 const AutoControlledTextInput = ({
@@ -31,14 +30,16 @@ const AutoControlledTextInput = ({
 	rules,
 	defaultValue,
 	label,
+	onSelectCallbackFn,
 	...inputProps
 }: AutoTextInputProps) => {
 	const formContext = useFormContext();
 	const { formState } = formContext;
 
 	const { field } = useController({name, rules});
-	const filter = (item: {title: string}, query: string) => item.title.toLowerCase().includes(query.toLowerCase());
-  const [value, setValue] = useState('');
+	const { field: from_field } = useController({name: 'book_from'});
+
+	const filter = (item: Book, query: string) => item.name.toLowerCase().includes(query.toLowerCase());
   const [data, setData] = useState(list);
   const [placement, setPlacement] = useState('bottom');
 
@@ -58,22 +59,21 @@ const AutoControlledTextInput = ({
   });
 
   const onSelect = (index : any) => {
-    setValue(list[index].title);
-		field.onChange(list[index].title)
-
+		onSelectCallbackFn && onSelectCallbackFn(list[index])
+		from_field.onChange(3)
+		field.onChange(list[index].name)
   };
 
   const onChangeText = (query: string) => {
 		field.onChange(query)
-    setValue(query);
     setData(list.filter(item => filter(item, query)));
 
   };
 
-  const renderOption = (item: {title: string}, index: number) => (
+  const renderOption = (item: Book, index: number) => (
     <AutocompleteItem
       key={index}
-      title={item.title}
+      title={item.name}
     />
   );
 
@@ -86,9 +86,9 @@ const AutoControlledTextInput = ({
 				placement={placement}
 				onChangeText={onChangeText}
 				onBlur={field.onBlur}
-				onSelect={onSelect}>
+				onSelect={onSelect}
+			>
 				{data.map(renderOption)}
-
 			</Autocomplete>
 			{formState?.errors && (
 					<Text style={styles.error}>{formState?.errors[name]?.message}</Text>

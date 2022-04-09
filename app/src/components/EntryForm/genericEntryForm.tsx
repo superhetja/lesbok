@@ -1,67 +1,51 @@
-import { Button, Datepicker, Layout } from "@ui-kitten/components";
-import { useEffect, useMemo, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { GestureResponderEvent, StyleSheet, View } from "react-native";
-import { FormData } from ".";
-import { NumberInput, TextInput } from "../FormComponents";
-import DatepickerInput from "../FormComponents/datePicker";
+import { Button, Layout } from "@ui-kitten/components";
+import { useEffect, useMemo } from "react";
+import { FormProvider, useController, useForm } from "react-hook-form";
+import { NumberInput, TextInput, DatePickerInput, AutoTextInput } from "../FormComponents";
 import BottomOverlay from "../Overlays/bottomOverlay";
-import AutocompleteTextInput from "../FormComponents/autoTextInput";
-import AutoTextInput from "../FormComponents/autoTextInput";
+import { Book } from "../../utils/types";
+import styles from "./styles";
 
-
-const styles = StyleSheet.create({
-	input: {
-		height: 40,
-		margin: 12,
-		borderWidth: 1,
-		padding: 10,
-		width: '100%',
-	},
-	container: {
-		backgroundColor: '#ffffff',
-		padding: 20,
-	},
-	actionWrapper: {
-		// alignSelf: 'stretch',
-		flexDirection: 'row',
-		justifyContent: 'space-around'
-	}
-});
-
-type formDataWithDate = {
+type FormDataWithDate = {
 	book_name: string;
 	book_from: number;
 	book_to: number;
 	comment: string;
-	date_of_entry: Date;
+	date_of_entry: any;
 }
 
 type GenericEntryFormProps = {
-	defaultValues: formDataWithDate;
-	submitHandler: (entry: FormData) => Promise<void>;
+	defaultValues: FormDataWithDate;
+	submitHandler: (entry: FormDataWithDate) => Promise<void>;
 	submitLabel: string;
 	isVisible: boolean;
 	toggleModal: () => void;
+	recentBooks: Book[]
 }
 
-const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible, toggleModal}: GenericEntryFormProps) => {
-	// const [isVisible, setIsVisible] = useState(true);
+const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible, toggleModal, recentBooks}: GenericEntryFormProps) => {
 
-	const {...methods} = useForm<formDataWithDate>({
+	const {...methods} = useForm<FormDataWithDate>({
 		defaultValues: useMemo(() => {
 			return defaultValues;
 		}, [defaultValues])
 	});
+
 	useEffect(() => {
 		methods.reset(defaultValues);
 	}, [defaultValues])
+
+	const onSelectedBook = (book) => {
+		console.log('setting..')
+		methods.setValue('book_from', 8);
+	}
 
 	const onSubmit = methods.handleSubmit(async (data) => {
 		console.log(defaultValues)
 		methods.reset(defaultValues);
 		await submitHandler(data);
 	});
+
 	const today = new Date();
 	return (
 		<>
@@ -74,13 +58,8 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 							label="Bók"
 							placeHolder="Skráðu nafn bókar"
 							rules={{ required: 'Verður að fylla út'}}
-							list={[
-								{ title: 'Star Wars' },
-								{ title: 'Back to the Future' },
-								{ title: 'The Matrix' },
-								{ title: 'Inception' },
-								{ title: 'Interstellar' },
-							]}
+							list={recentBooks}
+							onSelectCallbackFn={onSelectedBook}
 							/>
 						<NumberInput
 							name="book_from"
@@ -103,7 +82,7 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 									},
 								}}
 								/>
-						<DatepickerInput
+						<DatePickerInput
 							name="date_of_entry"
 							label="Dagsetning:"
 							placeHolder="Veldu dagsetningu"
@@ -116,7 +95,6 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 						<Layout style={styles.actionWrapper}>
 							<Button onPress={onSubmit} >{submitLabel}</Button>
 							<Button onPress={toggleModal} >Hætta við</Button>
-
 						</Layout>
 					</FormProvider>
 				</Layout>

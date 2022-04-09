@@ -42,13 +42,15 @@ export class EntryService {
 	}
 
 	async create(input: CreateEntryDto): Promise<EntryModel> {
+		const book = input.book_id
+			? { book_id: input.book_id }
+			: { book: { name: input.book_name } };
+
 		const entry = await this.entryModel
 			.create(
 				{
 					...input,
-					book: {
-						name: input.book_name,
-					},
+					...book,
 				},
 				{
 					include: [{ model: BookModel, as: 'book' }],
