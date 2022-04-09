@@ -1,6 +1,6 @@
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { BottomNavigation as UIKBottomNavigation, BottomNavigationTab, Layout } from "@ui-kitten/components"
-import { Home, List } from "react-native-feather";
+import { Home, List, User } from "react-native-feather";
 import { AddButton } from "../Buttons";
 import EntryForm from '../../components/EntryForm';
 import { useState } from "react";
@@ -41,6 +41,7 @@ const BottomNavigation = ({ navigation, state }:BottomTabBarProps) => {
 				>
 					<BottomNavigationTab icon={() => (<Home />)} />
 					<BottomNavigationTab icon={() => (<List />)} />
+					<BottomNavigationTab icon={() => (<User />)} />
 				</UIKBottomNavigation>
 			</Layout>
 		</Layout>
