@@ -14,6 +14,8 @@ export interface CreateEntryDto {
 	comment?: string;
 
 	time_spent?: number;
+
+	book_id?: string;
 }
 
 export interface UpdateEntryDto {

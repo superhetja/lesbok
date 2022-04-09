@@ -17,7 +17,6 @@ interface NumericInputProps extends UseControllerProps {
 	label: string;
 }
 
-let render = 0;
 
 const ControlledNumberInput = ({
 	name,
@@ -34,17 +33,6 @@ const ControlledNumberInput = ({
 	// establishes the instance of our controlled input and stores its value to the form
 	const { field } = useController({ name, rules, defaultValue });
 
-	const watch = useWatch({
-		name: 'book_name'
-	})
-
-	useEffect(() => {
-		console.log('watch')
-		console.log(watch)
-	}, [watch])
-
-	render ++;
-
 	return (
 		<View style={styles.container}>
 			{label && <Text style={styles.label}>{label}</Text>}
@@ -54,11 +42,12 @@ const ControlledNumberInput = ({
 					value={field.value}
 					minValue={minVal}
 					maxValue={maxVal}
+
+
 				/>
 				{formState.errors && (
 					<Text style={styles.error}>{formState?.errors[name]?.message}</Text>
 				)}
-				<Text>{render}</Text>
 			</View>
 		</View>
 	);
