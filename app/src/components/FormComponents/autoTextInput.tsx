@@ -60,7 +60,7 @@ const AutoControlledTextInput = ({
 
   const onSelect = (index : any) => {
 		onSelectCallbackFn && onSelectCallbackFn(list[index])
-		from_field.onChange(3)
+		from_field.onChange(8)
 		field.onChange(list[index].name)
   };
 
