@@ -1,12 +1,10 @@
 import { Button, Layout } from "@ui-kitten/components";
 import { useEffect, useMemo } from "react";
-import { FormProvider, useController, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { NumberInput, TextInput, DatePickerInput, AutoTextInput } from "../FormComponents";
 import BottomOverlay from "../Overlays/bottomOverlay";
-import { Book, BookWithLastPage, FormDataWithDate } from "../../utils/types";
+import { BookWithLastPage, FormDataWithDate } from "../../utils/types";
 import styles from "./styles";
-import { showMessage, hideMessage } from 'react-native-flash-message';
-
 
 
 

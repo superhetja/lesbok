@@ -59,7 +59,6 @@ const AutoControlledTextInput = ({
   });
 
   const onSelect = (index : any) => {
-		console.log(typeof(onSelectCallbackFn))
 		onSelectCallbackFn && onSelectCallbackFn(list[index])
 		field.onChange(list[index].name)
   };
