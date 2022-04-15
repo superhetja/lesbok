@@ -40,7 +40,6 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 		const set = new Set<string>();
 		// Return a unique selector instance for this page so that
     // the filtered results are correctly memoized
-		console.log('inside useMemo')
 		return createSelector(
 			(			res: { data?: EntryResponse[]; }) => res.data?? emptyArray,
 			(data: EntryResponse[]) => data?.map((entry: EntryResponse):BookWithLastPage => ({...entry.book, 'last_page': entry.page_to}))
@@ -59,8 +58,6 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 			books: selectBooks(result)
 		})
 	});
-
-	console.log(books)
 
 
 	/**
