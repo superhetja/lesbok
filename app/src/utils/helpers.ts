@@ -6,5 +6,5 @@ export function getDateNow() {
 
 export function getDateFormated(unFormated: string) {
 	let date = new Date(unFormated);
-	return `${date.getDate()}. ${date.getMonth()}. ${date.getFullYear()}`
+	return `${date.getDate()}. ${date.getMonth()+1}. ${date.getFullYear()}`
 }
