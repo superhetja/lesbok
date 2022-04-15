@@ -1,52 +1,43 @@
-import { SchoolModel } from 'school/school.model';
+/* eslint-disable import/no-cycle */
 import {
-	BelongsTo,
 	Column,
-	CreatedAt,
 	DataType,
 	ForeignKey,
+	HasMany,
 	Model,
 	Table,
-	UpdatedAt,
 } from 'sequelize-typescript';
+import { UUIDV4 } from 'sequelize/types';
+
+import { School } from 'Schools/school.model';
+import { Student } from 'Students/student.model';
 
 @Table({
 	tableName: 'group',
-	timestamps: true,
+	timestamps: false,
 })
-export class GroupModel extends Model {
+export class Group extends Model {
 	@Column({
 		type: DataType.UUID,
 		primaryKey: true,
 		allowNull: false,
-		defaultValue: DataType.UUIDV4,
+		defaultValue: UUIDV4,
 	})
-	id: string;
+	group_id: string;
 
-	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-	})
+	@Column
 	name: string;
 
-	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-	})
+	@Column
 	description: string;
 
-	@ForeignKey(() => SchoolModel)
+	@ForeignKey(() => School)
 	@Column({
 		type: DataType.UUID,
+		allowNull: false,
 	})
 	school_id: string;
 
-	@BelongsTo(() => SchoolModel)
-	school: SchoolModel;
-
-	@CreatedAt
-	created: Date;
-
-	@UpdatedAt
-	modified: Date;
+	@HasMany(() => Student)
+	students: Student[];
 }

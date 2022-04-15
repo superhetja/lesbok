@@ -1,12 +1,12 @@
 /* eslint-disable import/no-cycle */
 import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
-import { EntryModel } from './entry.model';
+import { Entry } from './entry.model';
 
 @Table({
 	tableName: 'book',
 	timestamps: true,
 })
-export class BookModel extends Model {
+export class Book extends Model {
 	@Column({
 		type: DataType.UUID,
 		primaryKey: true,
@@ -21,6 +21,6 @@ export class BookModel extends Model {
 	})
 	name: string;
 
-	@HasMany(() => EntryModel)
-	entries: EntryModel[];
+	@HasMany(() => Entry)
+	entries: Entry[];
 }

@@ -1,4 +1,4 @@
-import SchoolsController from 'Schools/schools.controller';
+import SchoolsController from '../schools.controller';
 // import { SchoolsService } from 'Schools/schools.services';
 import {
 	createTestingSchoolModule,

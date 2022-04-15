@@ -9,11 +9,13 @@ import {
 	HasMany,
 } from 'sequelize-typescript';
 
+import { Group } from 'group/group.model';
+
 @Table({
 	tableName: 'school',
 	timestamps: true,
 })
-export class SchoolModel extends Model {
+export class School extends Model {
 	@Column({
 		type: DataType.UUID,
 		primaryKey: true,
@@ -58,6 +60,6 @@ export class SchoolModel extends Model {
 	})
 	email: string;
 
-	@HasMany(() => GroupModel)
-	groups: GroupModel[];
+	@HasMany(() => Group)
+	groups: Group[];
 }
