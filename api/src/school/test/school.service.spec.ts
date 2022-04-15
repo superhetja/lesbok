@@ -1,5 +1,5 @@
 import { SchoolModel } from '../school.model';
-import { SchoolsService } from '../schools.services';
+import { SchoolsService } from '../school.services';
 import { createTestingSchoolModule } from './createTestingSchoolModule';
 
 const testSchool = {

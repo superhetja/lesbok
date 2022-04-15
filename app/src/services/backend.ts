@@ -1,8 +1,19 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from '../constants';
-import { Entry } from '../lib/types';
+import { BASE_URL } from '../utils/constants';
+import { Entry, EntryResponse } from '../utils/types';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
 
+function providesList<R extends { id: string | number }[], T extends string>(
+  resultsWithIds: R | undefined,
+  tagType: T
+) {
+  return resultsWithIds
+    ? [
+        { type: tagType, id: 'LIST' },
+        ...resultsWithIds.map(({ id }) => ({ type: tagType, id })),
+      ]
+    : [{ type: tagType, id: 'LIST' }]
+}
 
 // Create our baseQuery instance
 // const baseQuery = fetchBaseQuery({
@@ -23,23 +34,14 @@ import { CreateEntryDto, UpdateEntryDto } from './dto';
 export const entryApi = createApi({
 	reducerPath: 'entryApi',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-	tagTypes: ['Entries'],
+	tagTypes: ['Entries', 'ReadThisWeek'],
 	endpoints: (build) => ({
-		getEntries: build.query<Entry[], void>({
+		getEntries: build.query<EntryResponse[], void>({
 			query: () => `entries`,
 			// Provides a list of `Posts` by `id`.
       // If any mutation is executed that `invalidate`s any of these tags, this query will re-run to be always up-to-date.
       // The `LIST` id is a "virtual id" we just made up to be able to invalidate this query specifically if a new `Posts` element was added.
-			providesTags: (result) =>
-			// is result available?
-			result
-			? // successful query
-			[
-				...result.map(({ id }) => ({ type: 'Entries' as const, id })),
-				{ type: 'Entries', id: 'LIST' },
-			]
-		: // an error occurred, but we still want to refetch this query when `{ type: 'Posts', id: 'LIST' }` is invalidated
-			[{ type: 'Entries', id: 'LIST' }],
+			providesTags: (result) => providesList(result, 'Entries'),
 		}),
 		getEntryById: build.query<Entry[], string>({
 			query: (id) => `entries/${id}`,
@@ -53,7 +55,7 @@ export const entryApi = createApi({
 					...body,
 				},
 			}),
-			invalidatesTags: [{ type: 'Entries', id: 'LIST' }],
+			invalidatesTags: [{ type: 'Entries', id: 'LIST' }, 'ReadThisWeek'],
 		}),
 		editEntryById: build.mutation<Entry, UpdateEntryDto>({
 			query: ({ id, ...body }) => ({
@@ -63,6 +65,10 @@ export const entryApi = createApi({
 			}),
 			invalidatesTags: (result, error, {id}) => [{type: 'Entries', id}]
 		}),
+		getReadThisWeek: build.query<number, void>({
+			query: () => '/entries/thisWeek/123',
+			providesTags: ['ReadThisWeek']
+		})
 	}),
 });
 
@@ -71,4 +77,5 @@ export const {
 	useCreateEntryForIdMutation,
 	useEditEntryByIdMutation,
 	useGetEntryByIdQuery,
+	useGetReadThisWeekQuery,
 } = entryApi;

@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 import {
+	BelongsTo,
 	Column,
 	CreatedAt,
 	DataType,
@@ -9,6 +10,7 @@ import {
 	Table,
 	UpdatedAt,
 } from 'sequelize-typescript';
+import { BookModel } from './book.model';
 
 import { User } from 'Users/user.model';
 import { Book } from './book.model';
@@ -72,6 +74,15 @@ export class Entry extends Model {
 		allowNull: true,
 	})
 	time_spent;
+
+	@ForeignKey(() => BookModel)
+	@Column({
+		type: DataType.UUID,
+	})
+	book_id: string;
+
+	@BelongsTo(() => BookModel)
+	book: BookModel;
 
 	@CreatedAt
 	created: Date;

@@ -22,7 +22,7 @@ const EntryListItem = ({ title, from, to, id, date, comment='', onEdit }: EntryL
 	return (
 		<ListItem
 			title={title}
-			description={`Bls: ${from} - ${to} ${comment? '| ' + comment : ''}`}
+			description={`Dags: ${formattedDate} | Bls: ${from} - ${to} ${comment? '| ' + comment : ''}`}
 			accessoryRight={() => AccessoryRight(onEdit)}
 		/>
 	)

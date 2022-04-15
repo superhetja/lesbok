@@ -6,18 +6,22 @@ import {
 } from 'react-hook-form';
 import styles from './styles';
 import { useMemo } from 'react';
-import { Input } from '@ui-kitten/components';
+import { Autocomplete, Input } from '@ui-kitten/components';
 
 interface TextInputProps extends UseControllerProps {
 	placeHolder?: string;
 	defaultValue?: string;
+	label?: string;
+	disabled?: boolean
 }
 
 const ControlledTextInput = ({
 	name,
 	placeHolder,
+	label,
 	rules,
 	defaultValue,
+	disabled = false,
 	...inputProps
 }: TextInputProps) => {
 	const formContext = useFormContext();
@@ -26,21 +30,19 @@ const ControlledTextInput = ({
 	const { field } = useController({
 		name,
 		rules,
-		// defaultValue: useMemo(() => {
-		// 	console.log('Textinput')
-		// 	console.log(defaultValue)
-		// 	return defaultValue;
-		// }, [defaultValue])
 	});
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.container}>
 				<Input
-					label={placeHolder}
+					label={label}
+					placeholder={placeHolder}
 					style={styles.input}
 					onChangeText={field.onChange}
 					onBlur={field.onBlur}
 					value={field.value}
+					disabled={disabled}
 					{...inputProps}
 				/>
 				{formState?.errors && (

@@ -11,6 +11,16 @@ import * as eva from '@eva-design/eva';
 import { ApplicationProvider, Layout } from '@ui-kitten/components';
 import { NavigationContainer } from '@react-navigation/native';
 import { AppNavigator } from './src/navigation';
+import FlashMessage from 'react-native-flash-message';
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+	handleNotification: async () => ({
+		shouldShowAlert: true,
+		shouldPlaySound: true,
+		shouldSetBadge: true,
+	})
+})
 
 const styles = StyleSheet.create({
 	container: {
@@ -36,6 +46,7 @@ export default function App() {
 					<EntryForm />
 					<StatusBar />
 				</SafeAreaView> */}
+				<FlashMessage position={'top'} />
 			</ApplicationProvider>
 		</Provider>
 	);

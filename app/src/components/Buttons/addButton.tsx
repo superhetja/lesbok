@@ -1,16 +1,16 @@
+import { Button } from '@ui-kitten/components';
 import React from 'react';
-import { GestureResponderEvent, Pressable } from 'react-native';
+import { GestureResponderEvent, Pressable, StyleProp, ViewStyle } from 'react-native';
 import { PlusCircle } from 'react-native-feather';
 
 export type Props = {
 	onPress: (event: GestureResponderEvent) => void;
+	style?: StyleProp<ViewStyle>
 };
 
-const AddButton: React.FC<Props> = ({ onPress }) => {
+const AddButton: React.FC<Props> = ({ onPress, style={} }) => {
 	return (
-		<Pressable onPress={(e) => onPress(e)}>
-			<PlusCircle />
-		</Pressable>
+		<Button style={style} appearance='outline' onPress={(e) => onPress(e)} accessoryLeft={() => (<PlusCircle width={60} height={60}/> )} />
 	);
 }
 

@@ -1,3 +1,5 @@
+import { GroupModel } from 'group/group.model';
+import { Gender } from 'lib/enums';
 import {
 	Table,
 	Model,
@@ -5,16 +7,14 @@ import {
 	DataType,
 	CreatedAt,
 	UpdatedAt,
-	HasMany,
+	ForeignKey,
 } from 'sequelize-typescript';
 
-import { Group } from 'group/group.model';
-
 @Table({
-	tableName: 'school',
+	tableName: 'student',
 	timestamps: true,
 })
-export class School extends Model {
+export class StudentModel extends Model {
 	@Column({
 		type: DataType.UUID,
 		primaryKey: true,
@@ -30,35 +30,27 @@ export class School extends Model {
 	name: string;
 
 	@Column({
-		type: DataType.BOOLEAN,
+		type: DataType.STRING,
 		allowNull: false,
 	})
-	active: boolean;
+	gender: Gender;
 
 	@Column({
 		type: DataType.STRING,
-		allowNull: true,
+		allowNull: false,
+		unique: true,
 	})
-	phoneNumer: string;
+	national_id!: string;
 
+	@ForeignKey(() => GroupModel)
 	@Column({
-		type: DataType.STRING,
-		allowNull: true,
+		type: DataType.UUID,
 	})
-	location: string;
+	group_id: GroupModel;
 
 	@CreatedAt
 	created: Date;
 
 	@UpdatedAt
 	modified: Date;
-
-	@Column({
-		type: DataType.STRING,
-		allowNull: true,
-	})
-	email: string;
-
-	@HasMany(() => Group)
-	groups: Group[];
 }

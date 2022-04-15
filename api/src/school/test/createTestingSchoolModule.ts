@@ -2,8 +2,8 @@ import { getModelToken } from '@nestjs/sequelize';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Test } from '@nestjs/testing';
 import { SchoolModel } from '../school.model';
-import SchoolsController from '../schools.controller';
-import { SchoolsService } from '../schools.services';
+import SchoolsController from '../school.controller';
+import { SchoolsService } from '../school.services';
 
 export const testSchool = {
 	name: 'Sunnulækjarskóli',
