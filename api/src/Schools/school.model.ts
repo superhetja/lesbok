@@ -5,13 +5,16 @@ import {
 	DataType,
 	CreatedAt,
 	UpdatedAt,
+	HasMany,
 } from 'sequelize-typescript';
+
+import { Group } from 'group/group.model';
 
 @Table({
 	tableName: 'school',
 	timestamps: true,
 })
-export class SchoolModel extends Model {
+export class School extends Model {
 	@Column({
 		type: DataType.UUID,
 		primaryKey: true,
@@ -55,4 +58,7 @@ export class SchoolModel extends Model {
 		allowNull: true,
 	})
 	email: string;
+
+	@HasMany(() => Group)
+	groups: Group[];
 }

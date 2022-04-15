@@ -3,16 +3,21 @@ import {
 	Column,
 	CreatedAt,
 	DataType,
+	ForeignKey,
+	HasOne,
 	Model,
 	Table,
 	UpdatedAt,
 } from 'sequelize-typescript';
 
+import { User } from 'Users/user.model';
+import { Book } from './book.model';
+
 @Table({
 	tableName: 'entry',
 	timestamps: true,
 })
-export class EntryModel extends Model {
+export class Entry extends Model {
 	@Column({
 		type: DataType.UUID,
 		primaryKey: true,
@@ -27,9 +32,11 @@ export class EntryModel extends Model {
 	})
 	student_id: string;
 
+	@HasOne(() => Book)
 	@Column
-	book_name: string;
+	book_id: string;
 
+	@ForeignKey(() => User)
 	@Column({
 		type: DataType.UUID,
 		allowNull: false,

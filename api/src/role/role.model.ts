@@ -6,14 +6,14 @@ import { UUIDV4 } from 'sequelize/types';
 	tableName: 'role',
 	timestamps: false,
 })
-export class RoleModel extends Model {
+export class Role extends Model {
 	@Column({
 		type: DataType.UUID,
 		primaryKey: true,
 		allowNull: false,
 		defaultValue: UUIDV4,
 	})
-	id: string;
+	role_id: string;
 
 	@Column
 	name: string;
