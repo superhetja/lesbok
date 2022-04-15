@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../../configureStore';
-import { FormData } from '../components/EntryForm';
 import { getDateNow } from '../utils/helpers';
+import { FormDataWithDate } from '../utils/types';
 
 interface GlobalState {
   selectedEntryId: string;
-	formData: FormData;
+	formData: FormDataWithDate;
 }
 
-const emptyValues: FormData = {
+const emptyValues: FormDataWithDate = {
+	book_id: '',
 	book_name: '',
 	book_from: 1,
 	book_to: 1,
@@ -30,7 +31,7 @@ const globalSlice = createSlice({
 			state.formData = action.payload.formData;
 
     },
-		updateForm(state, action: PayloadAction<{formData: FormData}>) {
+		updateForm(state, action: PayloadAction<{formData: FormDataWithDate}>) {
 			state.formData = action.payload.formData;
 		},
     clearSelectedEntry(state) {

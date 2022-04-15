@@ -21,6 +21,11 @@ export default class EntryController {
 		return await this.entryService.findAll();
 	}
 
+	@Get('thisWeek/:id')
+	async readThisWeek(@Param('id') id: string): Promise<number> {
+		return await this.entryService.readThisWeek(id);
+	}
+
 	@Post()
 	async createEntry(
 		@Body() createEntryInput: CreateEntryDto
