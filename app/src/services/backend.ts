@@ -68,7 +68,10 @@ export const entryApi = createApi({
 		getReadThisWeek: build.query<number, void>({
 			query: () => '/entries/thisWeek/123',
 			providesTags: ['ReadThisWeek']
-		})
+		}),
+		getStudentScore: build.query<number,void>({
+			query: () => '/entries/score/123',
+		}),
 	}),
 });
 
@@ -78,4 +81,5 @@ export const {
 	useEditEntryByIdMutation,
 	useGetEntryByIdQuery,
 	useGetReadThisWeekQuery,
+	useGetStudentScoreQuery,
 } = entryApi;
