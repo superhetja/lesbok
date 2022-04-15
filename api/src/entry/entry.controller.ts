@@ -26,6 +26,11 @@ export default class EntryController {
 		return await this.entryService.readThisWeek(id);
 	}
 
+	@Get('score/:id')
+	async studentScore(@Param('id') id: string): Promise<number> {
+		return await this.entryService.studentScore(id);
+	}
+
 	@Post()
 	async createEntry(
 		@Body() createEntryInput: CreateEntryDto

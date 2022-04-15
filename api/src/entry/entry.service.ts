@@ -9,7 +9,7 @@ import { BookModel } from './book.model';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
 import { EntryModel } from './entry.model';
 
-const START_OF_SCHOOL = new Date('August 19, 2021 23:15:30')
+const START_OF_SCHOOL = new Date('August 19, 2021 23:15:30');
 
 export class EntryService {
 	constructor(
@@ -55,7 +55,12 @@ export class EntryService {
 	}
 
 	async studentScore(student_id: string): Promise<number> {
-		const diff = new Date().valueOf() - START_OF_SCHOOL.valueOf();
+		const diff =
+			(Math.floor(
+				(new Date().valueOf() - START_OF_SCHOOL.valueOf()) / (1000 * 3600 * 24)
+			) /
+				7) *
+			5;
 		const score = await this.entryModel.count({
 			where: {
 				student_id,
@@ -64,8 +69,7 @@ export class EntryService {
 				},
 			},
 		});
-		console.log('score: ', score);
-		return score;
+		return Math.ceil((score / diff) * 100);
 	}
 
 	// eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars

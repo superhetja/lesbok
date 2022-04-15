@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 	},
 	column: {
 		borderRadius: 20,
-		padding: 10,
+		padding: 16,
 		flex: 1,
 	}
 });
