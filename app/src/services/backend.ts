@@ -7,8 +7,6 @@ function providesList<R extends { id: string | number }[], T extends string>(
   resultsWithIds: R | undefined,
   tagType: T
 ) {
-	console.log('-------------------------- provideList: ')
-	console.log(resultsWithIds);
   return resultsWithIds
     ? [
         { type: tagType, id: 'LIST' },
@@ -36,7 +34,7 @@ function providesList<R extends { id: string | number }[], T extends string>(
 export const entryApi = createApi({
 	reducerPath: 'entryApi',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-	tagTypes: ['Entries'],
+	tagTypes: ['Entries', 'ReadThisWeek'],
 	endpoints: (build) => ({
 		getEntries: build.query<EntryResponse[], void>({
 			query: () => `entries`,
@@ -57,7 +55,7 @@ export const entryApi = createApi({
 					...body,
 				},
 			}),
-			invalidatesTags: [{ type: 'Entries', id: 'LIST' }],
+			invalidatesTags: [{ type: 'Entries', id: 'LIST' }, 'ReadThisWeek'],
 		}),
 		editEntryById: build.mutation<Entry, UpdateEntryDto>({
 			query: ({ id, ...body }) => ({
@@ -67,6 +65,10 @@ export const entryApi = createApi({
 			}),
 			invalidatesTags: (result, error, {id}) => [{type: 'Entries', id}]
 		}),
+		getReadThisWeek: build.query<number, void>({
+			query: () => '/entries/thisWeek/123',
+			providesTags: ['ReadThisWeek']
+		})
 	}),
 });
 
@@ -75,4 +77,5 @@ export const {
 	useCreateEntryForIdMutation,
 	useEditEntryByIdMutation,
 	useGetEntryByIdQuery,
+	useGetReadThisWeekQuery,
 } = entryApi;
