@@ -6,6 +6,7 @@ import DonutChart from "../../components/Charts/donutChart";
 import { useGetReadThisWeekQuery, useGetStudentScoreQuery, useGetEntriesQuery } from "../../services/backend";
 import styles from "../styles";
 import {EntryResponse} from '../../utils/types'
+import { View } from "react-native";
 
 const DashboardScreen = () => {
 
@@ -21,6 +22,9 @@ const DashboardScreen = () => {
 	console.log(entry)
 	return(
 		<Layout level='3' style={styles.container}>
+			<View style={{padding: 12}}>
+				<Text category={'h1'} style={{color: 'blue'}}>Pétur É. Hólmfríðarson</Text>
+			</View>
 			<Layout style={[styles.row, {flex: 2}]}>
 			</Layout>
 			<Layout style={[styles.row, {flex: 3}]}>
