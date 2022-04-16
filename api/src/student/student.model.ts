@@ -11,6 +11,7 @@ import {
 	ForeignKey,
 	HasMany,
 	BelongsToMany,
+	BelongsTo,
 } from 'sequelize-typescript';
 import { User } from 'user/models/user.model';
 import { UserStudent } from 'user/models/userStudent.model';
@@ -35,8 +36,9 @@ export class Student extends Model {
 	name: string;
 
 	@Column({
-		type: DataType.STRING,
+		type: DataType.ENUM,
 		allowNull: false,
+		values: Object.values(Gender),
 	})
 	gender: Gender;
 
@@ -53,6 +55,9 @@ export class Student extends Model {
 		allowNull: false,
 	})
 	group_id: string;
+
+	@BelongsTo(() => Group)
+	group: Group;
 
 	@CreatedAt
 	created: Date;
