@@ -23,7 +23,7 @@ export class Group extends Model {
 		allowNull: false,
 		defaultValue: DataType.UUIDV4,
 	})
-	group_id: string;
+	id: string;
 
 	@Column
 	name: string;
