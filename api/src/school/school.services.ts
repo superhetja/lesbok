@@ -21,11 +21,8 @@ export class SchoolsService {
 	async create(input: CreateSchoolDto): Promise<School> {
 		const school = await this.schoolModel
 			.create({
-				name: input.name,
+				...input,
 				active: true,
-				phoneNumer: input.phoneNumer,
-				email: input.email,
-				location: input.location,
 			})
 			.catch(() => {
 				throw new BadRequestException('Cannot create school');

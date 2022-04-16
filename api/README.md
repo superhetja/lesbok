@@ -24,6 +24,28 @@
 
 ## Description
 
+Webservice for Lesbok app.
+
+## Endpoints
+
+School
+
+- GET .../schools -> Gets All Schools
+- POST .../schools -> Create new School, returns School Obj
+- PUT .../school/{id} -> Updates School with id {id}, returns number of affected rows
+
+User
+
+- GET .../users -> Get All Users
+- POST .../users -> Create new User, returns User Obj
+- PUT .../users/{id} -> Updates User with id {id}, returns number of affected rows.
+
+Group
+
+- GET .../groups -> returns list of Groups
+- POST .../groups -> Crete new Groups, returns Group Obj
+- PUT .../groups/{id} -> Updates Groups with id {id}, returns number of affected rows
+
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
