@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { GroupModel } from './group.model';
+import { Group } from './group.model';
 
 @Module({
-	imports: [SequelizeModule.forFeature([GroupModel])],
+	imports: [SequelizeModule.forFeature([Group])],
 	providers: [],
 	controllers: [],
 	exports: [],

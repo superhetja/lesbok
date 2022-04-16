@@ -1,7 +1,7 @@
 import { getModelToken } from '@nestjs/sequelize';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Test } from '@nestjs/testing';
-import { SchoolModel } from '../school.model';
+import { School } from '../school.model';
 import SchoolsController from '../school.controller';
 import { SchoolsService } from '../school.services';
 
@@ -19,7 +19,7 @@ export const createTestingSchoolModule = async () => {
 		controllers: [SchoolsController],
 		providers: [
 			{
-				provide: getModelToken(SchoolModel),
+				provide: getModelToken(School),
 				useValue: {
 					create: jest.fn(() => testSchool),
 					findAll: jest.fn(() => [testSchool]),
@@ -32,8 +32,8 @@ export const createTestingSchoolModule = async () => {
 		],
 	}).compile();
 
-	const schoolModel = await schoolModule.resolve<typeof SchoolModel>(
-		getModelToken(SchoolModel)
+	const schoolModel = await schoolModule.resolve<typeof School>(
+		getModelToken(School)
 	);
 
 	const schoolService = schoolModule.get<SchoolsService>(SchoolsService);

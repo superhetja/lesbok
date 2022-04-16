@@ -1,4 +1,3 @@
-import { GroupModel } from 'group/group.model';
 import {
 	Table,
 	Model,
@@ -9,7 +8,8 @@ import {
 	HasMany,
 } from 'sequelize-typescript';
 
-import { Group } from 'group/group.model';
+// eslint-disable-next-line import/no-cycle
+import { Group } from '../group/group.model';
 
 @Table({
 	tableName: 'school',

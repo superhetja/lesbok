@@ -9,7 +9,7 @@ import {
 	Put,
 } from '@nestjs/common';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
-import { EntryModel } from './entry.model';
+import { Entry } from './entry.model';
 import { EntryService } from './entry.service';
 
 @Controller('entries')
@@ -17,7 +17,7 @@ export default class EntryController {
 	constructor(private readonly entryService: EntryService) {}
 
 	@Get()
-	async findAll(): Promise<EntryModel[]> {
+	async findAll(): Promise<Entry[]> {
 		return await this.entryService.findAll();
 	}
 
@@ -32,9 +32,7 @@ export default class EntryController {
 	}
 
 	@Post()
-	async createEntry(
-		@Body() createEntryInput: CreateEntryDto
-	): Promise<EntryModel> {
+	async createEntry(@Body() createEntryInput: CreateEntryDto): Promise<Entry> {
 		return await this.entryService.create(createEntryInput);
 	}
 

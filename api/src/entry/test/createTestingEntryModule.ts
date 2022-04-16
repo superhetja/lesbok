@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Test } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/sequelize';
-import { EntryModel } from '../entry.model';
+import { Entry } from '../entry.model';
 import { EntryService } from '../entry.service';
 import EntryController from '../entry.controller';
 // import { DATE } from 'sequelize/types';
@@ -24,7 +24,7 @@ export const createTestingEntryModule = async () => {
 		controllers: [EntryController],
 		providers: [
 			{
-				provide: getModelToken(EntryModel),
+				provide: getModelToken(Entry),
 				useValue: {
 					create: jest.fn(() => testEntry),
 					findAll: jest.fn(() => [testEntry]),
@@ -37,8 +37,8 @@ export const createTestingEntryModule = async () => {
 		],
 	}).compile();
 
-	const entryModel = await entryModule.resolve<typeof EntryModel>(
-		getModelToken(EntryModel)
+	const entryModel = await entryModule.resolve<typeof Entry>(
+		getModelToken(Entry)
 	);
 
 	const entryService = entryModule.get<EntryService>(EntryService);

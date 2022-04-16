@@ -1,4 +1,4 @@
-import { SchoolModel } from '../school.model';
+import { School } from '../school.model';
 import { SchoolsService } from '../school.services';
 import { createTestingSchoolModule } from './createTestingSchoolModule';
 
@@ -12,14 +12,14 @@ const testSchool = {
 
 describe('SchoolService', () => {
 	let schoolService: SchoolsService;
-	let schoolModel: typeof SchoolModel;
+	let schoolModel: typeof School;
 
 	beforeEach(async () => {
 		// const modRef = await Test.createTestingModule({
 		// 	providers: [
 		// 		SchoolsService,
 		// 		{
-		// 			provide: getModelToken(SchoolModel),
+		// 			provide: getModelToken(School),
 		// 			useValue: {
 		// 				findAll: jest.fn(() => [testSchool]),
 		// 				findOne: jest.fn(),
@@ -30,7 +30,7 @@ describe('SchoolService', () => {
 		// 	],
 		// }).compile();
 		// service = modRef.get(SchoolsService);
-		// model = modRef.get<typeof SchoolModel>(getModelToken(SchoolModel));
+		// model = modRef.get<typeof School>(getModelToken(School));
 		({ schoolModel, schoolService } = await createTestingSchoolModule());
 	});
 
