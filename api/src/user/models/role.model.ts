@@ -1,6 +1,5 @@
 /* eslint-disable import/no-cycle */
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
-import { UUIDV4 } from 'sequelize/types';
 
 @Table({
 	tableName: 'role',
@@ -11,7 +10,7 @@ export class Role extends Model {
 		type: DataType.UUID,
 		primaryKey: true,
 		allowNull: false,
-		defaultValue: UUIDV4,
+		defaultValue: DataType.UUIDV4,
 	})
 	role_id: string;
 

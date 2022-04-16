@@ -8,7 +8,7 @@ import {
 	Put,
 } from '@nestjs/common';
 import { CreateSchoolDto, UpdateSchoolDto } from './dto';
-import { SchoolModel } from './school.model';
+import { School } from './school.model';
 import { SchoolsService } from './school.services';
 
 @Controller('schools')
@@ -16,19 +16,17 @@ export default class SchoolsController {
 	constructor(private readonly schoolService: SchoolsService) {}
 
 	@Post()
-	async create(
-		@Body() createSchoolInput: CreateSchoolDto
-	): Promise<SchoolModel> {
+	async create(@Body() createSchoolInput: CreateSchoolDto): Promise<School> {
 		return this.schoolService.create(createSchoolInput);
 	}
 
 	@Get()
-	async findAll(): Promise<SchoolModel[]> {
+	async findAll(): Promise<School[]> {
 		return this.schoolService.findAll();
 	}
 
 	@Get(':id')
-	async findOne(@Param('id') id: string): Promise<SchoolModel> {
+	async findOne(@Param('id') id: string): Promise<School> {
 		const school = await this.schoolService.findById(id);
 		if (school === null) {
 			throw new NotFoundException('School not found');
@@ -40,7 +38,7 @@ export default class SchoolsController {
 	async update(
 		@Param('id') id: string,
 		@Body() schoolUpdateInput: UpdateSchoolDto
-	): Promise<SchoolModel> {
+	): Promise<School> {
 		const { numberOfAffectedRows, updatedSchool } =
 			await this.schoolService.update(id, schoolUpdateInput);
 

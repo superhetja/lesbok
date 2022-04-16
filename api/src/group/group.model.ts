@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 import {
+	BelongsToMany,
 	Column,
 	DataType,
 	ForeignKey,
@@ -7,10 +8,9 @@ import {
 	Model,
 	Table,
 } from 'sequelize-typescript';
-import { UUIDV4 } from 'sequelize/types';
-
-import { School } from 'Schools/school.model';
-import { Student } from 'Students/student.model';
+import { Access, User } from 'user/models';
+import { School } from '../school/school.model';
+import { Student } from '../student/student.model';
 
 @Table({
 	tableName: 'group',
@@ -21,9 +21,9 @@ export class Group extends Model {
 		type: DataType.UUID,
 		primaryKey: true,
 		allowNull: false,
-		defaultValue: UUIDV4,
+		defaultValue: DataType.UUIDV4,
 	})
-	group_id: string;
+	id: string;
 
 	@Column
 	name: string;
@@ -40,4 +40,10 @@ export class Group extends Model {
 
 	@HasMany(() => Student)
 	students: Student[];
+
+	@BelongsToMany(() => User, () => Access)
+	users: Array<User & { Access: Access }>;
+
+	@HasMany(() => Access)
+	access: Access[];
 }

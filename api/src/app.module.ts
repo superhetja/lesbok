@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-// import { AppController } from './app.controller';
-// import AppService from './app.service';
 import { GroupModule } from 'group/group.module';
 import { SchoolModule } from './school/school.module';
 import { EntryModule } from './entry/entry.module';
 import { SequelizeConfigService } from './sequelizeConfig.service';
+import { StudentModule } from './student/student.module';
+import { UserModule } from './user/user.module';
 
 // TODO: use sequlize.config.js
 @Module({
@@ -16,6 +16,8 @@ import { SequelizeConfigService } from './sequelizeConfig.service';
 		SchoolModule,
 		EntryModule,
 		GroupModule,
+		StudentModule,
+		UserModule,
 	],
 	// controllers: [AppController],
 	// providers: [AppService],

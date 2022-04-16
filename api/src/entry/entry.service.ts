@@ -5,32 +5,32 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
-import { BookModel } from './book.model';
+import { Book } from './book.model';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
-import { EntryModel } from './entry.model';
+import { Entry } from './entry.model';
 
 const START_OF_SCHOOL = new Date('August 19, 2021 23:15:30');
 
 export class EntryService {
 	constructor(
-		@InjectModel(EntryModel)
-		private entryModel: typeof EntryModel
+		@InjectModel(Entry)
+		private entry: typeof Entry
 	) {}
 
-	async findAll(): Promise<EntryModel[]> {
-		return this.entryModel.findAll({
+	async findAll(): Promise<Entry[]> {
+		return this.entry.findAll({
 			order: [
 				['date_of_entry', 'DESC'],
 				['created', 'DESC'],
 			],
-			include: [{ model: BookModel, as: 'book' }],
+			include: [{ model: Book, as: 'book' }],
 		});
 	}
 
-	async findById(id: string): Promise<EntryModel> {
-		const entry = this.entryModel.findOne({
+	async findById(id: string): Promise<Entry> {
+		const entry = this.entry.findOne({
 			where: { id },
-			include: [{ model: BookModel, as: 'book' }],
+			include: [{ model: Book, as: 'book' }],
 		});
 		if (!entry) {
 			throw new NotFoundException(`Entry ${id} does not exist`);
@@ -42,7 +42,7 @@ export class EntryService {
 	async readThisWeek(student_id: string): Promise<number> {
 		const now = new Date();
 
-		const count = this.entryModel.count({
+		const count = this.entry.count({
 			where: {
 				student_id,
 				date_of_entry: {
@@ -61,7 +61,7 @@ export class EntryService {
 			) /
 				7) *
 			5;
-		const score = await this.entryModel.count({
+		const score = await this.entry.count({
 			where: {
 				student_id,
 				date_of_entry: {
@@ -73,23 +73,23 @@ export class EntryService {
 	}
 
 	// eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
-	async findByStudentId(id: string): Promise<EntryModel[]> {
+	async findByStudentId(id: string): Promise<Entry[]> {
 		throw new NotImplementedException('Todo!');
 	}
 
-	async create(input: CreateEntryDto): Promise<EntryModel> {
+	async create(input: CreateEntryDto): Promise<Entry> {
 		const book = input.book_id
 			? { book_id: input.book_id }
 			: { book: { name: input.book_name } };
 
-		const entry = await this.entryModel
+		const entry = await this.entry
 			.create(
 				{
 					...input,
 					...book,
 				},
 				{
-					include: [{ model: BookModel, as: 'book' }],
+					include: [{ model: Book, as: 'book' }],
 				}
 			)
 			.catch(() => {
@@ -100,7 +100,7 @@ export class EntryService {
 	}
 
 	async update(id: string, update: UpdateEntryDto): Promise<number> {
-		const [numberOfAffectedRows] = await this.entryModel.update(update, {
+		const [numberOfAffectedRows] = await this.entry.update(update, {
 			where: { id },
 		});
 		return numberOfAffectedRows;

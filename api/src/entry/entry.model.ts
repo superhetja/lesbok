@@ -5,14 +5,12 @@ import {
 	CreatedAt,
 	DataType,
 	ForeignKey,
-	HasOne,
 	Model,
 	Table,
 	UpdatedAt,
 } from 'sequelize-typescript';
-import { BookModel } from './book.model';
-
-import { User } from 'Users/user.model';
+import { Student } from '../student/student.model';
+import { User } from '../user/models/user.model';
 import { Book } from './book.model';
 
 @Table({
@@ -28,15 +26,12 @@ export class Entry extends Model {
 	})
 	id: string;
 
+	@ForeignKey(() => Student)
 	@Column({
 		type: DataType.UUID,
 		allowNull: false,
 	})
 	student_id: string;
-
-	@HasOne(() => Book)
-	@Column
-	book_id: string;
 
 	@ForeignKey(() => User)
 	@Column({
@@ -75,14 +70,14 @@ export class Entry extends Model {
 	})
 	time_spent;
 
-	@ForeignKey(() => BookModel)
+	@ForeignKey(() => Book)
 	@Column({
 		type: DataType.UUID,
 	})
 	book_id: string;
 
-	@BelongsTo(() => BookModel)
-	book: BookModel;
+	@BelongsTo(() => Book)
+	book: Book;
 
 	@CreatedAt
 	created: Date;
