@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 import {
+	BelongsTo,
 	BelongsToMany,
 	Column,
 	DataType,
@@ -37,6 +38,9 @@ export class Group extends Model {
 		allowNull: false,
 	})
 	school_id: string;
+
+	@BelongsTo(() => School)
+	school: School;
 
 	@HasMany(() => Student)
 	students: Student[];
