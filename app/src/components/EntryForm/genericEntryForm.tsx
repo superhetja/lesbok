@@ -1,10 +1,14 @@
 import { Button, Layout } from "@ui-kitten/components";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { NumberInput, TextInput, DatePickerInput, AutoTextInput } from "../FormComponents";
 import BottomOverlay from "../Overlays/bottomOverlay";
 import { BookWithLastPage, FormDataWithDate } from "../../utils/types";
 import styles from "./styles";
+import { ScrollView } from "react-native";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+// import {keyboardSize} from '../../utils/keyboardSize/keyboardSize'
+
 
 
 
@@ -24,6 +28,7 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 			return defaultValues;
 		}, [defaultValues])
 	});
+
 
 	/**
 	 * Reset the form values if defaultValues changes
@@ -59,7 +64,9 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 		<>
 
 			<BottomOverlay isVisible={isVisible}>
-				<Layout style={styles.container}>
+				<Layout style={{...styles.container}}>
+					<KeyboardAwareScrollView>
+
 					<FormProvider {...methods}>
 							<AutoTextInput
 							name="book_name"
@@ -95,16 +102,19 @@ const GenericEntryForm = ({defaultValues, submitHandler, submitLabel, isVisible,
 							label="Dagsetning:"
 							placeHolder="Veldu dagsetningu"
 							maxDate={today}
-						/>
+							/>
 						<TextInput
 							name="comment"
 							label="Athugasemd"
-						/>
+							// onPress={setKeyboardSize(useKeyboardSize)}
+
+							/>
 						<Layout style={styles.actionWrapper}>
 							<Button onPress={onSubmit} >{submitLabel}</Button>
 							<Button onPress={toggleModal} >Hætta við</Button>
 						</Layout>
 					</FormProvider>
+						</KeyboardAwareScrollView>
 				</Layout>
 			</BottomOverlay>
 
