@@ -26,6 +26,18 @@
 
 Webservice for Lesbok app.
 
+## Seed
+
+https://sequelize.org/v5/manual/migrations.html#the-cli
+
+Vera í lesbok/api!
+
+Búa til nýtt seed skjal
+npx sequelize-cli seed:generate --name demo-user
+
+Getur verið að það þurfi að keyra þessa skipun inni í docker containernum...
+npx sequelize-cli db:seed:all
+
 ## Endpoints
 
 School
