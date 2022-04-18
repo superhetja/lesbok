@@ -3,7 +3,7 @@ export class CreateSchoolDto {
 
 	location: string;
 
-	phoneNumer: string;
+	phone: string;
 
 	email: string;
 }

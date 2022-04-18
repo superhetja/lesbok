@@ -1,6 +1,6 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateGroupDto } from './dto';
+import { CreateGroupDto, UpdateGroupDto } from './dto';
 import { Group } from './group.model';
 
 export class GroupService {
@@ -33,5 +33,13 @@ export class GroupService {
 			});
 
 		return group;
+	}
+
+	async update(id: string, input: UpdateGroupDto): Promise<number> {
+		const [numberOfAffectedRows] = await this.group.update(input, {
+			where: { id },
+		});
+
+		return numberOfAffectedRows;
 	}
 }

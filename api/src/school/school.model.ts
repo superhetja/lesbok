@@ -40,7 +40,7 @@ export class School extends Model {
 		type: DataType.STRING,
 		allowNull: true,
 	})
-	phoneNumer: string;
+	phone: string;
 
 	@Column({
 		type: DataType.STRING,
