@@ -25,6 +25,7 @@
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/sequelize": "^8.0.0",
+    "@nestjs/swagger": "^5.2.1",
     "@nestjs/typeorm": "^8.0.3",
     "mariadb": "^2.5.5",
     "reflect-metadata": "^0.1.13",
@@ -32,6 +33,7 @@
     "rxjs": "^7.2.0",
     "sequelize": "^6.16.1",
     "sequelize-typescript": "^2.1.2",
+    "swagger-ui-express": "^4.3.0",
     "typeorm": "^0.2.41",
     "uuid": "^8.3.2"
   },
