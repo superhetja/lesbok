@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
 	Table,
 	Model,
@@ -61,5 +62,6 @@ export class School extends Model {
 	email: string;
 
 	@HasMany(() => Group)
+	@ApiProperty({ type: () => Group })
 	groups: Group[];
 }

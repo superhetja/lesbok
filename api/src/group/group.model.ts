@@ -46,7 +46,7 @@ export class Group extends Model {
 	students: Student[];
 
 	@BelongsToMany(() => User, () => Access)
-	users: Array<User & { Access: Access }>;
+	users: User[];
 
 	@HasMany(() => Access)
 	access: Access[];

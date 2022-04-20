@@ -1,3 +1,3 @@
-export { CreateStudentDto } from './CreateStudentDto';
+export { CreateStudentDto } from './create-student.dto';
 
-export { UpdateStudentDto } from './UpdateStudentDto';
+export { UpdateStudentDto } from './update-student.dto';

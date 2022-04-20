@@ -60,7 +60,7 @@ export class User extends Model {
 	entries: Entry[];
 
 	@BelongsToMany(() => Group, () => Access)
-	groups: Array<Group & { Access: Access }>;
+	groups: Group[];
 
 	@HasMany(() => Access)
 	access: Access[];

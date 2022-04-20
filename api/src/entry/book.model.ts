@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import { ApiProperty } from '@nestjs/swagger';
 import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 import { Entry } from './entry.model';
 
@@ -13,14 +14,17 @@ export class Book extends Model {
 		allowNull: false,
 		defaultValue: DataType.UUIDV4,
 	})
+	@ApiProperty()
 	id: string;
 
 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
 	})
+	@ApiProperty()
 	name: string;
 
 	@HasMany(() => Entry)
+	@ApiProperty()
 	entries: Entry[];
 }
