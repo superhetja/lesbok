@@ -6,6 +6,9 @@ export class UpdateUserDto {
 
 	email?: string;
 
+	/**
+	 * Array of student ids
+	 */
 	children?: string[];
 
 	groups?: { group_id: Roles };

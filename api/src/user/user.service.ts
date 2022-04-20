@@ -7,7 +7,9 @@ import { Access, User, UserStudent } from './models';
 export class UserService {
 	constructor(
 		@InjectModel(User)
-		private user: typeof User
+		private readonly user: typeof User,
+		@InjectModel(UserStudent)
+		private readonly userStudent: typeof UserStudent
 	) {}
 
 	async findAll(): Promise<User[]> {
@@ -47,10 +49,22 @@ export class UserService {
 		return user;
 	}
 
-	async update(id: string, input: UpdateUserDto): Promise<number> {
-		const [numberOfAffectedRows] = await this.user.update(input, {
-			where: { id },
-		});
-		return numberOfAffectedRows;
+	async update(
+		id: string,
+		input: UpdateUserDto,
+		children: Student[]
+	): Promise<User> {
+		const user = await this.user.findOne({ where: { id } });
+
+		if (!user) {
+			throw new NotFoundException(`User ${id} not found!`);
+		}
+
+		user.email = input.email ?? user.email;
+		user.name = input.name ?? user.name;
+
+		await user.addChildren(children);
+
+		return user.save();
 	}
 }

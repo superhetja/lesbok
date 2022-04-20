@@ -9,6 +9,9 @@ export class CreateUserDto {
 
 	access!: Access[];
 
+	/**
+	 * Array of student ids
+	 */
 	childrens?: string[];
 
 	students?: UserStudent[];
