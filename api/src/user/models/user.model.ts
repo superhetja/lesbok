@@ -56,11 +56,14 @@ export class User extends Model {
 	@BelongsToMany(() => Student, () => UserStudent)
 	children: Array<Student & { UserStudent: UserStudent }>;
 
+	@HasMany(() => UserStudent)
+	students: UserStudent[];
+
 	@HasMany(() => Entry)
 	entries: Entry[];
 
 	@BelongsToMany(() => Group, () => Access)
-	groups: Array<Group & { Access: Access }>;
+	groups: Group[];
 
 	@HasMany(() => Access)
 	access: Access[];

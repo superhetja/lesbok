@@ -7,11 +7,13 @@ import {
 	NotFoundException,
 	Put,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateSchoolDto, UpdateSchoolDto } from './dto';
 import { School } from './school.model';
 import { SchoolsService } from './school.services';
 
 @Controller('schools')
+@ApiTags('schools')
 export default class SchoolsController {
 	constructor(private readonly schoolService: SchoolsService) {}
 

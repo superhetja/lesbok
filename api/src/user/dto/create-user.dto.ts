@@ -1,4 +1,4 @@
-import { Roles } from 'lib/enums';
+import { Access, UserStudent } from 'user/models';
 
 export class CreateUserDto {
 	name!: string;
@@ -7,7 +7,9 @@ export class CreateUserDto {
 
 	email: string;
 
-	access!: [{ group_id: string; role: Roles }];
+	access!: Access[];
 
 	childrens?: string[];
+
+	students?: UserStudent[];
 }

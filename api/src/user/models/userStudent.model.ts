@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 import {
+	BelongsTo,
 	Column,
 	DataType,
 	ForeignKey,
@@ -25,4 +26,10 @@ export class UserStudent extends Model {
 		type: DataType.UUID,
 	})
 	student_id: string;
+
+	@BelongsTo(() => User)
+	user: User;
+
+	@BelongsTo(() => Student)
+	student: Student;
 }
