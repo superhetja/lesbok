@@ -1,7 +1,8 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { Student } from 'student';
 import { CreateUserDto, UpdateUserDto } from './dto';
-import { Access, User } from './models';
+import { Access, User, UserStudent } from './models';
 
 export class UserService {
 	constructor(
@@ -16,6 +17,10 @@ export class UserService {
 	async findById(id: string): Promise<User> {
 		const user = this.user.findOne({
 			where: { id },
+			include: [
+				{ model: Access, as: 'access' },
+				{ model: Student, as: 'children' },
+			],
 		});
 		if (!user) {
 			throw new NotFoundException(`User ${id} does not exist`);
@@ -30,7 +35,10 @@ export class UserService {
 					...input,
 				},
 				{
-					include: [{ model: Access, as: 'access' }],
+					include: [
+						{ model: Access, as: 'access' },
+						{ model: UserStudent, as: 'students' },
+					],
 				}
 			)
 			.catch(() => {

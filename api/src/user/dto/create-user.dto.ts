@@ -1,4 +1,4 @@
-import { Access } from 'user/models';
+import { Access, UserStudent } from 'user/models';
 
 export class CreateUserDto {
 	name!: string;
@@ -10,4 +10,6 @@ export class CreateUserDto {
 	access!: Access[];
 
 	childrens?: string[];
+
+	students?: UserStudent[];
 }

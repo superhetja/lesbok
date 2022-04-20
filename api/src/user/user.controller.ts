@@ -40,4 +40,9 @@ export class UserController {
 
 		return numberOfAffectedRows;
 	}
+
+	@Get(':id')
+	async getUserById(@Param('id') id: string): Promise<User> {
+		return this.userService.findById(id);
+	}
 }
