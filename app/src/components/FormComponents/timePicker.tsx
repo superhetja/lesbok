@@ -1,39 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
 import { UseControllerProps } from "react-hook-form";
-import { View, Button } from "react-native";
+import { View } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 interface TimePickerProps extends UseControllerProps {
 	mode?: string;
 	date?: Date;
+	setDate: Date;
+	updateDate: (arg: Date) => void
 
 }
 
 
-const DatePicker = ({
-	mode = 'time',
+const TimePicker = ({
+	name,
+	setDate,
+	updateDate,
+
 }: TimePickerProps) => {
+	const onChange = (e: any, date: any) => {
+		updateDate(date)
 
-	const [date, setDate] = useState(new Date());
-	const [show, setShow] = useState(false);
 
-
+}
 	return (
 		<View>
-
-		{/* <Text>selected: {date.toLocaleString()}</Text> */}
 			<DateTimePicker
 			testID="dateTimePicker"
-			value={date}
+			value={setDate}
 			mode={'time'}
 			is24Hour={true}
 			display={'spinner'}
 			minuteInterval={5}
-			// onChange={onChange}
+			onChange={onChange}
 			/>
 	</View>
 );
 }
 
-export default DatePicker;
+export default TimePicker;

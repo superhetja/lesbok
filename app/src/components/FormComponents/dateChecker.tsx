@@ -1,18 +1,51 @@
-import { CheckBox } from "@ui-kitten/components";
+import { CheckBox, DatepickerProps } from "@ui-kitten/components";
 import React, { useEffect, useState } from "react";
+import { UseControllerProps } from "react-hook-form";
 import { StyleSheet } from "react-native";
+import { Bool } from "reselect/es/types";
 
+interface DateCheckerProps extends UseControllerProps {
+	monday: boolean;
+	tuesday: boolean;
+	wednsday: boolean;
+	thursday: boolean;
+	friday: boolean;
+	saturday: boolean;
+	sunday: boolean;
+	setMonday: (arg: boolean) => void;
+	setTuesday: (arg: boolean) => void;
+	setWednsday: (arg: boolean)=> void;
+	setThursday: (arg: boolean)=> void;
+	setFriday: (arg: boolean)=> void;
+	setSaturday: (arg: boolean)=> void;
+	setSunday: (arg: boolean)=> void;
+}
 
-const DateChecker = () => {
+const DateChecker = ({
+	monday,
+	tuesday,
+	wednsday,
+	thursday,
+	friday,
+	saturday,
+	sunday,
+	setMonday,
+	setTuesday,
+	setWednsday,
+	setThursday,
+	setFriday,
+	setSaturday,
+	setSunday,
+}: DateCheckerProps) => {
 	const [allChecked, setAllChecked] = useState(true);
 	const [indeterminate, setIndeterminate] = useState(false);
-  const [monday, setMonday] = useState(true);
-  const [tuesday, setTuesday] = useState(true);
-	const [wednsday, setWednsday] = useState(true);
-	const [thursday, setThursday] = useState(true);
-	const [friday, setFriday] = useState(true);
-	const [saturday, setSaturday] = useState(true);
-	const [sunday, setSunday] = useState(true);
+  // const [monday, setMonday] = useState(true);
+  // const [tuesday, setTuesday] = useState(true);
+	// const [wednsday, setWednsday] = useState(true);
+	// const [thursday, setThursday] = useState(true);
+	// const [friday, setFriday] = useState(true);
+	// const [saturday, setSaturday] = useState(true);
+	// const [sunday, setSunday] = useState(true);
 
 	const onGroupCheckedChange = (checked: boolean) => {
     setMonday(checked);
@@ -29,8 +62,6 @@ const DateChecker = () => {
 		const someChecked = (sunday || monday ||tuesday || wednsday ||thursday ||friday ||saturday)
 			// const everyChecked = states.every((item: any) => item === true);
 			const everyChecked = (sunday && monday && tuesday && wednsday && thursday && friday && saturday)
-			console.log(monday, tuesday, wednsday, thursday, friday, saturday, sunday)
-			console.log(everyChecked)
 			if (someChecked && !everyChecked) {
 				setAllChecked(true);
 				setIndeterminate(true);

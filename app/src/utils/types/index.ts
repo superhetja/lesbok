@@ -52,3 +52,13 @@ export type FormDataWithDate = {
 	book_id: string;
 }
 
+export type NotificationData = {
+	time: Date;
+	monday: boolean;
+	tuesday: boolean;
+	wednsday: boolean;
+	thursday: boolean;
+	friday: boolean;
+	saturday: boolean;
+	sunday: boolean
+}
