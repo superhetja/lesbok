@@ -32,7 +32,7 @@ const TimePicker = ({
 			mode={'time'}
 			is24Hour={true}
 			display={'spinner'}
-			minuteInterval={5}
+			minuteInterval={1}
 			onChange={onChange}
 			/>
 	</View>
