@@ -29,7 +29,6 @@ export interface BookWithLastPage extends Book {
 export interface EntryResponse {
 	id: string;
 	student_id: string;
-	book_name: string;
 	page_from: string;
 	page_to: string;
 	comment?: string;
