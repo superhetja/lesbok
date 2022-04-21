@@ -5,8 +5,8 @@ import ScoreCard from "../../components/Cards/scoreCard";
 import DonutChart from "../../components/Charts/donutChart";
 import { useGetReadThisWeekQuery, useGetStudentScoreQuery, useGetEntriesQuery } from "../../services/backend";
 import styles from "../styles";
-import {EntryResponse} from '../../utils/types'
 import { View } from "react-native";
+import { selectEntry } from "../../slices/globalSlice";
 
 const DashboardScreen = () => {
 
@@ -18,21 +18,44 @@ const DashboardScreen = () => {
 			entry: (data!== undefined && data[0]) ?? []
 		})
 	});
+
 	const dispatch = useDispatch();
 	console.log(entry)
 	return(
 		<Layout level='3' style={styles.container}>
-			<View style={{padding: 12}}>
-				<Text category={'h1'} style={{color: 'blue'}}>Pétur É. Hólmfríðarson</Text>
-			</View>
 			<Layout style={[styles.row, {flex: 2}]}>
+			<View style={{padding: 16, justifyContent:'flex-end', marginBottom: 16}}>
+				<Text style={{fontSize: 26}}>Pétur É. Hólmfríðarson</Text>
+			</View>
+			</Layout>
+			<Layout style={[styles.row, {flex: 4}]}>
+				<Layout style={{...styles.column}} >
+
+				{ entry &&
+				<LatestEntry
+					book_name={entry.book.name}
+					page_from={entry.page_from}
+					page_to={entry.page_to}
+					comment={entry.comment}
+					date={entry.date_of_entry}
+					onEditClick={
+						() => dispatch(
+							selectEntry({
+								selectedEntryId: entry.id,
+								formData: {
+									book_id: entry.book.id,
+									book_name: entry.book.name,
+									book_from: parseInt(entry.page_from),
+									book_to: parseInt(entry.page_to),
+									comment: entry.comment?? '',
+									date_of_entry: entry.date_of_entry
+								}
+					}))}
+					/>
+			}
+			</Layout>
 			</Layout>
 			<Layout style={[styles.row, {flex: 3}]}>
-				{ entry &&
-				<LatestEntry book_name={entry.book_name} page_from={entry.page_from} page_to={entry.page_to} comment={entry.comment} date={entry.date_of_entry}/>
-				}
-			</Layout>
-			<Layout style={[styles.row, {flex: 2}]}>
 				<Layout style={[styles.column, {marginRight: 6}]}>
 					{ loadingRead
 						? <Spinner />

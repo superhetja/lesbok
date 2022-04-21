@@ -69,8 +69,8 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 			book_name: entry.book_name,
 			page_from: entry.book_from,
 			page_to: entry.book_to,
-			student_id: '123',
-			registered_by: 'abc',
+			student_id: 'e4e59bbc-5567-4dc8-a4a4-35c879166aed',
+			registered_by: 'fb2d1327-804a-4d7f-b81b-8da1ebcbfd0a',
 			date_of_entry: entry.date_of_entry,
 			comment: entry.comment,
 			book_id: entry.book_id
@@ -79,10 +79,10 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 		try {
 			toggleModal()
 			await addEntry(obj).unwrap();
-		} catch {
+		} catch (error) {
 
 			console.log('ERROR');
-			console.log(addResult);
+			console.log(error);
 		}
 	};
 
@@ -96,8 +96,8 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 			book_name: entry.book_name,
 			page_from: entry.book_from,
 			page_to: entry.book_to,
-			student_id: '123',
-			registered_by: 'abc',
+			student_id: 'e4e59bbc-5567-4dc8-a4a4-35c879166aed',
+			registered_by: 'fb2d1327-804a-4d7f-b81b-8da1ebcbfd0a',
 			date_of_entry: entry.date_of_entry,
 			comment: entry.comment,
 			book_id: entry.book_id
