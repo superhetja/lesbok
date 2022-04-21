@@ -49,9 +49,10 @@ School
 
 User
 
-- [] GET .../users -> Get All Users
-- [] POST .../users -> Create new User, returns User Obj
-- [] PUT .../users/{id} -> Updates User with id {id}, returns number of affected rows.
+- [x] GET .../users -> Get All Users
+- [x] GET .../users/{id} -> Returns detailed user
+- [x] POST .../users -> Create new User, returns User Obj
+- [/] PUT .../users/{id} -> Updates User with id {id}, returns number of affected rows. (Partial: only updates: name, email, children)
 
 Group
 

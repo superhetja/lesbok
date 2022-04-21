@@ -20,6 +20,8 @@ import { Access } from './access.model';
 	timestamps: true,
 })
 export class User extends Model {
+	[x: string]: any;
+
 	@Column({
 		type: DataType.UUID,
 		primaryKey: true,

@@ -1,13 +1,6 @@
-import {
-	Body,
-	Controller,
-	Get,
-	NotFoundException,
-	Param,
-	Post,
-	Put,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Student, StudentService } from 'student';
 import { CreateUserDto, UpdateUserDto } from './dto';
 import { User } from './models';
 import { UserService } from './user.service';
@@ -15,7 +8,10 @@ import { UserService } from './user.service';
 @Controller('users')
 @ApiTags('users')
 export class UserController {
-	constructor(private readonly userService: UserService) {}
+	constructor(
+		private readonly userService: UserService,
+		private readonly studentService: StudentService
+	) {}
 
 	@Get()
 	async findAll(): Promise<User[]> {
@@ -31,14 +27,17 @@ export class UserController {
 	async updateUser(
 		@Param('id') id: string,
 		@Body() input: UpdateUserDto
-	): Promise<number> {
-		const numberOfAffectedRows = await this.userService.update(id, input);
+	): Promise<User> {
+		const children: Student[] = [];
 
-		if (numberOfAffectedRows === 0) {
-			throw new NotFoundException(`User ${id} does not exist`);
+		if (input.children) {
+			input.children.forEach(async (student_id) => {
+				children.push(await this.studentService.findById(student_id));
+			});
 		}
+		const updatedUser = await this.userService.update(id, input, children);
 
-		return numberOfAffectedRows;
+		return updatedUser;
 	}
 
 	@Get(':id')
