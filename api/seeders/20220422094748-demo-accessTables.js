@@ -68,6 +68,14 @@ module.exports = {
 				modified: new Date(),
 			},
 			{
+				user_id: '541535da-5a38-4fb1-8d6c-90eff0d56b50',
+				group_id: '9172e6b0-227a-4365-9275-864ae7705bbd',
+				role: 'Guardian',
+				created: new Date(),
+				modified: new Date(),
+			},
+			{
+				//
 				user_id: 'ed219c4e-7fd4-4f9b-9f11-2dc0d2b48e73',
 				group_id: '9172e6b0-227a-4365-9275-864ae7705bbd',
 				role: 'Guardian',
@@ -75,6 +83,7 @@ module.exports = {
 				modified: new Date(),
 			},
 			{
+				//
 				user_id: 'ed219c4e-7fd4-4f9b-9f11-2dc0d2b48e73',
 				group_id: 'd26f1ce2-1c31-43d0-8358-f5fece5e1d6f',
 				role: 'Guardian',
