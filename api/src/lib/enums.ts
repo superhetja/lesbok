@@ -3,7 +3,7 @@ export enum Roles {
 	ADMIN = 'Admin',
 	TEACHER = 'Teacher',
 	ASSISTANT = 'Assistant',
-	GUARDIAN = 'guardian',
+	GUARDIAN = 'Guardian',
 }
 
 export enum Gender {

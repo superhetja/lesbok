@@ -12,7 +12,7 @@ interface TextInputProps extends UseControllerProps {
 	placeHolder?: string;
 	defaultValue?: string;
 	label?: string;
-	disabled?: boolean
+	disabled?: boolean;
 }
 
 const ControlledTextInput = ({

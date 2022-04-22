@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import { ApiProperty } from '@nestjs/swagger';
 import {
 	BelongsTo,
 	Column,
@@ -24,6 +25,7 @@ export class Entry extends Model {
 		allowNull: false,
 		defaultValue: DataType.UUIDV4,
 	})
+	@ApiProperty()
 	id: string;
 
 	@ForeignKey(() => Student)
@@ -31,6 +33,7 @@ export class Entry extends Model {
 		type: DataType.UUID,
 		allowNull: false,
 	})
+	@ApiProperty()
 	student_id: string;
 
 	@ForeignKey(() => User)
@@ -38,50 +41,59 @@ export class Entry extends Model {
 		type: DataType.UUID,
 		allowNull: false,
 	})
+	@ApiProperty()
 	registered_by: string;
 
 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
 	})
+	@ApiProperty()
 	page_from: string;
 
 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
 	})
+	@ApiProperty()
 	page_to: string;
 
 	@Column({
 		type: DataType.DATEONLY,
 		allowNull: false,
 	})
+	@ApiProperty()
 	date_of_entry: Date;
 
 	@Column({
 		type: DataType.STRING,
 		allowNull: true,
 	})
+	@ApiProperty()
 	comment: string;
 
 	@Column({
 		type: DataType.TIME,
 		allowNull: true,
 	})
+	@ApiProperty()
 	time_spent;
 
 	@ForeignKey(() => Book)
 	@Column({
 		type: DataType.UUID,
 	})
+	@ApiProperty()
 	book_id: string;
 
 	@BelongsTo(() => Book)
 	book: Book;
 
 	@CreatedAt
+	@ApiProperty()
 	created: Date;
 
 	@UpdatedAt
+	@ApiProperty()
 	modified: Date;
 }

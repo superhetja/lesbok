@@ -24,6 +24,56 @@
 
 ## Description
 
+Webservice for Lesbok app.
+
+## Seed
+
+https://sequelize.org/v5/manual/migrations.html#the-cli
+
+Vera í lesbok/api!
+
+Búa til nýtt seed skjal
+npx sequelize-cli seed:generate --name demo-user
+
+Getur verið að það þurfi að keyra þessa skipun inni í docker containernum...
+npx sequelize-cli db:seed:all
+
+## Endpoints
+
+School
+
+- [x] GET .../schools -> Gets All Schools
+- [x] GET .../schools/{id} -> Get detailed description of school
+- [x] POST .../schools -> Create new School, returns School Obj
+- [x] PUT .../school/{id} -> Updates School with id {id}, returns number of affected rows
+
+User
+
+- [x] GET .../users -> Get All Users
+- [x] GET .../users/{id} -> Returns detailed user
+- [x] POST .../users -> Create new User, returns User Obj
+- [/] PUT .../users/{id} -> Updates User with id {id}, returns number of affected rows. (Partial: only updates: name, email, children)
+
+Group
+
+- [] GET .../groups -> returns list of Groups
+- [] POST .../groups -> Crete new Groups, returns Group Obj
+- [] PUT .../groups/{id} -> Updates Groups with id {id}, returns number of affected rows
+
+Student
+
+- [] GET .../students -> returns list of Students
+- [] GET .../students/{id} -> returns detailed Student Obj
+- [] GET .../students/{id}/score -> Returns the score of the student
+- [] POST .../students -> Create new Students, returns Studends Obj
+- [] PUT .../students/{id} -> Updates Student with id {id}, returns number of affected rows
+
+Entry
+
+- [x] GET .../entries -> returns list of entries
+- [x] POST .../entries -> Create new Entry, returns Entry Obj
+- [x] PUT .../entries/{id} -> Updates Entry with id {id}, returns number of affected rows
+
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation

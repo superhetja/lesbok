@@ -60,4 +60,5 @@ module.exports = {
 		 */
 		return queryInterface.bulkDelete('student', null, {});
 	},
+
 };

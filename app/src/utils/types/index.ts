@@ -29,7 +29,6 @@ export interface BookWithLastPage extends Book {
 export interface EntryResponse {
 	id: string;
 	student_id: string;
-	book_name: string;
 	page_from: string;
 	page_to: string;
 	comment?: string;
@@ -52,3 +51,13 @@ export type FormDataWithDate = {
 	book_id: string;
 }
 
+export type NotificationData = {
+	time: Date;
+	monday: boolean;
+	tuesday: boolean;
+	wednsday: boolean;
+	thursday: boolean;
+	friday: boolean;
+	saturday: boolean;
+	sunday: boolean
+}

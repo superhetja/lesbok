@@ -1,7 +1,7 @@
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import React, { useState, useEffect, useRef, SetStateAction } from "react";
-import {  Platform } from "react-native";
+import {  Platform, View } from "react-native";
 import { Subscription } from 'expo-modules-core';
 
 Notifications.setNotificationHandler({
@@ -20,7 +20,7 @@ export default function Notification() {
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) =>
-			{
+		{
 			if (token){
 				return setExpoPushToken(token)
 			}}
@@ -47,10 +47,9 @@ export default function Notification() {
 			}
     };
   }, []);
-
-  return (
-    null
-  );
+	return (
+		null
+	);
 }
 
 export async function schedulePushNotification(
@@ -72,12 +71,13 @@ export async function schedulePushNotification(
   ];
   const weekday = days.indexOf(day) + 1;
   const hours = time.getHours();
-  const minutes = time.getMinutes();
+  const minutes = time.getMinutes() + 5;
+	console.log(day, ' ', hours, ' ', minutes)
   const id = await Notifications.scheduleNotificationAsync({
     content: {
       title: className + " " + type,
       body: slot,
-      // sound: 'default',
+      sound: 'default',
     },
     trigger: {
       weekday: weekday,
@@ -86,12 +86,13 @@ export async function schedulePushNotification(
       repeats: true,
     },
   });
-  console.log("notif id on scheduling",id)
+  console.log("notification id on scheduling",id)
   return id;
 }
 
 async function registerForPushNotificationsAsync() {
   let token;
+	console.log('scheduled')
   if (Constants.isDevice) {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
