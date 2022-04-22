@@ -2,10 +2,12 @@
 import {
 	BelongsTo,
 	Column,
+	CreatedAt,
 	DataType,
 	ForeignKey,
 	Model,
 	Table,
+	UpdatedAt,
 } from 'sequelize-typescript';
 import { User } from './user.model';
 import { Group } from '../../group/group.model';
@@ -37,6 +39,12 @@ export class Access extends Model {
 		values: Object.values(Roles),
 	})
 	role!: Roles;
+
+	@CreatedAt
+	created: Date;
+
+	@UpdatedAt
+	modified: Date;
 
 	@BelongsTo(() => User)
 	user: User;
