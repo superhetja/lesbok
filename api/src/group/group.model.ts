@@ -1,12 +1,15 @@
 /* eslint-disable import/no-cycle */
 import {
+	BelongsTo,
 	BelongsToMany,
 	Column,
+	CreatedAt,
 	DataType,
 	ForeignKey,
 	HasMany,
 	Model,
 	Table,
+	UpdatedAt,
 } from 'sequelize-typescript';
 import { Access, User } from 'user/models';
 import { School } from '../school/school.model';
@@ -37,6 +40,15 @@ export class Group extends Model {
 		allowNull: false,
 	})
 	school_id: string;
+
+	@CreatedAt
+	created: Date;
+
+	@UpdatedAt
+	modified: Date;
+
+	@BelongsTo(() => School)
+	school: School;
 
 	@HasMany(() => Student)
 	students: Student[];
