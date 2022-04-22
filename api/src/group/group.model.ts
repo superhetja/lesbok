@@ -17,7 +17,6 @@ import { Student } from '../student/student.model';
 
 @Table({
 	tableName: 'group',
-	timestamps: false,
 })
 export class Group extends Model {
 	@Column({

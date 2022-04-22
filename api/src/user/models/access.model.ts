@@ -15,7 +15,6 @@ import { Roles } from '../../lib/enums';
 
 @Table({
 	tableName: 'access_table',
-	timestamps: false,
 })
 export class Access extends Model {
 	@ForeignKey(() => User)
