@@ -46,7 +46,7 @@ module.exports = {
 				date_of_entry: '2022-04-19',
 				comment: 'Áhugaverð bók',
 				time_spent: null,
-				book_id: '9902e245-254b-4c30-86b6-7c80f2230572',
+				book_id: '3818439a-b5ca-47bd-8f05-12f8491ce6b4',
 				created: new Date(),
 				modified: new Date(),
 			},
