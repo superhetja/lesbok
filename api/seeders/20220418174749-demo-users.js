@@ -87,6 +87,14 @@ module.exports = {
 				created: new Date(),
 				modified: new Date(),
 			},
+			{
+				id: '9902e245-254b-4c30-86b6-7c80f2230572',
+				name: 'Sindri Snær Þorsteinsson',
+				national_id: '280294-2929',
+				email: 'sindrismai@gmail.com',
+				created: new Date(),
+				modified: new Date(),
+			},
 		]);
 	},
 
