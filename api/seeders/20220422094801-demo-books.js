@@ -18,7 +18,7 @@ module.exports = {
 				modified: new Date(),
 			},
 			{
-				user_id: 'f6f664c3-d818-4b3b-9164-887d6ddca689',
+				id: 'f6f664c3-d818-4b3b-9164-887d6ddca689',
 				name: 'Emil í Kattholti',
 				created: new Date(),
 				modified: new Date(),

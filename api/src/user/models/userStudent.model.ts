@@ -6,6 +6,8 @@ import {
 	ForeignKey,
 	Model,
 	Table,
+	CreatedAt,
+	UpdatedAt,
 } from 'sequelize-typescript';
 import { Student } from '../../student/student.model';
 import { User } from './user.model';
@@ -32,4 +34,10 @@ export class UserStudent extends Model {
 
 	@BelongsTo(() => Student)
 	student: Student;
+
+	@CreatedAt
+	created: Date;
+
+	@UpdatedAt
+	modified: Date;
 }
