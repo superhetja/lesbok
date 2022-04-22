@@ -31,7 +31,7 @@ module.exports = {
 				modified: new Date(),
 			},
 			{
-				id: 'd26f1ce2-1c31-43d0-8358-f5fece5e1d6f',
+				id: 'c6f666dd-c39a-4838-babd-d9d6ed097514',
 				name: 'Logi Hrafn',
 				gender: 'Male',
 				national_id: '010215-2300',
