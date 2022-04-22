@@ -1,7 +1,6 @@
-version: "3.5"
+version: '3.5'
 
 services:
-
   db:
     image: ${MYSQL_IMAGE}
     restart: always
@@ -22,14 +21,14 @@ services:
     ports:
       - 8080:8080
     networks:
-    - private
+      - private
 
   backend:
     build:
       context: ./api
       target: development
     container_name: api
-    command: npm run start:dev
+    command: npm run start:dev && npx sequelize-cli db:seed:all
     depends_on:
       - db
     ports:
