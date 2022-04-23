@@ -11,23 +11,17 @@ import SettingsMenu from "../../components/SettingsMenu/SettingsMenu";
 import { Star } from "react-native-feather";
 import { useState } from "react";
 import Rewards from "../../components/Rewards/Rewards";
+import ThisWeekCard from "../../components/Cards/thisWeekCard";
 
 const DashboardScreen = () => {
 
 	const {data: readThisWeek, isLoading: loadingRead} = useGetReadThisWeekQuery();
 	const {data: score, isLoading: loadingScore} = useGetStudentScoreQuery();
-	const [visible, setVisible] = useState(false)
 	const { entry } = useGetEntriesQuery(undefined, {
 		selectFromResult: ({ data }) => ({
 			entry: (data!== undefined && data[0]) ?? []
 		})
 	});
-	const timeOut = () => {
-		setVisible(true);
-		setTimeout(() => {
-			setVisible(false)
-		}, 6000)
-	}
 	const dispatch = useDispatch();
 	console.log(entry)
 	return(
@@ -66,18 +60,10 @@ const DashboardScreen = () => {
 			</Layout>
 			<Layout style={[styles.row, {flex: 3}]}>
 				<Layout style={[styles.column, {marginRight: 6}]}>
-					<Button
-					appearance="ghost"
-					onPress={() => timeOut()}
-					accessoryLeft={() => (<Star color={'black'} />)} />
-					{
-						visible &&
-						<Rewards/>
-					}
 					{ loadingRead
 						? <Spinner />
 						: typeof(readThisWeek) === 'number' ?
-						<DonutChart divident={readThisWeek}/>
+						<ThisWeekCard readThisWeek={readThisWeek}/>
 						: <Text>Error</Text>
 					}
 				</Layout>
