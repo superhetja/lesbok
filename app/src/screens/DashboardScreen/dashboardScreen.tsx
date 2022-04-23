@@ -1,4 +1,4 @@
-import { Text, Layout, Spinner } from "@ui-kitten/components";
+import { Text, Layout, Spinner, Icon, Button } from "@ui-kitten/components";
 import { useDispatch } from "react-redux";
 import LatestEntry from "../../components/Cards/latestEntry";
 import ScoreCard from "../../components/Cards/scoreCard";
@@ -7,18 +7,21 @@ import { useGetReadThisWeekQuery, useGetStudentScoreQuery, useGetEntriesQuery } 
 import styles from "../styles";
 import { View } from "react-native";
 import { selectEntry } from "../../slices/globalSlice";
+import SettingsMenu from "../../components/SettingsMenu/SettingsMenu";
+import { Star } from "react-native-feather";
+import { useState } from "react";
+import Rewards from "../../components/Rewards/Rewards";
+import ThisWeekCard from "../../components/Cards/thisWeekCard";
 
 const DashboardScreen = () => {
 
 	const {data: readThisWeek, isLoading: loadingRead} = useGetReadThisWeekQuery();
 	const {data: score, isLoading: loadingScore} = useGetStudentScoreQuery();
-
 	const { entry } = useGetEntriesQuery(undefined, {
 		selectFromResult: ({ data }) => ({
 			entry: (data!== undefined && data[0]) ?? []
 		})
 	});
-
 	const dispatch = useDispatch();
 	console.log(entry)
 	return(
@@ -60,7 +63,7 @@ const DashboardScreen = () => {
 					{ loadingRead
 						? <Spinner />
 						: typeof(readThisWeek) === 'number' ?
-						<DonutChart divident={readThisWeek}/>
+						<ThisWeekCard readThisWeek={readThisWeek}/>
 						: <Text>Error</Text>
 					}
 				</Layout>
