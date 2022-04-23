@@ -1,4 +1,4 @@
-import { Text, Layout, Spinner } from "@ui-kitten/components";
+import { Text, Layout, Spinner, Icon, Button } from "@ui-kitten/components";
 import { useDispatch } from "react-redux";
 import LatestEntry from "../../components/Cards/latestEntry";
 import ScoreCard from "../../components/Cards/scoreCard";
@@ -7,18 +7,27 @@ import { useGetReadThisWeekQuery, useGetStudentScoreQuery, useGetEntriesQuery } 
 import styles from "../styles";
 import { View } from "react-native";
 import { selectEntry } from "../../slices/globalSlice";
+import SettingsMenu from "../../components/SettingsMenu/SettingsMenu";
+import { Star } from "react-native-feather";
+import { useState } from "react";
+import Rewards from "../../components/Rewards/Rewards";
 
 const DashboardScreen = () => {
 
 	const {data: readThisWeek, isLoading: loadingRead} = useGetReadThisWeekQuery();
 	const {data: score, isLoading: loadingScore} = useGetStudentScoreQuery();
-
+	const [visible, setVisible] = useState(false)
 	const { entry } = useGetEntriesQuery(undefined, {
 		selectFromResult: ({ data }) => ({
 			entry: (data!== undefined && data[0]) ?? []
 		})
 	});
-
+	const timeOut = () => {
+		setVisible(true);
+		setTimeout(() => {
+			setVisible(false)
+		}, 6000)
+	}
 	const dispatch = useDispatch();
 	console.log(entry)
 	return(
@@ -57,6 +66,14 @@ const DashboardScreen = () => {
 			</Layout>
 			<Layout style={[styles.row, {flex: 3}]}>
 				<Layout style={[styles.column, {marginRight: 6}]}>
+					<Button
+					appearance="ghost"
+					onPress={() => timeOut()}
+					accessoryLeft={() => (<Star color={'black'} />)} />
+					{
+						visible &&
+						<Rewards/>
+					}
 					{ loadingRead
 						? <Spinner />
 						: typeof(readThisWeek) === 'number' ?
