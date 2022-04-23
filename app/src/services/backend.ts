@@ -1,7 +1,17 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { RootState } from '../../configureStore';
 import { BASE_URL } from '../utils/constants';
-import { Entry, EntryResponse } from '../utils/types';
+import { Entry, EntryResponse, User } from '../utils/types';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
+
+export interface UserResponse {
+  user: User
+  token: string
+}
+
+export interface LoginRequest {
+	national_id: string;
+}
 
 function providesList<R extends { id: string | number }[], T extends string>(
   resultsWithIds: R | undefined,
@@ -30,12 +40,32 @@ function providesList<R extends { id: string | number }[], T extends string>(
 
 // const baseQueryWithRetry = retry(baseQuery, { maxRetries: 6 });
 
+const baseQuery = () => {
+	return fetchBaseQuery({
+		baseUrl: BASE_URL,
+		prepareHeaders: (headers, { getState }) => {
+			const token = (getState() as RootState).auth.token
+			if (token) {
+				headers.set('authorization', `Bearer ${token}`)
+			}
+			return headers
+		}
+	})
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export const entryApi = createApi({
 	reducerPath: 'entryApi',
-	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	baseQuery: baseQuery(),
 	tagTypes: ['Entries', 'ReadThisWeek'],
 	endpoints: (build) => ({
+		login: build.mutation<UserResponse, LoginRequest>({
+			query: (credentials) => ({
+				url: 'login',
+				method: 'POST',
+				body: credentials,
+			}),
+		}),
 		getEntries: build.query<EntryResponse[], void>({
 			query: () => `entries`,
 			// Provides a list of `Posts` by `id`.
@@ -82,4 +112,5 @@ export const {
 	useGetEntryByIdQuery,
 	useGetReadThisWeekQuery,
 	useGetStudentScoreQuery,
+	useLoginMutation,
 } = entryApi;

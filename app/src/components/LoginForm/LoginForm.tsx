@@ -13,17 +13,23 @@ type FormTelephone = {
 	telephone: string;
 }
 
+type KennitalaForm = {
+	kennitala: string;
+}
 
+type LoginFromProps = {
+	authorize: (name: string) => any
+}
 
-const LoginForm = () => {
-	const {...methods} = useForm<FormData>();
-	const onSubmit = methods.handleSubmit( () =>
-			showMessage({
-			message: "Þú hefur verið skráð/ur inn.",
-			type: "success"
-		})
+const LoginForm = ({authorize}: LoginFromProps) => {
+	const {...methods} = useForm<KennitalaForm>();
+	const onSubmit = methods.handleSubmit( (data) =>
+			// showMessage({
+			// 	message: "Þú hefur verið skráð/ur inn.",
+			// 	type: "success"
+			// })
+			authorize(data.kennitala)
 		)
-		console.log(methods.getValues('telephone'))
 	return (
 		<>
 		<Layout style={styles.welcomeText}>
@@ -35,6 +41,7 @@ const LoginForm = () => {
 			<FormProvider {...methods}>
 				<Layout style={styles.container}>
 				<Text>Símanúmer</Text>
+					{/*
 				<Layout style={styles.telephoneWrapper}>
 					<TextInput
 						name="region_code"
@@ -52,8 +59,15 @@ const LoginForm = () => {
 							message: 'Verður að vera gilt símanúmer'
 						}}}
 						/>
+
 						</Layout>
 					</Layout>
+						*/}
+						<Layout>
+							<TextInput
+								name="kennitala"
+								/>
+						</Layout>
 					<Button onPress={onSubmit} >Innskrá </Button>
 					</Layout>
 				{/* </Layout> */}

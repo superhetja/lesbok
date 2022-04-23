@@ -67,4 +67,14 @@ export class UserService {
 
 		return user.save();
 	}
+
+	async findByNationalId(national_id: string) {
+		const user = await this.user.findOne({ where: { national_id } });
+
+		if (!user) {
+			throw new NotFoundException(`User ${national_id} not found`);
+		}
+
+		return user;
+	}
 }

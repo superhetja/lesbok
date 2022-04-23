@@ -1,34 +1,13 @@
 import React, { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Provider } from 'react-redux';
-import EntryForm from './src/components/EntryForm';
 import store from './configureStore';
-import EntryList from './src/components/Lists/entryList';
-import { useGetEntriesQuery } from './src/services/backend';
-import { AddButton } from './src/components/Buttons';
 import * as eva from '@eva-design/eva';
-import { ApplicationProvider, Layout } from '@ui-kitten/components';
-import { NavigationContainer } from '@react-navigation/native';
+import { ApplicationProvider, Button, Layout } from '@ui-kitten/components';
 import { AppNavigator } from './src/navigation';
 import FlashMessage from 'react-native-flash-message';
 import * as Notifications from 'expo-notifications';
-
-Notifications.setNotificationHandler({
-	handleNotification: async () => ({
-		shouldShowAlert: true,
-		shouldPlaySound: true,
-		shouldSetBadge: true,
-	})
-})
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems:'center'
-	},
-});
+import * as WebBrowser from 'expo-web-browser';
+import * as AuthSession from 'expo-auth-session';
 
 
 export default function App() {
@@ -37,6 +16,7 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<ApplicationProvider {...eva} theme={eva.light}>
+
 					<AppNavigator />
 				{/* <SafeAreaView style={styles.container}>
 
