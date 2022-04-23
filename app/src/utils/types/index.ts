@@ -61,3 +61,10 @@ export type NotificationData = {
 	saturday: boolean;
 	sunday: boolean
 }
+
+export type User = {
+	id: string;
+	name: string;
+	email: string;
+	national_id: string;
+}

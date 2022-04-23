@@ -6,6 +6,7 @@ import { EntryModule } from './entry/entry.module';
 import { SequelizeConfigService } from './sequelizeConfig.service';
 import { StudentModule } from './student/student.module';
 import { UserModule } from './user/user.module';
+import { LoginModule } from './login/login.module';
 
 // TODO: use sequlize.config.js
 @Module({
@@ -18,6 +19,7 @@ import { UserModule } from './user/user.module';
 		GroupModule,
 		StudentModule,
 		UserModule,
+		LoginModule,
 	],
 	// controllers: [AppController],
 	// providers: [AppService],
