@@ -41,7 +41,7 @@ const BottomNavigation = ({ navigation, state }:BottomTabBarProps) => {
 				>
 					<BottomNavigationTab icon={() => (<Home />)} />
 					<BottomNavigationTab icon={() => (<List />)} />
-					<BottomNavigationTab icon={() => (<User />)} />
+					{/* <BottomNavigationTab icon={() => (<User />)} /> */}
 				</UIKBottomNavigation>
 			</Layout>
 		</Layout>
