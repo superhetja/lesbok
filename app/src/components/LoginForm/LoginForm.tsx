@@ -5,7 +5,7 @@ import {showMessage} from 'react-native-flash-message'
 import { TextInput } from "../FormComponents";
 import styles from "./styles";
 
-const DEFAULT_VALUE = '200294-2930';
+const DEFAULT_VALUE = '2002942930';
 
 type FormData = {
 	telephone: string;
