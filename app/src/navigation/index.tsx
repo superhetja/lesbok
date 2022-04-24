@@ -3,18 +3,13 @@ import ListScreen from '../screens/ListScreen/listScreen';
 import DashboardScreen from '../screens/DashboardScreen/dashboardScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BottomNavigation from '../components/Navigations/bottomNavigation';
-import SetNotifications from '../components/Notifications/Notifications';
-import { Button, IndexPath } from '@ui-kitten/components';
+import { Button, IndexPath, Layout, MenuItem, OverflowMenu } from '@ui-kitten/components';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { selectCurrentUser } from '../slices/authSlice';
-import { useSelector } from 'react-redux';
+import { selectCurrentUser, setCredentials } from '../slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { NotificationScreen } from '../screens/NotificationScreen/notificationScreen';
-import { Icon } from 'react-native-elements';
-import styles from '../screens/styles';
-import SettingsMenu from '../components/SettingsMenu/SettingsMenu';
-import { Settings } from 'react-native-feather';
-import Rewards from '../components/Rewards/Rewards';
+import { ArrowLeft, Settings } from 'react-native-feather';
 import LoginScreen from '../screens/LoginScreen/loginScreen';
 
 
@@ -32,12 +27,14 @@ const LoginNavigator = () => (
 				title: 'Innskráning'
 			}} />
 	</Stack.Navigator>
-)
+);
 
+export const OverflowMenuFullWidth = () => {
 
-const HomeNavigator = () => {
-	const [selectedIndex, setSelectedIndex] = useState<IndexPath|undefined>(undefined);
-  const [visible, setVisible] = useState(false);
+	const [selectedIndex, setSelectedIndex] = useState<IndexPath|undefined>(undefined)
+  const [visible, setVisible] = React.useState(false);
+	const navigation = useNavigation();
+	const dispatch = useDispatch();
 
   const onItemSelect = (index: any) => {
     setSelectedIndex(index);
@@ -45,36 +42,63 @@ const HomeNavigator = () => {
   };
 
   const renderToggleButton = () => (
-		<Icon
-			name="settings"
-			type="material"
+    <Button
 			onPress={() => setVisible(true)}
+			accessoryLeft={() => <Settings/>}
+			appearance='ghost'
 		/>
   );
 
+	const logOut = () => {
+		dispatch(setCredentials({user: null, token: null}))
+	}
+
+  return (
+      <OverflowMenu
+        anchor={renderToggleButton}
+        visible={visible}
+        selectedIndex={selectedIndex}
+        onSelect={onItemSelect}
+        onBackdropPress={() => setVisible(false)}
+			>
+        <MenuItem
+					title='Tilkynningar'
+					onPress={() => navigation.navigate('notifications' as never)}
+				/>
+        <MenuItem
+					title='Útskrá'
+					onPress={logOut}
+				/>
+      </OverflowMenu>
+  );
+};
+
+
+const HomeNavigator = () => {
+
 	return(
-	// const navigation: <ProfileScreenNavigationProp>;
-		// const navigation = useNavigation()
-		// <Navigator tabBar={props => <BottomNavigation {...props} />}>
-		// 	<Screen name='Mælaborð' component={DashboardScreen} />
-		// 	<Screen
-		// 		name='Seinustu færslur'
-		// 		component={ListScreen}
-		// 		options={({route, navigation}) => ({
-		// 			headerRight: () => <Button onPress={() => navigation.navigate('Stillingar')}>Click me</Button>
-		// 		})}/>
-		// 	<Screen name='Stillingar' component={SetNotifications} />
-			<Navigator tabBar={props => <BottomNavigation {...props} />}>
+		<Navigator tabBar={props => <BottomNavigation {...props} />}>
 			<Screen
-			name='Mælaborð'
-			component={DashboardScreen}
-			// component={Rewards}
-		/>
+				name='dashboard'
+				component={DashboardScreen}
+				// component={Rewards}
+				options={({route, navigation}) => ({
+					headerRight: OverflowMenuFullWidth,
+					title: 'Mælaborð'
+				})}
+			/>
     <Screen
-			name='Seinustu færslur'
+			name='list'
 			component={ListScreen}
 		/>
-			<Screen name='Verðlaun' component={Rewards} />
+		<Screen
+			name='notifications'
+			component={NotificationScreen}
+			options={({route, navigation}) => ({
+				title: 'Tilkynningar',
+				headerLeft: () => <Button appearance='ghost' accessoryLeft={<ArrowLeft/>} onPress={navigation.goBack}/> // EKKI BREYTA
+			})}
+		/>
   </Navigator>
 	)
 }

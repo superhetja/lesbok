@@ -5,6 +5,8 @@ import {showMessage} from 'react-native-flash-message'
 import { TextInput } from "../FormComponents";
 import styles from "./styles";
 
+const DEFAULT_VALUE = '200294-2930';
+
 type FormData = {
 	telephone: string;
 }
@@ -22,7 +24,7 @@ type LoginFromProps = {
 }
 
 const LoginForm = ({authorize}: LoginFromProps) => {
-	const {...methods} = useForm<KennitalaForm>();
+	const {...methods} = useForm<KennitalaForm>({defaultValues: {kennitala: DEFAULT_VALUE}});
 	const onSubmit = methods.handleSubmit( (data) =>
 			// showMessage({
 			// 	message: "Þú hefur verið skráð/ur inn.",

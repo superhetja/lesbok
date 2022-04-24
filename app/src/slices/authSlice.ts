@@ -13,11 +13,11 @@ const slice = createSlice({
 	reducers: {
 		setCredentials: (
 			state,
-			{ payload: { user, token } }: PayloadAction<{ user: User; token: string }>
+			{ payload: { user, token } }: PayloadAction<{ user: User|null; token: string|null }>
 		) => {
 			state.user = user,
 			state.token = token
-		}
+		},
 	}
 })
 
