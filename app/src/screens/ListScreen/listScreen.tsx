@@ -1,5 +1,5 @@
+import { Layout } from '@ui-kitten/components';
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import EntryList from '../../components/Lists/entryList';
 import { useGetEntriesQuery } from '../../services/backend';
@@ -12,11 +12,11 @@ const ListScreen = () => {
 
 
 	return(
-		<SafeAreaView style={styles.container}>
+		<Layout level='3' style={styles.container}>
 			{/* <TopNavigation title='Seinustu færslur' /> */}
 			<EntryList entries={entries} isLoading={isLoading} dispatch={dispatch}/>
 			{/* <BottomNavigation /> */}
-		</SafeAreaView>
+		</Layout>
 	)
 }
 
