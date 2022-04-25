@@ -1,3 +1,17 @@
+export enum Gender {
+	MALE = 'Male',
+	FEMALE = 'Female',
+	OTHER = 'Other',
+}
+
+export enum Roles {
+	SUPERADMIN = 'SuperAdmin',
+	ADMIN = 'Admin',
+	TEACHER = 'Teacher',
+	ASSISTANT = 'Assistant',
+	GUARDIAN = 'Guardian',
+}
+
 export interface Entry {
 	id: string;
 	student_id: string;
@@ -62,9 +76,48 @@ export type NotificationData = {
 	sunday: boolean
 }
 
+export type Student = {
+	id: string;
+	name: string;
+	national_id: string;
+	group_id: string;
+	gender: Gender;
+	created: Date;
+	modified: Date;
+}
+
+export type Access = {
+	user_id: string;
+	group_id: string;
+	role: Roles;
+	created: Date;
+	modified: Date;
+}
+
+export type Group = {
+	id: string;
+	name: string;
+	school_id: string;
+	description: string;
+	Access : Access;
+	created: Date;
+	modified: Date;
+}
+
 export type User = {
 	id: string;
 	name: string;
 	email: string;
 	national_id: string;
+}
+
+export type UserResponse = {
+	id: string;
+	name: string;
+	national_id: string;
+	email: string;
+	created: Date;
+	modified: Date;
+	children: Student[];
+	groups: Group[];
 }
