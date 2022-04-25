@@ -12,6 +12,8 @@ import { useState } from "react";
 import Rewards from "../../components/Rewards/Rewards";
 import ThisWeekCard from "../../components/Cards/thisWeekCard";
 import { HomeTabScreenProps } from "../../navigation";
+import Informations from "../../components/Informations/Informations";
+import { InformationScreen } from "../InformationScreen/informationScreen";
 
 type DashboardScreenProps = HomeTabScreenProps<'Dashboard'>;
 
