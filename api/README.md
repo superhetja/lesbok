@@ -56,14 +56,15 @@ User
 
 Group
 
-- [] GET .../groups -> returns list of Groups
-- [] POST .../groups -> Crete new Groups, returns Group Obj
+- [x] GET .../groups -> returns list of Groups
+- [x] GET .../groups/{id} -> returns list of Groups
+- [x] POST .../groups -> Crete new Groups, returns Group Obj
 - [] PUT .../groups/{id} -> Updates Groups with id {id}, returns number of affected rows
 
 Student
 
-- [] GET .../students -> returns list of Students
-- [] GET .../students/{id} -> returns detailed Student Obj
+- [x] GET .../students -> returns list of Students
+- [x] GET .../students/{id} -> returns detailed Student Obj
 - [] GET .../students/{id}/score -> Returns the score of the student
 - [] POST .../students -> Create new Students, returns Studends Obj
 - [] PUT .../students/{id} -> Updates Student with id {id}, returns number of affected rows
