@@ -12,6 +12,8 @@ import { Star } from "react-native-feather";
 import { useState } from "react";
 import Rewards from "../../components/Rewards/Rewards";
 import ThisWeekCard from "../../components/Cards/thisWeekCard";
+import Informations from "../../components/Informations/Informations";
+import { InformationScreen } from "../InformationScreen/informationScreen";
 
 const DashboardScreen = () => {
 
