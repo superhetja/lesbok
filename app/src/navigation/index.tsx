@@ -52,6 +52,10 @@ export const OverflowMenuFullWidth = () => {
         onSelect={onItemSelect}
         onBackdropPress={() => setVisible(false)}
 			>
+				<MenuItem
+					title='Upplýsingar'
+					onPress={() => navigation.navigate('informations' as never)}
+				/>
         <MenuItem
 					title='Tilkynningar'
 					onPress={() => navigation.navigate('notifications' as never)}
@@ -91,7 +95,6 @@ const HomeNavigator = () => {
 }
 
 const MainStack = createNativeStackNavigator<RootStackParamList>();
-
 
 export const AppNavigator = () => {
 	const user = useSelector(selectCurrentUser)
