@@ -1,8 +1,4 @@
-import {
-	BadRequestException,
-	NotFoundException,
-	NotImplementedException,
-} from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
 import { Book } from './book.model';
@@ -73,8 +69,10 @@ export class EntryService {
 	}
 
 	// eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
-	async findByStudentId(id: string): Promise<Entry[]> {
-		throw new NotImplementedException('Todo!');
+	async findByStudentId(student_id: string): Promise<Entry[]> {
+		return this.entry.findAll({
+			where: { student_id },
+		});
 	}
 
 	async create(input: CreateEntryDto): Promise<Entry> {

@@ -11,6 +11,7 @@ type ThisWeekCardProps = {
 }
 
 const ThisWeekCard = ({readThisWeek}: ThisWeekCardProps) => {
+	readThisWeek=5;
 	const [visible, setVisible] = useState(false)
 	const timeOut = () => {
 		setVisible(true);
@@ -21,7 +22,7 @@ const ThisWeekCard = ({readThisWeek}: ThisWeekCardProps) => {
 		<>
 			<DonutChart divident={readThisWeek}/>
 			{
-				readThisWeek === 0 &&
+				readThisWeek === 5 &&
 				<Button
 					appearance="ghost"
 					onPress={() => timeOut()}

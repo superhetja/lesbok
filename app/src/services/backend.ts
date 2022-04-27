@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../../configureStore';
 import { BASE_URL } from '../utils/constants';
-import { Entry, EntryResponse, User } from '../utils/types';
+import { Entry, EntryResponse, GroupDetailedResponse, StudentResponse, User, UserDetailResponse } from '../utils/types';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
 
 export interface UserResponse {
@@ -57,9 +57,9 @@ const baseQuery = () => {
 export const entryApi = createApi({
 	reducerPath: 'entryApi',
 	baseQuery: baseQuery(),
-	tagTypes: ['Entries', 'ReadThisWeek'],
+	tagTypes: ['Entries', 'ReadThisWeek', 'Groups'],
 	endpoints: (build) => ({
-		login: build.mutation<UserResponse, LoginRequest>({
+		login: build.mutation<{user:UserDetailResponse, token: string}, LoginRequest>({
 			query: (credentials) => ({
 				url: 'login',
 				method: 'POST',
@@ -96,12 +96,19 @@ export const entryApi = createApi({
 			invalidatesTags: (result, error, {id}) => [{type: 'Entries', id}]
 		}),
 		getReadThisWeek: build.query<number, void>({
-			query: () => '/entries/thisWeek/123',
+			query: () => '/entries/thisWeek/e4e59bbc-5567-4dc8-a4a4-35c879166aed',
 			providesTags: ['ReadThisWeek']
 		}),
 		getStudentScore: build.query<number,void>({
-			query: () => '/entries/score/123',
+			query: () => '/entries/score/e4e59bbc-5567-4dc8-a4a4-35c879166aed',
 		}),
+		getGroupById: build.query<GroupDetailedResponse, string>({
+			query: (id) => `/groups/${id}`,
+			providesTags: (result, error, id) => [{ type: 'Groups', id}]
+		}),
+		getStudentById: build.query<StudentResponse, string>({
+			query: (id) => `/students/${id}`
+		})
 	}),
 });
 
@@ -113,4 +120,6 @@ export const {
 	useGetReadThisWeekQuery,
 	useGetStudentScoreQuery,
 	useLoginMutation,
+	useGetGroupByIdQuery,
+	useGetStudentByIdQuery
 } = entryApi;

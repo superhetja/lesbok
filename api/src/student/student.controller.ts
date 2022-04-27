@@ -57,4 +57,9 @@ export default class StudentController {
 
 		return numberOfAffectedRows;
 	}
+
+	@Get(':id/entries')
+	async getStudentEntries(@Param('id') id: string): Promise<Student> {
+		return this.studentService.getStudentEntries(id);
+	}
 }
