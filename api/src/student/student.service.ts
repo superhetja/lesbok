@@ -63,7 +63,6 @@ export class StudentService {
 		if (!student) {
 			throw new NotFoundException(`Student ${id} does not exist`);
 		}
-
 		return student;
 	}
 

@@ -62,4 +62,14 @@ export default class StudentController {
 	async getStudentEntries(@Param('id') id: string): Promise<Student> {
 		return this.studentService.getStudentEntries(id);
 	}
+
+	@Get(':id/score')
+	async getStudentScore(@Param('id') id: string): Promise<Student> {
+		return this.studentService.getStudentScore(id);
+	}
+
+	@Get(':id/read_week')
+	async readByWeek(@Param('id') id: string): Promise<Student> {
+		return this.readByWeek(id);
+	}
 }
