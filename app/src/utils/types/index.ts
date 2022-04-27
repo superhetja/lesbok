@@ -29,32 +29,9 @@ export interface Entry {
 	}
 }
 
-export interface Book {
-	id: string;
-	name: string;
-	created: string;
-	modified: string;
-}
-
 export interface BookWithLastPage extends Book {
 	last_page: string;
 }
-
-export interface EntryResponse {
-	id: string;
-	student_id: string;
-	page_from: string;
-	page_to: string;
-	comment?: string;
-	time_spent?: string;
-	registered_by: string;
-	date_of_entry: string;
-	book_id: string;
-	created: string;
-	modified: string;
-	book: Book;
-}
-
 
 export type FormDataWithDate = {
 	book_name: string;
@@ -76,32 +53,11 @@ export type NotificationData = {
 	sunday: boolean
 }
 
-export type Student = {
+export interface Book {
 	id: string;
 	name: string;
-	national_id: string;
-	group_id: string;
-	gender: Gender;
-	created: Date;
-	modified: Date;
-}
-
-export type Access = {
-	user_id: string;
-	group_id: string;
-	role: Roles;
-	created: Date;
-	modified: Date;
-}
-
-export type Group = {
-	id: string;
-	name: string;
-	school_id: string;
-	description: string;
-	Access : Access;
-	created: Date;
-	modified: Date;
+	created: string;
+	modified: string;
 }
 
 export type User = {
@@ -111,13 +67,66 @@ export type User = {
 	national_id: string;
 }
 
-export type UserResponse = {
+export type StudentResponse = {
+	id: string;
+	name: string;
+	national_id: string;
+	group_id: string;
+	gender: Gender;
+	created: Date;
+	modified: Date;
+}
+
+export interface EntryResponse {
+	id: string;
+	student_id: string;
+	page_from: string;
+	page_to: string;
+	comment?: string;
+	time_spent?: string;
+	registered_by: string;
+	date_of_entry: string;
+	book_id: string;
+	created: string;
+	modified: string;
+	book: Book;
+}
+
+export type AccessResponse = {
+	user_id: string;
+	group_id: string;
+	role: Roles;
+	created: Date;
+	modified: Date;
+}
+
+export type UserGroupResponse = {
+	id: string;
+	name: string;
+	school_id: string;
+	description: string;
+	Access : AccessResponse;
+	created: Date;
+	modified: Date;
+}
+
+export type GroupDetailedResponse = {
+	id: string;
+	name: string;
+	school_id: string;
+	description: string;
+	students: StudentResponse[];
+	created: Date;
+	modified: Date;
+}
+
+export type UserDetailResponse = {
 	id: string;
 	name: string;
 	national_id: string;
 	email: string;
 	created: Date;
 	modified: Date;
-	children: Student[];
-	groups: Group[];
+	children: StudentResponse[];
+	groups: UserGroupResponse[];
 }

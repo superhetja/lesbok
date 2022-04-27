@@ -30,7 +30,7 @@ const globalSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    selectEntry(state, action: PayloadAction<GlobalState>) {
+    selectEntry(state, action: PayloadAction<{formData: FormDataWithDate, selectedEntryId: string}>) {
       state.selectedEntryId = action.payload.selectedEntryId;
 			state.formData = action.payload.formData;
 

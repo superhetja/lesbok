@@ -9,36 +9,16 @@ import { selectCurrentUser, selectUserGroups, setCredentials } from '../slices/a
 import { useDispatch, useSelector } from 'react-redux';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { NotificationScreen } from '../screens/NotificationScreen/notificationScreen';
-import { InformationScreen } from '../screens/InformationScreen/informationScreen';
-import { ArrowLeft, Settings } from 'react-native-feather';
+import { Settings } from 'react-native-feather';
 import LoginScreen from '../screens/LoginScreen/loginScreen';
 import SelectGroupScreen from '../screens/SelectGroupScreen/selectGroupScreen';
 import GroupScreen from '../screens/GroupScreen/groupScreen';
+import { HomeTabParamList, RootStackParamList } from './types';
 
 
-const Stack = createNativeStackNavigator()
 
+const { Navigator, Screen } = createBottomTabNavigator<HomeTabParamList>();
 
-const { Navigator, Screen } = createBottomTabNavigator();
-
-const GroupNavigator = () => {
-	return (
-		<Stack.Navigator>
-
-		</Stack.Navigator>
-	)
-}
-
-const LoginNavigator = () => (
-	<Stack.Navigator>
-		<Stack.Screen
-			name="SignIn"
-			component={LoginScreen}
-			options={{
-				title: 'Innskráning'
-			}} />
-	</Stack.Navigator>
-);
 
 export const OverflowMenuFullWidth = () => {
 
@@ -99,7 +79,7 @@ const HomeNavigator = () => {
 			}}
 		>
 			<Screen
-				name='dashboard'
+				name='Dashboard'
 				component={DashboardScreen}
 				// component={Rewards}
 				options={({route, navigation}) => ({
@@ -107,80 +87,61 @@ const HomeNavigator = () => {
 				})}
 			/>
     <Screen
-			name='list'
+			name='EntryList'
 			component={ListScreen}
 		/>
-		{/* <Screen
-			name='notifications'
-			component={NotificationScreen}
-			options={({route, navigation}) => ({
-				title: 'Tilkynningar',
-				headerLeft: () => <Button appearance='ghost' accessoryLeft={<ArrowLeft/>} onPress={navigation.goBack}/> // EKKI BREYTA
-			})}
-		/> */}
   </Navigator>
 	)
 }
 
-const MainStack = createNativeStackNavigator();
-
-const MainStackNavigator = () => (
-	<MainStack.Navigator
-		screenOptions={{
-			headerRight: OverflowMenuFullWidth
-		}}
-	>
-		<MainStack.Screen
-				name='group-list'
-				component={SelectGroupScreen}
-				options={{
-					title: 'Listi'
-				}}
-				/>
-		<MainStack.Screen
-			component={HomeNavigator}
-			name="home"
-			options={{
-				title: ''
-			}}
-
-		/>
-		<MainStack.Screen
-			component={GroupScreen}
-			name='group'
-			options={{
-				title: ''
-			}}
-			/>
-		<MainStack.Screen
-			name='notifications'
-			component={NotificationScreen}
-			options={{
-				title: 'Tilkynningar'
-			}}
-		/>
-		<MainStack.Screen
-			name='informations'
-			component={InformationScreen}
-			options={{
-				title: 'Upplýsingar'
-			}}
-		/>
-	</MainStack.Navigator>
-)
+const MainStack = createNativeStackNavigator<RootStackParamList>();
 
 export const AppNavigator = () => {
 	const user = useSelector(selectCurrentUser)
-	const groups = useSelector(selectUserGroups);
 
-	console.log(user)
 	return (
 		<NavigationContainer>
-			{
-				user
-				? <MainStackNavigator/>
-				: <LoginNavigator />
-			}
+			<MainStack.Navigator screenOptions={{ headerRight: OverflowMenuFullWidth }}>
+				{user ?
+					<MainStack.Group>
+						<MainStack.Screen
+							name='GroupList'
+							component={SelectGroupScreen}
+							options={{
+								title: 'Listi'
+							}}
+						/>
+						<MainStack.Screen
+							component={HomeNavigator}
+							name="Home"
+							options={{
+								title: ''
+							}}
+						/>
+						<MainStack.Screen
+							component={GroupScreen}
+							name='Group'
+							options={{
+								title: ''
+							}}
+						/>
+						<MainStack.Screen
+							name='Notification'
+							component={NotificationScreen}
+						/>
+					</MainStack.Group>
+				:
+					<MainStack.Screen
+						name="SignIn"
+						component={LoginScreen}
+						options={{
+							title: 'Innskráning'
+						}}
+					/>
+				}
+			</MainStack.Navigator>
 		</NavigationContainer>
 	) ;
 };
+
+export { RootStackParamList, RootStackScreenProps, HomeTabParamList, HomeTabScreenProps} from './types'

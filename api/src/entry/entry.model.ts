@@ -96,4 +96,7 @@ export class Entry extends Model {
 	@UpdatedAt
 	@ApiProperty()
 	modified: Date;
+
+	@BelongsTo(() => Student)
+	student: Student;
 }
