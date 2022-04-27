@@ -8,6 +8,10 @@ export type RootStackParamList = {
 	Home: NavigatorScreenParams<HomeTabParamList>;
 	Notification: undefined;
 	SignIn: undefined;
+	EntryForm: {
+		studentId: string,
+		entryId: string|undefined,
+	};
 }
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, T>;

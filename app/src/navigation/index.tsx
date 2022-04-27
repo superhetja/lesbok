@@ -14,6 +14,7 @@ import LoginScreen from '../screens/LoginScreen/loginScreen';
 import SelectGroupScreen from '../screens/SelectGroupScreen/selectGroupScreen';
 import GroupScreen from '../screens/GroupScreen/groupScreen';
 import { HomeTabParamList, RootStackParamList } from './types';
+import EntryFormScreen from '../screens/EntryFormScreen/entryFormScreen';
 
 
 
@@ -58,7 +59,7 @@ export const OverflowMenuFullWidth = () => {
 				/>
         <MenuItem
 					title='Tilkynningar'
-					onPress={() => navigation.navigate('notifications' as never)}
+					onPress={() => navigation.navigate('Notification')}
 				/>
         <MenuItem
 					title='Útskrá'
@@ -86,11 +87,11 @@ const HomeNavigator = () => {
 					title: 'Mælaborð'
 				})}
 			/>
-    <Screen
-			name='EntryList'
-			component={ListScreen}
-		/>
-  </Navigator>
+			<Screen
+				name='EntryList'
+				component={ListScreen}
+			/>
+  	</Navigator>
 	)
 }
 
@@ -109,6 +110,13 @@ export const AppNavigator = () => {
 							component={SelectGroupScreen}
 							options={{
 								title: 'Listi'
+							}}
+						/>
+						<MainStack.Screen
+							name='EntryForm'
+							component={EntryFormScreen}
+							options={{
+								presentation: 'modal',
 							}}
 						/>
 						<MainStack.Screen
