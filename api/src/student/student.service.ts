@@ -1,6 +1,6 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Entry } from 'entry';
+import { Book, Entry } from 'entry';
 import { CreateStudentDto, UpdateStudentDto } from './dto';
 import { Student } from './student.model';
 
@@ -46,7 +46,18 @@ export class StudentService {
 		const student = await this.student.findOne({
 			attributes: ['id'],
 			where: { id },
-			include: [{ model: Entry, as: 'entries' }],
+			include: [
+				{
+					model: Entry,
+					as: 'entries',
+					include: [
+						{
+							model: Book,
+							as: 'book',
+						},
+					],
+				},
+			],
 		});
 		if (!student) {
 			throw new NotFoundException(`Student ${id} does not exist`);

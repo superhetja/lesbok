@@ -1,8 +1,8 @@
-import { Text, Layout, Spinner, Icon, Button } from "@ui-kitten/components";
+import { Text, Layout, Spinner, Icon, Button, ButtonGroup } from "@ui-kitten/components";
 import { useDispatch } from "react-redux";
 import LatestEntry from "../../components/Cards/latestEntry";
 import ScoreCard from "../../components/Cards/scoreCard";
-import { useGetReadThisWeekQuery, useGetStudentScoreQuery, useGetEntriesQuery, useGetStudentByIdQuery } from "../../services/backend";
+import { useGetReadThisWeekQuery, useGetStudentScoreQuery, useGetEntriesQuery, useGetStudentByIdQuery, useGetStudentEntriesQuery } from "../../services/backend";
 import styles from "../styles";
 import { View } from "react-native";
 import { selectEntry } from "../../slices/globalSlice";
@@ -17,17 +17,22 @@ import { InformationScreen } from "../InformationScreen/informationScreen";
 
 type DashboardScreenProps = HomeTabScreenProps<'Dashboard'>;
 
-const DashboardScreen = ({route}: DashboardScreenProps) => {
+const DashboardScreen = ({route, navigation}: DashboardScreenProps) => {
 	// Get the student
 	const {data: student, isLoading: isLoadingStudent, isFetching: isFetchingStudent } = useGetStudentByIdQuery(route.params.studentId);
+	const { entry } = useGetStudentEntriesQuery(route.params.studentId, {
+		selectFromResult: ({ data }) => ({
+			entry: (data!== undefined && data.entries[0]) ?? []
+		})
+	});
 
 	const {data: readThisWeek, isLoading: loadingRead} = useGetReadThisWeekQuery();
 	const {data: score, isLoading: loadingScore} = useGetStudentScoreQuery();
-	const { entry } = useGetEntriesQuery(undefined, {
-		selectFromResult: ({ data }) => ({
-			entry: (data!== undefined && data[0]) ?? []
-		})
-	});
+	// const { entry } = useGetEntriesQuery(undefined, {
+	// 	selectFromResult: ({ data }) => ({
+	// 		entry: (data!== undefined && data[0]) ?? []
+	// 	})
+	// });
 	const dispatch = useDispatch();
 
 	if(isLoadingStudent || isFetchingStudent ) return <Spinner/>;
@@ -40,6 +45,7 @@ const DashboardScreen = ({route}: DashboardScreenProps) => {
 					student &&
 					<Text style={{fontSize: 26}}>{student?.name}</Text>
 				}
+				<Button onPress={() => navigation.navigate('EntryForm', {studentId: route.params.studentId, entryId: entry ? entry.id : ''})}></Button>
 			</View>
 			</Layout>
 			<Layout style={[styles.row, {flex: 4}]}>
