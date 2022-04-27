@@ -9,6 +9,7 @@ import { selectCurrentUser, selectUserGroups, setCredentials } from '../slices/a
 import { useDispatch, useSelector } from 'react-redux';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { NotificationScreen } from '../screens/NotificationScreen/notificationScreen';
+import { InformationScreen } from '../screens/InformationScreen/informationScreen';
 import { ArrowLeft, Settings } from 'react-native-feather';
 import LoginScreen from '../screens/LoginScreen/loginScreen';
 import SelectGroupScreen from '../screens/SelectGroupScreen/selectGroupScreen';
@@ -71,6 +72,10 @@ export const OverflowMenuFullWidth = () => {
         onSelect={onItemSelect}
         onBackdropPress={() => setVisible(false)}
 			>
+				<MenuItem
+					title='Upplýsingar'
+					onPress={() => navigation.navigate('informations' as never)}
+				/>
         <MenuItem
 					title='Tilkynningar'
 					onPress={() => navigation.navigate('notifications' as never)}
@@ -150,6 +155,16 @@ const MainStackNavigator = () => (
 		<MainStack.Screen
 			name='notifications'
 			component={NotificationScreen}
+			options={{
+				title: 'Tilkynningar'
+			}}
+		/>
+		<MainStack.Screen
+			name='informations'
+			component={InformationScreen}
+			options={{
+				title: 'Upplýsingar'
+			}}
 		/>
 	</MainStack.Navigator>
 )
