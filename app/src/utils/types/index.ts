@@ -38,7 +38,7 @@ export type FormDataWithDate = {
 	book_from: number;
 	book_to: number;
 	comment?: string;
-	date_of_entry: any;
+	date_of_entry: string;
 	book_id: string;
 }
 
