@@ -58,6 +58,7 @@ export class StudentService {
 					],
 				},
 			],
+			order: [[{ model: Entry, as: 'entries' }, 'date_of_entry', 'DESC']],
 		});
 		if (!student) {
 			throw new NotFoundException(`Student ${id} does not exist`);
