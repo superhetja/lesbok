@@ -116,6 +116,12 @@ module.exports = {
 				modified: new Date(),
 			},
 			{
+				user_id: '541535da-5a38-4fb1-8d6c-90eff0d56b50',
+				student_id: 'c3ddb8c7-6665-40a6-aea1-4af54a3f5fd7',
+				created: new Date(),
+				modified: new Date(),
+			},
+			{
 				user_id: 'ed219c4e-7fd4-4f9b-9f11-2dc0d2b48e73',
 				student_id: '7418fa25-72e2-44c0-99a5-762f38a0bd1b',
 				created: new Date(),
