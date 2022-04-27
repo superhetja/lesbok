@@ -23,7 +23,10 @@ const emptyValues: FormDataWithDate = {
 }
 
 const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
+	const user = useSelector(selectCurrentUser);
 	const isEditing = route.params.entryId !== undefined;
+
+
 	const entryValues = route.params.entryId ? useGetEntriesQuery(undefined,{
 		selectFromResult: ({data}) => {
 			const entry = data?.filter(e => e.id === route.params.entryId)[0];
@@ -37,7 +40,6 @@ const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
 			} : emptyValues
 				}
 	}):  emptyValues
-	const user = useSelector(selectCurrentUser);
 
 	const [addEntry, addResult] = useCreateEntryForIdMutation();
 	const [editEntry, editResult] = useEditEntryByIdMutation();
@@ -74,12 +76,15 @@ const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
 	 * @param entry the form data
 	 */
 	const handleAddEntry = async (entry: FormDataWithDate) => {
+		// TODO: handleERROR
+		if(!user) return;
+
 		const obj = {
 			book_name: entry.book_name,
 			page_from: entry.book_from,
 			page_to: entry.book_to,
-			student_id: 'e4e59bbc-5567-4dc8-a4a4-35c879166aed',
-			registered_by: 'fb2d1327-804a-4d7f-b81b-8da1ebcbfd0a',
+			student_id: route.params.studentId,
+			registered_by: user.id,
 			date_of_entry: entry.date_of_entry,
 			comment: entry.comment,
 			book_id: entry.book_id
@@ -87,6 +92,7 @@ const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
 
 		try {
 			await addEntry(obj).unwrap();
+			navigation.goBack();
 		} catch (error) {
 
 			console.log('ERROR');
@@ -99,20 +105,21 @@ const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
 	 * @param entry the form data
 	 */
 	const handleEditEntry = async (entry: FormDataWithDate) => {
-		if(!route.params.entryId) return;
+		if(!route.params.entryId || !user) return;
 		const obj = {
 			id: route.params.entryId,
 			book_name: entry.book_name,
 			page_from: entry.book_from,
 			page_to: entry.book_to,
-			student_id: 'e4e59bbc-5567-4dc8-a4a4-35c879166aed',
-			registered_by: 'fb2d1327-804a-4d7f-b81b-8da1ebcbfd0a',
+			student_id: route.params.studentId,
+			registered_by: user.id,
 			date_of_entry: entry.date_of_entry,
 			comment: entry.comment,
 			book_id: entry.book_id
 		};
 		try {
 			await editEntry(obj).unwrap();
+			navigation.goBack();
 			showMessage({
 				message: "Bók skráð.",
 				type: "success"
@@ -127,8 +134,8 @@ const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
 		<Layout>
 			<EntryForm
 				defaultValues={entryValues}
-				submitHandler={entryValues ? handleEditEntry : handleAddEntry}
-				submitLabel={entryValues? 'Breyta': 'Skrá'}
+				submitHandler={isEditing ? handleEditEntry : handleAddEntry}
+				submitLabel={isEditing? 'Breyta': 'Skrá'}
 				recentBooks={books}
 				/>
 			<Button onPress={() => navigation.goBack()}>Dismiss</Button>

@@ -117,9 +117,7 @@ export const AppNavigator = () => {
 							component={EntryFormScreen}
 							options={{
 								title: 'Færsla',
-								presentation: 'modal',
-								
-
+								presentation: 'containedModal',
 							}}
 
 						/>
