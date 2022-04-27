@@ -1,6 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { Layout, Button } from "@ui-kitten/components";
 import { useMemo } from "react";
+import { View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import { useSelector } from "react-redux";
 import EntryForm from "../../components/EntryForm/entryForm";
@@ -26,14 +27,13 @@ const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
 	const entryValues = route.params.entryId ? useGetEntriesQuery(undefined,{
 		selectFromResult: ({data}) => {
 			const entry = data?.filter(e => e.id === route.params.entryId)[0];
-
 			return entry ? {
 				book_name: entry.book.name,
 				book_from: parseInt(entry.page_from),
 				book_to: parseInt(entry.page_to),
 				comment: entry.comment,
 				book_id: entry.book.id,
-				date_of_entry: entry.date_of_entry,
+				date_of_entry: entry.date_of_entry, //ATHUGA
 			} : emptyValues
 				}
 	}):  emptyValues
@@ -130,7 +130,7 @@ const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
 				submitHandler={entryValues ? handleEditEntry : handleAddEntry}
 				submitLabel={entryValues? 'Breyta': 'Skrá'}
 				recentBooks={books}
-			/>
+				/>
 			<Button onPress={() => navigation.goBack()}>Dismiss</Button>
 		</Layout>
 	)

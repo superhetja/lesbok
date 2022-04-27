@@ -116,8 +116,12 @@ export const AppNavigator = () => {
 							name='EntryForm'
 							component={EntryFormScreen}
 							options={{
+								title: 'Færsla',
 								presentation: 'modal',
+								
+
 							}}
+
 						/>
 						<MainStack.Screen
 							component={HomeNavigator}
