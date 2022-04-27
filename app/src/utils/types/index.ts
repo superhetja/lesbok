@@ -37,7 +37,7 @@ export type FormDataWithDate = {
 	book_name: string;
 	book_from: number;
 	book_to: number;
-	comment: string;
+	comment?: string;
 	date_of_entry: any;
 	book_id: string;
 }
@@ -129,4 +129,9 @@ export type UserDetailResponse = {
 	modified: Date;
 	children: StudentResponse[];
 	groups: UserGroupResponse[];
+}
+
+export type StudentEntryResponse = {
+	id: string;
+	entries: EntryResponse[];
 }
