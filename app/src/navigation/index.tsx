@@ -96,7 +96,6 @@ const HomeNavigator = () => {
 
 const MainStack = createNativeStackNavigator<RootStackParamList>();
 
-
 export const AppNavigator = () => {
 	const user = useSelector(selectCurrentUser)
 
