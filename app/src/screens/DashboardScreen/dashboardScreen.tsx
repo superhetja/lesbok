@@ -1,31 +1,51 @@
-import { Text, Layout, Spinner } from "@ui-kitten/components";
+import { Text, Layout, Spinner, Icon, Button, ButtonGroup } from "@ui-kitten/components";
 import { useDispatch } from "react-redux";
 import LatestEntry from "../../components/Cards/latestEntry";
 import ScoreCard from "../../components/Cards/scoreCard";
-import DonutChart from "../../components/Charts/donutChart";
-import { useGetReadThisWeekQuery, useGetStudentScoreQuery, useGetEntriesQuery } from "../../services/backend";
+import { useGetReadThisWeekQuery, useGetStudentScoreQuery, useGetEntriesQuery, useGetStudentByIdQuery, useGetStudentEntriesQuery } from "../../services/backend";
 import styles from "../styles";
 import { View } from "react-native";
 import { selectEntry } from "../../slices/globalSlice";
+import SettingsMenu from "../../components/SettingsMenu/SettingsMenu";
+import { Star } from "react-native-feather";
+import { useState } from "react";
+import Rewards from "../../components/Rewards/Rewards";
+import ThisWeekCard from "../../components/Cards/thisWeekCard";
+import { HomeTabScreenProps } from "../../navigation";
+import Informations from "../../components/Informations/Informations";
+import { InformationScreen } from "../InformationScreen/informationScreen";
 
-const DashboardScreen = () => {
+type DashboardScreenProps = HomeTabScreenProps<'Dashboard'>;
 
-	const {data: readThisWeek, isLoading: loadingRead} = useGetReadThisWeekQuery();
-	const {data: score, isLoading: loadingScore} = useGetStudentScoreQuery();
-
-	const { entry } = useGetEntriesQuery(undefined, {
+const DashboardScreen = ({route, navigation}: DashboardScreenProps) => {
+	// Get the student
+	const {data: student, isLoading: isLoadingStudent, isFetching: isFetchingStudent } = useGetStudentByIdQuery(route.params.studentId);
+	const { entry } = useGetStudentEntriesQuery(route.params.studentId, {
 		selectFromResult: ({ data }) => ({
-			entry: (data!== undefined && data[0]) ?? []
+			entry: (data!== undefined && data.entries[0]) ?? []
 		})
 	});
 
+	const {data: readThisWeek, isLoading: loadingRead} = useGetReadThisWeekQuery();
+	const {data: score, isLoading: loadingScore} = useGetStudentScoreQuery();
+	// const { entry } = useGetEntriesQuery(undefined, {
+	// 	selectFromResult: ({ data }) => ({
+	// 		entry: (data!== undefined && data[0]) ?? []
+	// 	})
+	// });
 	const dispatch = useDispatch();
-	console.log(entry)
+
+	if(isLoadingStudent || isFetchingStudent ) return <Spinner/>;
+
 	return(
 		<Layout level='3' style={styles.container}>
 			<Layout style={[styles.row, {flex: 2}]}>
 			<View style={{padding: 16, justifyContent:'flex-end', marginBottom: 16}}>
-				<Text style={{fontSize: 26}}>Pétur É. Hólmfríðarson</Text>
+				{
+					student &&
+					<Text style={{fontSize: 26}}>{student?.name}</Text>
+				}
+				<Button onPress={() => navigation.navigate('EntryForm', {studentId: route.params.studentId, entryId: entry ? entry.id : ''})}></Button>
 			</View>
 			</Layout>
 			<Layout style={[styles.row, {flex: 4}]}>
@@ -60,7 +80,7 @@ const DashboardScreen = () => {
 					{ loadingRead
 						? <Spinner />
 						: typeof(readThisWeek) === 'number' ?
-						<DonutChart divident={readThisWeek}/>
+						<ThisWeekCard readThisWeek={readThisWeek}/>
 						: <Text>Error</Text>
 					}
 				</Layout>

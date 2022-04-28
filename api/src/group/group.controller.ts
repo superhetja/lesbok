@@ -19,6 +19,11 @@ export default class GroupController {
 		return this.groupService.create(input);
 	}
 
+	@Get(':id')
+	async findGroupById(@Param('id') id: string): Promise<Group> {
+		return this.groupService.findById(id);
+	}
+
 	@Put(':id')
 	async updateGroup(
 		@Param('id') id: string,

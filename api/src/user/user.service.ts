@@ -1,5 +1,6 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { Group } from 'group';
 import { Student } from 'student';
 import { CreateUserDto, UpdateUserDto } from './dto';
 import { Access, User, UserStudent } from './models';
@@ -66,5 +67,21 @@ export class UserService {
 		await user.addChildren(children);
 
 		return user.save();
+	}
+
+	async findByNationalId(national_id: string) {
+		const user = await this.user.findOne({
+			where: { national_id },
+			include: [
+				{ model: Group, as: 'groups' },
+				{ model: Student, as: 'children' },
+			],
+		});
+
+		if (!user) {
+			throw new NotFoundException(`User ${national_id} not found`);
+		}
+
+		return user;
 	}
 }

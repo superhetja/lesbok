@@ -14,7 +14,6 @@ const BottomNavigation = ({ navigation, state }:BottomTabBarProps) => {
 	const selectedId = useSelector(selectedEntryId);
 	const dispatch = useDispatch();
 
-
 	const toggleModal = () => {
 		// clear selected values if we are canceling
 		if(selectedId && isVisible) {
@@ -37,11 +36,12 @@ const BottomNavigation = ({ navigation, state }:BottomTabBarProps) => {
 				</Layout>
 				<UIKBottomNavigation
 					selectedIndex={state.index}
-					onSelect={index => navigation.navigate(state.routeNames[index])}
+					// get the student id from route
+					onSelect={index => navigation.navigate(state.routeNames[index], state.routes[state.index].params)}
 				>
 					<BottomNavigationTab icon={() => (<Home />)} />
 					<BottomNavigationTab icon={() => (<List />)} />
-					<BottomNavigationTab icon={() => (<User />)} />
+					{/* <BottomNavigationTab icon={() => (<User />)} /> */}
 				</UIKBottomNavigation>
 			</Layout>
 		</Layout>

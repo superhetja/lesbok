@@ -95,6 +95,22 @@ module.exports = {
 				created: new Date(),
 				modified: new Date(),
 			},
+			{
+				id: '241bbcdd-415e-4ba8-9cf3-765c36b69fd2',
+				name: 'Hólmfríður Magnea Hákonardóttir',
+				national_id: '0403962179',
+				email: 'holmfridurmh@gmail.com',
+				created: new Date(),
+				modified: new Date(),
+			},
+			{
+				id: '3dc4e76c-a756-4988-b16c-c990e5d7b8a5',
+				name: 'Pétur E. Tómasson',
+				national_id: '2801962119',
+				email: 'petur@gmail.com',
+				created: new Date(),
+				modified: new Date(),
+			},
 		]);
 	},
 

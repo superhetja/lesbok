@@ -1,22 +1,29 @@
+import { Layout, Spinner, Text } from '@ui-kitten/components';
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import EntryList from '../../components/Lists/entryList';
-import { useGetEntriesQuery } from '../../services/backend';
+import { HomeTabScreenProps } from '../../navigation';
+import { useGetEntriesQuery, useGetStudentEntriesQuery } from '../../services/backend';
 import styles from '../styles';
 
-const ListScreen = () => {
+type ListScreenProps = HomeTabScreenProps<'EntryList'>;
 
-	const { data: entries, isLoading } = useGetEntriesQuery();
+const ListScreen = ({route}: ListScreenProps) => {
+
+	const {data: studentEntries, isFetching, isLoading} = useGetStudentEntriesQuery(route.params.studentId);
 	const dispatch = useDispatch();
 
+	if( isLoading || isFetching) return <Spinner/>
 
 	return(
-		<SafeAreaView style={styles.container}>
+		<Layout level='3' style={styles.container}>
 			{/* <TopNavigation title='Seinustu færslur' /> */}
-			<EntryList entries={entries} isLoading={isLoading} dispatch={dispatch}/>
+			{ studentEntries?.entries ?
+				<EntryList entries={studentEntries.entries} isLoading={isLoading} dispatch={dispatch}/>
+				: <Text>No entries found</Text>
+			}
 			{/* <BottomNavigation /> */}
-		</SafeAreaView>
+		</Layout>
 	)
 }
 

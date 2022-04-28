@@ -102,7 +102,7 @@ const SetNotifications = () => {
 
 				/>
 		</FormProvider>
-			<Button onPress={onSubmit}>Setja áminningar</Button>
+			<Button style={{height:10}} onPress={onSubmit}>Setja áminningar</Button>
 		</Layout>
 
 	)

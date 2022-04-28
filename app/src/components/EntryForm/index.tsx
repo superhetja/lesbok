@@ -118,7 +118,7 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 	return (
 		<>
 			<GenericEntryForm
-				defaultValues={{...entryValues, date_of_entry: new Date(entryValues.date_of_entry)}}
+				defaultValues={{...entryValues, date_of_entry: entryValues.date_of_entry}}
 				submitHandler={selectedId? handleEditEntry : handleAddEntry}
 				submitLabel={selectedId? 'Breyta': 'Skrá'}
 				isVisible={isVisible}

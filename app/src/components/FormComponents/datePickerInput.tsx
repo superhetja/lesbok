@@ -1,6 +1,6 @@
 import React, { LegacyRef, useRef, useState } from 'react';
 import { Datepicker, Layout, Icon, Text } from '@ui-kitten/components';
-import {View } from 'react-native';
+import {TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import { Calendar } from 'react-native-feather'
 import {
@@ -13,7 +13,7 @@ const CalendarIcon = () => (
 )
 
 interface DatePickerProps extends UseControllerProps {
-	defaultValue?: Date;
+	defaultValue?: string;
 	minDate?: Date;
 	maxDate?: Date;
 	label: string
@@ -52,16 +52,18 @@ const DatePickerInput = ({
 	return(
 		<View style={styles.container}>
 				<Datepicker
+				style={{zIndex: 1000}}
 				placeholder={placeHolder}
-				date={field.value}
+				date={new Date(field.value)}
 				onSelect={date => onSelect(date)}
 				accessoryRight={CalendarIcon}
 				max={maxDate}
 				min={minDate}
+
 				/>
 				{hasWarning && (
 					<Text status='warning'>{warning}</Text>
-				)}
+					)}
 			</View>
 			)
 		}
