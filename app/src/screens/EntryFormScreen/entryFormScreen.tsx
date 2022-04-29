@@ -138,7 +138,7 @@ const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
 				submitLabel={isEditing? 'Breyta': 'Skrá'}
 				recentBooks={books}
 				/>
-			<Button onPress={() => navigation.goBack()}>Dismiss</Button>
+			<Button onPress={() => navigation.goBack()}>Hætta við</Button>
 		</Layout>
 	)
 }

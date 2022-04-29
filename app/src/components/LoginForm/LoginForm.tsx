@@ -37,12 +37,12 @@ const LoginForm = ({authorize}: LoginFromProps) => {
 		<Layout style={styles.welcomeText}>
 
 			<Text>Velkomin/n á Lesbók.</Text>
-			<Text>Til þess að nota smáforritið þarf að skrá sig inn með símanúmeri</Text>
+			<Text>Til þess að nota Lesbók þarf að skrá sig inn með kennitölu</Text>
 		</Layout>
 
 			<FormProvider {...methods}>
 				<Layout style={styles.container}>
-				<Text>Símanúmer</Text>
+				<Text>Kennitala</Text>
 					{/*
 				<Layout style={styles.telephoneWrapper}>
 					<TextInput

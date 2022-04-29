@@ -7,6 +7,7 @@ export type RootStackParamList = {
 	Group: {groupId: string};
 	Home: NavigatorScreenParams<HomeTabParamList>;
 	Notification: undefined;
+	Information: undefined;
 	SignIn: undefined;
 	EntryForm: {
 		studentId: string,
