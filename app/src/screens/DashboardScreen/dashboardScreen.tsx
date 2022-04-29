@@ -56,6 +56,7 @@ const DashboardScreen = ({route, navigation}: DashboardScreenProps) => {
 					comment={entry.comment}
 					date={entry.date_of_entry}
 					onEditClick={() => navigation.navigate('EntryForm', {studentId: route.params.studentId, entryId: entry ? entry.id : ''})}
+					onCardPress={() => navigation.navigate('DetailedEntry')}
 					/>
 			}
 			</Layout>

@@ -8,6 +8,7 @@ export type RootStackParamList = {
 	Home: NavigatorScreenParams<HomeTabParamList>;
 	Notification: undefined;
 	SignIn: undefined;
+	DetailedEntry: undefined;
 	EntryForm: {
 		studentId: string,
 		entryId: string|undefined,

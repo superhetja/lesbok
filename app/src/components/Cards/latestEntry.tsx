@@ -4,7 +4,7 @@ import { Dispatch } from 'react';
 import { MessageSquare } from 'react-native-feather'
 import { getDateFormated } from "../../utils/helpers";
 import { format } from "prettier";
-import { GestureResponderEvent, View } from "react-native";
+import { GestureResponderEvent, Pressable, Touchable, View } from "react-native";
 import { EditButton } from "../Buttons";
 
 
@@ -16,6 +16,7 @@ type LatestEntryProp = {
 	comment?: string,
 	date: string,
 	onEditClick: (event: GestureResponderEvent) => void
+	onCardPress: (event: GestureResponderEvent) => void
 }
 
 const LatestEntry = (
@@ -25,11 +26,13 @@ const LatestEntry = (
 	page_to,
 	comment,
 	date,
-	onEditClick
+	onEditClick,
+	onCardPress
 }: LatestEntryProp ) => {
-const formattedDate = getDateFormated(date);
+	const formattedDate = getDateFormated(date);
+
 	return (
-			<View style={{flex:1}}>
+			<Pressable onPress={onCardPress} style={{flex:1}}>
 				<View style={{flexDirection:'row', justifyContent:'space-between', marginBottom:-20}}>
 
 					<Text category="label">Seinasta færsla</Text>
@@ -41,12 +44,12 @@ const formattedDate = getDateFormated(date);
 				<View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}}>
 					<Text category="h3">{book_name}</Text>
 					<Text style={{fontSize: 50}}>{page_from}-{page_to}</Text>
-					{ comment !== '' &&
-						<><MessageSquare color={'black'} /><Text>{comment}</Text></>
-					}
 				</View>
+					{ comment && comment !== '' &&
+						<><MessageSquare color={'grey'} /><Text>{comment}</Text></>
+					}
 					</View>
-			</View>
+			</Pressable>
 
 	)
 }

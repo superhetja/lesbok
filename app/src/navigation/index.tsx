@@ -15,6 +15,7 @@ import SelectGroupScreen from '../screens/SelectGroupScreen/selectGroupScreen';
 import GroupScreen from '../screens/GroupScreen/groupScreen';
 import { HomeTabParamList, RootStackParamList } from './types';
 import EntryFormScreen from '../screens/EntryFormScreen/entryFormScreen';
+import DetailedEntryScreen from '../screens/DetailedEntryScreen/detailedEntryScreen';
 
 
 
@@ -111,6 +112,10 @@ export const AppNavigator = () => {
 							options={{
 								title: 'Listi'
 							}}
+						/>
+						<MainStack.Screen
+							name='DetailedEntry'
+							component={DetailedEntryScreen}
 						/>
 						<MainStack.Screen
 							name='EntryForm'
