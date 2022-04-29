@@ -31,6 +31,7 @@ export const SettingsMenu = () => {
         selectedIndex={selectedIndex}
         onSelect={onItemSelect}
         onBackdropPress={() => setVisible(false)}>
+				<MenuItem title="Upplýsingar" />
         <MenuItem title='Tilkynningar'/>
         <MenuItem title='Útskrá'/>
 
