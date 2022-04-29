@@ -8,10 +8,14 @@ import styles from '../styles';
 
 type ListScreenProps = HomeTabScreenProps<'EntryList'>;
 
-const ListScreen = ({route}: ListScreenProps) => {
+const ListScreen = ({route, navigation}: ListScreenProps) => {
 
 	const {data: studentEntries, isFetching, isLoading} = useGetStudentEntriesQuery(route.params.studentId);
 	const dispatch = useDispatch();
+
+	const onSelectEntry = (entryId: string) => {
+		navigation.navigate('EntryForm', {studentId: route.params.studentId, entryId: entryId})
+	}
 
 	if( isLoading || isFetching) return <Spinner/>
 
@@ -19,7 +23,7 @@ const ListScreen = ({route}: ListScreenProps) => {
 		<Layout level='3' style={styles.container}>
 			{/* <TopNavigation title='Seinustu færslur' /> */}
 			{ studentEntries?.entries ?
-				<EntryList entries={studentEntries.entries} isLoading={isLoading} dispatch={dispatch}/>
+				<EntryList entries={studentEntries.entries} onEdit={onSelectEntry} />
 				: <Text>No entries found</Text>
 			}
 			{/* <BottomNavigation /> */}

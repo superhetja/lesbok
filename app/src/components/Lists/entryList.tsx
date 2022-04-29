@@ -8,21 +8,16 @@ import { Dispatch } from "react";
 
 type EntryListProps = {
 	entries: EntryResponse[] |undefined,
-	isLoading: boolean,
-	dispatch:Dispatch<any>
+	onEdit: (id: string) => void,
 }
 
 const EntryList = ({
 	entries,
-	isLoading,
-	dispatch
+	onEdit
 }: EntryListProps) => {
 
 	return (
     <>
-			{
-				isLoading && <Text>Loading...</Text>
-			}
 			{
 				entries &&
 					<List
@@ -35,19 +30,7 @@ const EntryList = ({
 								comment={item.comment}
 								date={item.date_of_entry}
 								onEdit={
-									() => dispatch(
-										selectEntry({
-											selectedEntryId: item.id,
-											formData: {
-												book_id: item.book.id,
-												book_name: item.book.name,
-												book_to: parseInt(item.page_to),
-												book_from: parseInt(item.page_from),
-												date_of_entry: item.date_of_entry,
-												comment: item.comment? item.comment : ''
-											}
-										})
-									)
+									() => onEdit(item.id)
 								}
 								id={item.id}
 							/>

@@ -65,4 +65,46 @@ export class StudentService {
 		}
 		return student;
 	}
+
+	// /**
+	//  * Gets number of entries of given week.
+	//  * @param id
+	//  * @param week Optional. Defaults to currentWeek
+	//  */
+	// async readByWeek(id: string, week?: number): Promise<number> {
+	// 	if( !week ) { week = getCurrentWeek() }
+
+	// 	const {start, end} =
+
+	// 	const count = this.student.count({
+	// 		include: {
+	// 			model: Entry,
+	// 			as: 'entries',
+	// 			where: {
+	// 				date_of_entry:{
+	// 					[Op.lte]: new Date(),
+	// 					[Op.gt]: new Date(now.valueOf() - now.getDay() * 24 * 60 * 60 * 1000),
+	// 				}
+	// 			}
+	// 		},
+
+	// 	})
+	// 	return count;
+	// }
+
+	// /**
+	//  * Calculates student score based on number of reads!
+	//  * @param id string
+	//  */
+	// async getStudentScore(id: string): Promise<number> {
+	// 	const diff =
+	// 		(Math.floor(
+	// 			(new Date().valueOf() - START_OF_SCHOOL.valueOf()) /
+	// 		) /
+	// 			7) *
+	// 		5;
+	// 	const score = await this.entry.count({
+
+	// 	})
+	// }
 }

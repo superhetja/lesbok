@@ -8,6 +8,7 @@ import {
 	Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { EntryService } from 'entry';
 import { CreateStudentDto, UpdateStudentDto } from './dto';
 import { Student } from './student.model';
 import { StudentService } from './student.service';
@@ -15,7 +16,10 @@ import { StudentService } from './student.service';
 @Controller('students')
 @ApiTags('students')
 export default class StudentController {
-	constructor(private readonly studentService: StudentService) {}
+	constructor(
+		private readonly studentService: StudentService,
+		private readonly entryService: EntryService
+	) {}
 
 	/**
 	 * Gets list of all students
@@ -64,12 +68,12 @@ export default class StudentController {
 	}
 
 	@Get(':id/score')
-	async getStudentScore(@Param('id') id: string): Promise<Student> {
-		return this.studentService.getStudentScore(id);
+	async getStudentScore(@Param('id') id: string): Promise<number> {
+		return this.entryService.studentScore(id);
 	}
 
 	@Get(':id/read_week')
-	async readByWeek(@Param('id') id: string): Promise<Student> {
-		return this.readByWeek(id);
+	async readByWeek(@Param('id') id: string): Promise<number> {
+		return this.entryService.readThisWeek(id);
 	}
 }
