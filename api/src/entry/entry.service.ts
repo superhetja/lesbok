@@ -5,7 +5,7 @@ import { Book } from './book.model';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
 import { Entry } from './entry.model';
 
-const START_OF_SCHOOL = new Date('August 19, 2021 23:15:30');
+const START_OF_SCHOOL = new Date('Januar 6, 2022 23:15:30');
 
 export class EntryService {
 	constructor(
