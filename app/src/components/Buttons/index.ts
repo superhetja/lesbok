@@ -1,8 +1,4 @@
-import AddButton from "./addButton";
-import EditButton from "./editButton";
+export {default as EditButton} from './editButton'
 
-
-export {EditButton};
-
-export {AddButton};
+export {default as AddButton} from './addButton'
 

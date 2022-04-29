@@ -1,11 +1,10 @@
-import { Layout, Text } from "@ui-kitten/components"
+import { Layout, Button } from "@ui-kitten/components"
 import { schedulePushNotification } from "../../screens/Notification/notification"
 import React, { useState } from "react";
 import DateChecker from "../FormComponents/dateChecker";
 import { FormProvider, useForm } from "react-hook-form";
 import TimePicker from "../FormComponents/timePicker";
 import { NotificationData } from "../../utils/types";
-import { Button } from "react-native-elements";
 
 const SetNotifications = () => {
 	const [time, setTime] = useState(new Date())
@@ -16,12 +15,6 @@ const SetNotifications = () => {
 	const [friday, setFriday] = useState(true);
 	const [saturday, setSaturday] = useState(true);
 	const [sunday, setSunday] = useState(true);
-
-	const dt = new Date();
-	dt.setHours(13, 33)
-	console.log(dt)
-	console.log(time)
-	schedulePushNotification('Lesbók', 'Ertu að gleyma að lesa?', '', dt, 'Thursday')
 	const {...methods} = useForm<NotificationData>()
 
 	const updateTime = (updateTime: Date): void => {
@@ -74,10 +67,9 @@ const SetNotifications = () => {
 	}
 
 	return (
-		<Layout>
+		<Layout style={{padding: 10, paddingTop: 100}}>
 
 		<FormProvider {...methods}>
-				<Text>Áminningar</Text>
 				<TimePicker
 					name={"time"}
 					setDate={time}
@@ -100,9 +92,13 @@ const SetNotifications = () => {
 					setSaturday={updateSaturday}
 					setSunday={updateSunday}
 
-				/>
+					/>
+
 		</FormProvider>
-			<Button style={{height:10}} onPress={onSubmit}>Setja áminningar</Button>
+		<Layout style={{paddingTop: 10}} >
+
+			<Button onPress={onSubmit}>Setja áminningar</Button>
+		</Layout>
 		</Layout>
 
 	)

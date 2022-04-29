@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { Button, Divider, Layout, TopNavigation } from '@ui-kitten/components';
 
-export const HomeScreen = () => {
+const HomeScreen = () => {
 
 
   return (
@@ -15,3 +15,5 @@ export const HomeScreen = () => {
     </SafeAreaView>
   );
 };
+
+export default HomeScreen;
