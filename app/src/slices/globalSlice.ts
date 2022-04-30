@@ -8,6 +8,7 @@ interface GlobalState {
 	formData: FormDataWithDate;
 	currentStudent: string;
 	currentGroup: string;
+	expoPushToken: string;
 }
 
 const emptyValues: FormDataWithDate = {
@@ -24,6 +25,7 @@ const initialState = {
 	formData: emptyValues,
 	currentStudent: '',
 	currentGroup: '',
+	expoPushToken: '',
 } as GlobalState;
 
 const globalSlice = createSlice({
@@ -47,8 +49,10 @@ const globalSlice = createSlice({
 		},
 		setCurrentGroup(state, action: PayloadAction<{groupId: string}>){
 			state.currentGroup = action.payload.groupId;
+		},
+		setExpoPushToken(state, action: PayloadAction<{expoPushToken: string}>){
+			state.expoPushToken = action.payload.expoPushToken;
 		}
-
   },
 })
 
@@ -59,12 +63,15 @@ export const selectedEntryId = (state: RootState) => state.global.selectedEntryI
 export const selectedEntryValues = (state: RootState) => state.global.formData;
 export const selectCurrentStudent = (state: RootState) => state.global.currentStudent;
 export const selectCurrentGroup = (state: RootState) => state.global.currentGroup;
+export const selectExpoPushToken = (state: RootState) => state.global.expoPushToken;
 
 export const {
 	selectEntry,
 	clearSelectedEntry,
 	updateForm,
 	setCurrentGroup,
-	setCurrentStudent } = globalSlice.actions
+	setCurrentStudent,
+	setExpoPushToken
+ } = globalSlice.actions
 
 export default globalSlice.reducer

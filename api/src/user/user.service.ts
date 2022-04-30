@@ -4,13 +4,16 @@ import { Group } from 'group';
 import { Student } from 'student';
 import { CreateUserDto, UpdateUserDto } from './dto';
 import { Access, User, UserStudent } from './models';
+import { Notifications } from './models/notification.model';
 
 export class UserService {
 	constructor(
 		@InjectModel(User)
 		private readonly user: typeof User,
 		@InjectModel(UserStudent)
-		private readonly userStudent: typeof UserStudent
+		private readonly userStudent: typeof UserStudent,
+		@InjectModel(Notifications)
+		private readonly notifications: typeof Notifications
 	) {}
 
 	async findAll(): Promise<User[]> {
@@ -83,5 +86,12 @@ export class UserService {
 		}
 
 		return user;
+	}
+
+	async setUserPushToken(id: string, token: string): Promise<Notifications> {
+		return this.notifications.create({
+			user_id: id,
+			expoPushToken: token,
+		});
 	}
 }
