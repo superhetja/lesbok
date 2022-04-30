@@ -4,10 +4,10 @@ import { SafeAreaView } from 'react-native';
 import SetNotifications from '../../components/Notifications/Notifications';
 import styles from '../styles';
 
-export const NotificationScreen = () => {
+const NotificationScreen = () => {
 	return(
-		<SafeAreaView style={styles.container}>
-			<SetNotifications/>
-		</SafeAreaView>
+		<SetNotifications/>
 	)
 }
+
+export default NotificationScreen;

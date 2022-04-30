@@ -8,13 +8,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { selectCurrentUser, selectUserGroups, setCredentials } from '../slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { NotificationScreen } from '../screens/NotificationScreen/notificationScreen';
+import { NotificationScreen, InformationScreen, EntryFormScreen, SelectGroupScreen, LoginScreen, GroupScreen, DetailedEntryScreen} from '../screens/';
 import { Settings } from 'react-native-feather';
-import LoginScreen from '../screens/LoginScreen/loginScreen';
-import SelectGroupScreen from '../screens/SelectGroupScreen/selectGroupScreen';
-import GroupScreen from '../screens/GroupScreen/groupScreen';
 import { HomeTabParamList, RootStackParamList } from './types';
-import EntryFormScreen from '../screens/EntryFormScreen/entryFormScreen';
 
 
 
@@ -55,10 +51,10 @@ export const OverflowMenuFullWidth = () => {
 			>
 				<MenuItem
 					title='Upplýsingar'
-					onPress={() => navigation.navigate('informations' as never)}
+					onPress={() => navigation.navigate('Information' as never)}
 				/>
         <MenuItem
-					title='Tilkynningar'
+					title='Stilla Tilkynningar'
 					onPress={() => navigation.navigate('Notification')}
 				/>
         <MenuItem
@@ -82,14 +78,16 @@ const HomeNavigator = () => {
 			<Screen
 				name='Dashboard'
 				component={DashboardScreen}
-				// component={Rewards}
-				options={({route, navigation}) => ({
+				options={{
 					title: 'Mælaborð'
-				})}
+				}}
 			/>
 			<Screen
 				name='EntryList'
 				component={ListScreen}
+				options= {{
+					title: 'Færslur'
+				}}
 			/>
   	</Navigator>
 	)
@@ -102,9 +100,9 @@ export const AppNavigator = () => {
 
 	return (
 		<NavigationContainer>
-			<MainStack.Navigator screenOptions={{ headerRight: OverflowMenuFullWidth }}>
+			<MainStack.Navigator >
 				{user ?
-					<MainStack.Group>
+					<MainStack.Group screenOptions={{ headerRight: OverflowMenuFullWidth }}>
 						<MainStack.Screen
 							name='GroupList'
 							component={SelectGroupScreen}
@@ -113,13 +111,15 @@ export const AppNavigator = () => {
 							}}
 						/>
 						<MainStack.Screen
+							name='DetailedEntry'
+							component={DetailedEntryScreen}
+						/>
+						<MainStack.Screen
 							name='EntryForm'
 							component={EntryFormScreen}
 							options={{
 								title: 'Færsla',
-								presentation: 'modal',
-								
-
+								presentation: 'containedModal',
 							}}
 
 						/>
@@ -127,27 +127,39 @@ export const AppNavigator = () => {
 							component={HomeNavigator}
 							name="Home"
 							options={{
-								title: ''
+								title: 'Mælaborð'
 							}}
 						/>
 						<MainStack.Screen
 							component={GroupScreen}
 							name='Group'
 							options={{
-								title: ''
+								title: 'Nemendalisti'
 							}}
 						/>
 						<MainStack.Screen
 							name='Notification'
 							component={NotificationScreen}
+							options={{
+								title: 'Tilkynningar'
+							}}
+						/>
+						<MainStack.Screen
+							name='Information'
+							component={InformationScreen}
+							options={{
+								title: 'Upplýsingar'
+							}}
 						/>
 					</MainStack.Group>
 				:
 					<MainStack.Screen
 						name="SignIn"
 						component={LoginScreen}
+
 						options={{
 							title: 'Innskráning'
+
 						}}
 					/>
 				}

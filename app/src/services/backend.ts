@@ -13,6 +13,7 @@ export interface LoginRequest {
 	national_id: string;
 }
 
+console.log(BASE_URL)
 function providesList<R extends { id: string | number }[], T extends string>(
   resultsWithIds: R | undefined,
   tagType: T

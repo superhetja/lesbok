@@ -7,7 +7,7 @@ export type Props = {
 	onPress: (event: GestureResponderEvent) => void;
 };
 
-const EditButton: React.FC<Props> = ({ onPress }) => {
+const EditButton= ({ onPress }: Props) => {
 	return (
 		<Button
 			appearance='ghost'

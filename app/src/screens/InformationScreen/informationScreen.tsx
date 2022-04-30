@@ -4,10 +4,10 @@ import {SafeAreaView} from 'react-native';
 import styles from '../styles'
 
 
-export const InformationScreen = () => {
+const InformationScreen = () => {
 	return(
-		<SafeAreaView style={styles.container}>
 			<Informations/>
-		</SafeAreaView>
 	)
 }
+
+export default InformationScreen;
