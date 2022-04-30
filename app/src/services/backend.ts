@@ -13,7 +13,6 @@ export interface LoginRequest {
 	national_id: string;
 }
 
-console.log(BASE_URL)
 function providesList<R extends { id: string | number }[], T extends string>(
   resultsWithIds: R | undefined,
   tagType: T
@@ -67,6 +66,15 @@ export const entryApi = createApi({
 				url: 'login',
 				method: 'POST',
 				body: credentials,
+			}),
+		}),
+		setExpoPushToken: build.mutation<{userId: string, token: string}, any>({
+			query: ({userId, token}) => ({
+				url: `users/${userId}/push_token`,
+				method: 'POST',
+				body: {
+					expoPushToken: token
+				}
 			}),
 		}),
 		getEntries: build.query<EntryResponse[], void>({
@@ -130,4 +138,5 @@ export const {
 	useGetGroupByIdQuery,
 	useGetStudentByIdQuery,
 	useGetStudentEntriesQuery,
+	useSetExpoPushTokenMutation,
 } = entryApi;

@@ -1,12 +1,14 @@
-import { Text, Layout, Spinner } from "@ui-kitten/components";
-import { useDispatch } from "react-redux";
+import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
+import { useDispatch, useSelector } from "react-redux";
 import LatestEntry from "../../components/Cards/latestEntry";
 import ScoreCard from "../../components/Cards/scoreCard";
-import { useGetReadThisWeekQuery, useGetStudentScoreQuery, useGetStudentByIdQuery, useGetStudentEntriesQuery } from "../../services/backend";
+import { useGetReadThisWeekQuery, useGetStudentScoreQuery, useGetStudentByIdQuery, useGetStudentEntriesQuery, useSetExpoPushTokenMutation } from "../../services/backend";
 import styles from "../styles";
 import { View } from "react-native";
 import ThisWeekCard from "../../components/Cards/thisWeekCard";
 import { HomeTabScreenProps } from "../../navigation";
+import { selectCurrentUser } from "../../slices/authSlice";
+import pushNotificationSetupAsync from "../../utils/notification/pushNotificationSetup";
 
 type DashboardScreenProps = HomeTabScreenProps<'Dashboard'>;
 
@@ -22,14 +24,11 @@ const DashboardScreen = ({route, navigation}: DashboardScreenProps) => {
 	console.log(entry? 'true': 'false')
 	const {data: readThisWeek, isLoading: loadingRead} = useGetReadThisWeekQuery();
 	const {data: score, isLoading: loadingScore} = useGetStudentScoreQuery();
-	// const { entry } = useGetEntriesQuery(undefined, {
-	// 	selectFromResult: ({ data }) => ({
-	// 		entry: (data!== undefined && data[0]) ?? []
-	// 	})
-	// });
+
 	const dispatch = useDispatch();
 
 	if(isLoadingStudent || isFetchingStudent ) return <Spinner/>;
+
 
 	return(
 		<Layout level='3' style={styles.container}>

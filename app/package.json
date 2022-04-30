@@ -49,7 +49,8 @@
     "react-redux": "^7.2.6",
     "redux-thunk": "^2.4.1",
     "expo-secure-store": "~11.1.0",
-    "react-rewards": "^2.0.3"
+    "react-rewards": "^2.0.3",
+    "expo-device": "~4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
