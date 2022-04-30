@@ -8,5 +8,5 @@ export {default as LoginScreen } from './LoginScreen/loginScreen';
 export {default as Notification} from './Notification/notification';
 export {default as NotificationScreen} from './NotificationScreen/notificationScreen';
 export {default as SelectGroupScreen} from './SelectGroupScreen/selectGroupScreen';
-
+export {default as DetailedEntryScreen} from './DetailedEntryScreen/detailedEntryScreen';
 

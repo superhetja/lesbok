@@ -7,10 +7,12 @@ import { Button, IndexPath, Layout, MenuItem, OverflowMenu } from '@ui-kitten/co
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { selectCurrentUser, selectUserGroups, setCredentials } from '../slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavigationContainer, TabRouter, useNavigation } from '@react-navigation/native';
-import { NotificationScreen, InformationScreen, EntryFormScreen, SelectGroupScreen, LoginScreen, GroupScreen} from '../screens/';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NotificationScreen, InformationScreen, EntryFormScreen, SelectGroupScreen, LoginScreen, GroupScreen, DetailedEntryScreen} from '../screens/';
 import { Settings } from 'react-native-feather';
 import { HomeTabParamList, RootStackParamList } from './types';
+
+
 
 const { Navigator, Screen } = createBottomTabNavigator<HomeTabParamList>();
 
@@ -107,6 +109,10 @@ export const AppNavigator = () => {
 							options={{
 								title: 'Listi'
 							}}
+						/>
+						<MainStack.Screen
+							name='DetailedEntry'
+							component={DetailedEntryScreen}
 						/>
 						<MainStack.Screen
 							name='EntryForm'
