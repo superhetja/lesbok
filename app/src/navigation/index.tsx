@@ -7,7 +7,7 @@ import { Button, IndexPath, Layout, MenuItem, OverflowMenu } from '@ui-kitten/co
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { selectCurrentUser, selectUserGroups, setCredentials } from '../slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer, TabRouter, useNavigation } from '@react-navigation/native';
 import { NotificationScreen, InformationScreen, EntryFormScreen, SelectGroupScreen, LoginScreen, GroupScreen} from '../screens/';
 import { Settings } from 'react-native-feather';
 import { HomeTabParamList, RootStackParamList } from './types';
@@ -76,9 +76,9 @@ const HomeNavigator = () => {
 			<Screen
 				name='Dashboard'
 				component={DashboardScreen}
-				options={{
-					title: 'Mælaborð'
-				}}
+				options={({route}) => ({
+					title: route.params.name
+				})}
 			/>
 			<Screen
 				name='EntryList'
@@ -120,16 +120,16 @@ export const AppNavigator = () => {
 						<MainStack.Screen
 							component={HomeNavigator}
 							name="Home"
-							options={{
-								title: 'Mælaborð'
-							}}
+							options={({route}) => ({
+								title: route.params.params.name
+							})}
 						/>
 						<MainStack.Screen
 							component={GroupScreen}
 							name='Group'
-							options={{
+							options={({route}) => ({
 								title: 'Nemendalisti'
-							}}
+							})}
 						/>
 						<MainStack.Screen
 							name='Notification'

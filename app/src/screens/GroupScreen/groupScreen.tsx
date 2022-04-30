@@ -16,11 +16,11 @@ const GroupScreen = ({ route, navigation }: GroupScreenProps) => {
 	} = useGetGroupByIdQuery(route.params.groupId);
 	const dispatch = useDispatch();
 
-	const onChildPress = (id: string) => {
+	const onChildPress = (id: string, name: string) => {
 		dispatch(setCurrentStudent({studentId: id}))
 		navigation.navigate('Home', {
 			screen: 'Dashboard',
-			params: {studentId: id}
+			params: {studentId: id, name: name}
 		});
 	}
 
@@ -34,7 +34,7 @@ const GroupScreen = ({ route, navigation }: GroupScreenProps) => {
 			 <Menu>
 				{
 					group.students.map(s =>
-						<MenuItem title={s.name} key={s.id} onPress={() => onChildPress(s.id)}/>
+						<MenuItem title={s.name} key={s.id} onPress={() => onChildPress(s.id, s.name)}/>
 					)
 				}
 			 </Menu>

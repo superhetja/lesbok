@@ -13,12 +13,13 @@ export type RootStackParamList = {
 		studentId: string,
 		entryId: string|undefined,
 	};
+
 }
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, T>;
 
 export type HomeTabParamList = {
-	Dashboard: {studentId: string};
+	Dashboard: {studentId: string, name: string};
 	EntryList: {studentId: string};
 }
 

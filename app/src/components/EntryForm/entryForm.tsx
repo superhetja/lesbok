@@ -17,9 +17,18 @@ type GenericEntryFormProps = {
 	submitHandler: (entry: FormDataWithDate) => Promise<void>;
 	submitLabel: string;
 	recentBooks: BookWithLastPage[]
+	onCancelLabel?: string;
+	onCancel?: () => void
 }
 
-const EntryForm = ({defaultValues, submitHandler, submitLabel, recentBooks}: GenericEntryFormProps) => {
+const EntryForm = ({
+	defaultValues,
+	submitHandler,
+	submitLabel,
+	recentBooks,
+	onCancel,
+	onCancelLabel,
+}: GenericEntryFormProps) => {
 
 	const {...methods} = useForm<FormDataWithDate>({
 		defaultValues: useMemo(() => {
@@ -107,7 +116,7 @@ const EntryForm = ({defaultValues, submitHandler, submitLabel, recentBooks}: Gen
 							/>
 						<Layout style={styles.actionWrapper}>
 							<Button onPress={onSubmit} >{submitLabel}</Button>
-							{/* <Button onPress={toggleModal} >Hætta við</Button> */}
+							<Button onPress={onCancel} >{onCancelLabel}</Button>
 						</Layout>
 					</FormProvider>
 						</KeyboardAwareScrollView>
