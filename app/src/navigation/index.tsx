@@ -78,9 +78,9 @@ const HomeNavigator = () => {
 			<Screen
 				name='Dashboard'
 				component={DashboardScreen}
-				options={{
-					title: 'Mælaborð'
-				}}
+				options={({route}) => ({
+					title: route.params.name
+				})}
 			/>
 			<Screen
 				name='EntryList'
@@ -126,16 +126,16 @@ export const AppNavigator = () => {
 						<MainStack.Screen
 							component={HomeNavigator}
 							name="Home"
-							options={{
-								title: 'Mælaborð'
-							}}
+							options={({route}) => ({
+								title: route.params.params.name
+							})}
 						/>
 						<MainStack.Screen
 							component={GroupScreen}
 							name='Group'
-							options={{
+							options={({route}) => ({
 								title: 'Nemendalisti'
-							}}
+							})}
 						/>
 						<MainStack.Screen
 							name='Notification'

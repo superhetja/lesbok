@@ -22,7 +22,6 @@ const DashboardScreen = ({route, navigation}: DashboardScreenProps) => {
 	});
 
 	console.log(entry? 'true': 'false')
-
 	const {data: readThisWeek, isLoading: loadingRead} = useGetReadThisWeekQuery();
 	const {data: score, isLoading: loadingScore} = useGetStudentScoreQuery();
 

@@ -24,7 +24,9 @@ const ThisWeekCard = ({readThisWeek}: ThisWeekCardProps) => {
 			{
 				readThisWeek === 5 &&
 				<Button
-					appearance="ghost"
+					// appearance={'ghost'}
+					style={{width: 10, height: 10, borderRadius: 50, justifyContent: 'center'}}
+					status={'success'}
 					onPress={() => timeOut()}
 					accessoryLeft={() => (<Star color={'black'} />)} />
 			}
