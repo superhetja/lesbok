@@ -113,6 +113,9 @@ export const AppNavigator = () => {
 						<MainStack.Screen
 							name='DetailedEntry'
 							component={DetailedEntryScreen}
+							options={{
+								title: 'Ítarefni færslu'
+							}}
 						/>
 						<MainStack.Screen
 							name='EntryForm'

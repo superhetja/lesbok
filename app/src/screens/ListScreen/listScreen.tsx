@@ -13,8 +13,11 @@ const ListScreen = ({route, navigation}: ListScreenProps) => {
 	const {data: studentEntries, isFetching, isLoading} = useGetStudentEntriesQuery(route.params.studentId);
 	const dispatch = useDispatch();
 
-	const onSelectEntry = (entryId: string) => {
+	const onEditEntry = (entryId: string) => {
 		navigation.navigate('EntryForm', {studentId: route.params.studentId, entryId: entryId})
+	}
+	const onSelectEntry = (entryId: string) => {
+		navigation.navigate('DetailedEntry', {entryId: entryId})
 	}
 
 	if( isLoading || isFetching) return <Spinner/>
@@ -23,7 +26,11 @@ const ListScreen = ({route, navigation}: ListScreenProps) => {
 		<Layout level='3' style={styles.container}>
 			{/* <TopNavigation title='Seinustu færslur' /> */}
 			{ studentEntries?.entries ?
-				<EntryList entries={studentEntries.entries} onEdit={onSelectEntry} />
+				<EntryList
+					entries={studentEntries.entries}
+					onEdit={onEditEntry}
+					onCardPress={onSelectEntry}
+					/>
 				: <Text>No entries found</Text>
 			}
 			{/* <BottomNavigation /> */}

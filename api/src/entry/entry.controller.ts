@@ -28,6 +28,15 @@ export default class EntryController {
 		return await this.entryService.findAll();
 	}
 
+	@Get(':id')
+	@ApiOkResponse({
+		type: Entry,
+		description: 'Gets entry with id',
+	})
+	async findById(@Param('id') id: string): Promise<Entry> {
+		return await this.entryService.findById(id);
+	}
+
 	@Get('thisWeek/:id')
 	@ApiOkResponse({
 		type: Entry,

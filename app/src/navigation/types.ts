@@ -9,7 +9,9 @@ export type RootStackParamList = {
 	Notification: undefined;
 	Information: undefined;
 	SignIn: undefined;
-	DetailedEntry: undefined;
+	DetailedEntry: {
+		entryId: string,
+	};
 	EntryForm: {
 		studentId: string,
 		entryId: string|undefined,
