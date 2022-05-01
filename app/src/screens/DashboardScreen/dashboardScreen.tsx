@@ -7,8 +7,6 @@ import styles from "../styles";
 import { View } from "react-native";
 import ThisWeekCard from "../../components/Cards/thisWeekCard";
 import { HomeTabScreenProps } from "../../navigation";
-import { selectCurrentUser } from "../../slices/authSlice";
-import pushNotificationSetupAsync from "../../utils/notification/pushNotificationSetup";
 
 type DashboardScreenProps = HomeTabScreenProps<'Dashboard'>;
 
@@ -29,7 +27,6 @@ const DashboardScreen = ({route, navigation}: DashboardScreenProps) => {
 
 	if(isLoadingStudent || isFetchingStudent ) return <Spinner/>;
 
-
 	return(
 		<Layout level='3' style={styles.container}>
 			<Layout style={[styles.row, {flex: 2}]}>
@@ -43,6 +40,7 @@ const DashboardScreen = ({route, navigation}: DashboardScreenProps) => {
 				}
 			</View>
 			</Layout>
+
 			<Layout style={[styles.row, {flex: 4}]}>
 				<Layout style={{...styles.column}} >
 
@@ -54,11 +52,12 @@ const DashboardScreen = ({route, navigation}: DashboardScreenProps) => {
 					comment={entry.comment}
 					date={entry.date_of_entry}
 					onEditClick={() => navigation.navigate('EntryForm', {studentId: route.params.studentId, entryId: entry ? entry.id : ''})}
-					onCardPress={() => navigation.navigate('DetailedEntry')}
+					onCardPress={() => navigation.navigate('DetailedEntry', {entryId: entry.id})}
 					/>
 			}
 			</Layout>
 			</Layout>
+
 			<Layout style={[styles.row, {flex: 3}]}>
 				<Layout style={[styles.column, {marginRight: 6}]}>
 					{ loadingRead

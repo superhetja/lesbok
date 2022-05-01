@@ -99,4 +99,7 @@ export class Entry extends Model {
 
 	@BelongsTo(() => Student)
 	student: Student;
+
+	@BelongsTo(() => User)
+	user: User;
 }
