@@ -1,3 +1,5 @@
+import { IndexPath } from "@ui-kitten/components";
+
 export enum Gender {
 	MALE = 'Male',
 	FEMALE = 'Female',
@@ -44,13 +46,7 @@ export type FormDataWithDate = {
 
 export type NotificationData = {
 	time: Date;
-	monday: boolean;
-	tuesday: boolean;
-	wednsday: boolean;
-	thursday: boolean;
-	friday: boolean;
-	saturday: boolean;
-	sunday: boolean
+	days: IndexPath[];
 }
 
 export interface Book {
