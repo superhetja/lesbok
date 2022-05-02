@@ -30,7 +30,6 @@ const LatestEntry = (
 	onCardPress
 }: LatestEntryProp ) => {
 	const formattedDate = getDateFormated(date);
-
 	return (
 			<Pressable onPress={onCardPress} style={{flex:1}}>
 				<View style={{flexDirection:'row', justifyContent:'space-between', marginBottom:-20}}>
@@ -45,7 +44,7 @@ const LatestEntry = (
 					<Text category="h3">{book_name}</Text>
 					<Text style={{fontSize: 50}}>{page_from}-{page_to}</Text>
 				</View>
-					{ comment && comment !== '' &&
+				{ comment !== undefined && comment !== '' &&
 						<><MessageSquare color={'grey'} /><Text>{comment}</Text></>
 					}
 					</View>

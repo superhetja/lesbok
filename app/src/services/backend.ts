@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../../configureStore';
 import { BASE_URL } from '../utils/constants';
-import { Entry, EntryResponse, GroupDetailedResponse, StudentEntryResponse, StudentResponse, User, UserDetailResponse } from '../utils/types';
+import { Entry, EntryResponse, EntryWithUser, GroupDetailedResponse, StudentEntryResponse, StudentResponse, User, UserDetailResponse } from '../utils/types';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
 
 export interface UserResponse {
@@ -84,7 +84,7 @@ export const entryApi = createApi({
       // The `LIST` id is a "virtual id" we just made up to be able to invalidate this query specifically if a new `Posts` element was added.
 			providesTags: (result) => providesList(result, 'Entries'),
 		}),
-		getEntryById: build.query<Entry, string>({
+		getEntryById: build.query<EntryWithUser, string>({
 			query: (id) => `entries/${id}`,
 			providesTags: (result, error, id) => [{ type: 'Entries', id}]
 		}),
@@ -123,6 +123,9 @@ export const entryApi = createApi({
 		getStudentEntries: build.query<StudentEntryResponse, string>({
 			query: (id) => `/students/${id}/entries`,
 			providesTags: (result) => providesList(result?.entries, 'Entries')
+		}),
+		getUserById: build.query<UserResponse, string>({
+			query: (id) => `/users/${id}`
 		})
 	}),
 });

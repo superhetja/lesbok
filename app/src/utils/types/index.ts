@@ -31,6 +31,20 @@ export interface Entry {
 	}
 }
 
+export type UserResponse = {
+	id: string;
+	name: string;
+	national_id: string;
+  email: string;
+  created: string;
+  modified: string;
+
+}
+
+export interface EntryWithUser extends EntryResponse {
+	user: UserResponse;
+}
+
 export interface BookWithLastPage extends Book {
 	last_page: string;
 }
