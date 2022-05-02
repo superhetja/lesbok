@@ -49,7 +49,7 @@ return (
 			}
 			<View style={{flexDirection: 'row'}}>
 				<Text style={styles.bold}>Skráð: </Text>
-				<Text style={styles.text}>Skráð: {getDateFormated(entry.date_of_entry)}</Text>
+				<Text style={styles.text}>{getDateFormated(entry.date_of_entry)}</Text>
 			</View>
 			<View style={{flexDirection: 'row'}}>
 				<Text style={styles.bold}>Búin til:  </Text>
