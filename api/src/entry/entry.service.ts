@@ -1,6 +1,7 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
+import { User } from 'user';
 import { Book } from './book.model';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
 import { Entry } from './entry.model';
@@ -26,7 +27,10 @@ export class EntryService {
 	async findById(id: string): Promise<Entry> {
 		const entry = this.entry.findOne({
 			where: { id },
-			include: [{ model: Book, as: 'book' }],
+			include: [
+				{ model: Book, as: 'book' },
+				{ model: User, as: 'user' },
+			],
 		});
 		if (!entry) {
 			throw new NotFoundException(`Entry ${id} does not exist`);
