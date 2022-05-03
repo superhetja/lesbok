@@ -3,6 +3,7 @@ import * as Notifications from "expo-notifications";
 import React, { useState, useEffect, useRef, SetStateAction } from "react";
 import {  Platform, View } from "react-native";
 import { Subscription } from 'expo-modules-core';
+import { DAYS } from "../../utils/constants";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -60,16 +61,7 @@ export async function schedulePushNotification(
   day: string
 ) {
   time = new Date(time.getTime() - 5 * 60000);
-  var days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  const weekday = days.indexOf(day) + 1;
+  const weekday = DAYS.indexOf(day) + 1;
   const hours = time.getHours();
   const minutes = time.getMinutes() + 5;
 	console.log(day, ' ', hours, ' ', minutes)
@@ -126,6 +118,29 @@ async function registerForPushNotificationsAsync() {
   return token;
 }
 
+export async function requestPermissionsAsync() {
+  return await Notifications.requestPermissionsAsync({
+    ios: {
+      allowAlert: true,
+      allowBadge: true,
+      allowSound: true,
+      allowAnnouncements: true,
+    },
+  });
+}
+
+
+export async function getAllNotifications() {
+	return await Notifications.getAllScheduledNotificationsAsync();
+}
+
 export async function cancelNotification(notifId: string){
   await Notifications.cancelScheduledNotificationAsync(notifId);
+}
+
+export async function allowsNotificationsAsync() {
+  const settings = await Notifications.getPermissionsAsync();
+  return (
+    settings.granted || settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
+  );
 }

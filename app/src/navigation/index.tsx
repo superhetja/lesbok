@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { selectCurrentUser, selectUserGroups, setCredentials } from '../slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { NotificationScreen, InformationScreen, EntryFormScreen, SelectGroupScreen, LoginScreen, GroupScreen, DetailedEntryScreen} from '../screens/';
+import { NotificationScreen, InformationScreen, EntryFormScreen, SelectGroupScreen, LoginScreen, GroupScreen, DetailedEntryScreen, NotificationFormScreen} from '../screens/';
 import { Settings } from 'react-native-feather';
 import { HomeTabParamList, RootStackParamList } from './types';
 
@@ -127,6 +127,20 @@ export const AppNavigator = () => {
 
 						/>
 						<MainStack.Screen
+							name='Notification'
+							component={NotificationScreen}
+							options={{
+								title: 'Tilkynningar'
+							}}
+						/>
+						<MainStack.Screen
+							name='NotificationForm'
+							component={NotificationFormScreen}
+							options={{
+								title: 'Skrá nýja tilkynningu'
+							}}
+						/>
+						<MainStack.Screen
 							component={HomeNavigator}
 							name="Home"
 							options={({route}) => ({
@@ -140,13 +154,7 @@ export const AppNavigator = () => {
 								title: 'Nemendalisti'
 							})}
 						/>
-						<MainStack.Screen
-							name='Notification'
-							component={NotificationScreen}
-							options={{
-								title: 'Tilkynningar'
-							}}
-						/>
+
 						<MainStack.Screen
 							name='Information'
 							component={InformationScreen}
@@ -156,15 +164,17 @@ export const AppNavigator = () => {
 						/>
 					</MainStack.Group>
 				:
+				<>
 					<MainStack.Screen
 						name="SignIn"
 						component={LoginScreen}
 
 						options={{
 							title: 'Innskráning'
-
 						}}
-					/>
+						/>
+
+					</>
 				}
 			</MainStack.Navigator>
 		</NavigationContainer>

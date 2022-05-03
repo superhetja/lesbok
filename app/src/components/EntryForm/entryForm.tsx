@@ -1,11 +1,9 @@
 import { Button, Layout } from "@ui-kitten/components";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { NumberInput, TextInput, DatePickerInput, AutoTextInput } from "../FormComponents";
-import BottomOverlay from "../Overlays/bottomOverlay";
 import { BookWithLastPage, FormDataWithDate } from "../../utils/types";
 import styles from "./styles";
-import { ScrollView } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 // import {keyboardSize} from '../../utils/keyboardSize/keyboardSize'
 
@@ -18,7 +16,7 @@ type GenericEntryFormProps = {
 	submitLabel: string;
 	recentBooks: BookWithLastPage[]
 	onCancelLabel?: string;
-	onCancel?: () => void
+	onCancelHandler: () => void
 }
 
 const EntryForm = ({
@@ -26,7 +24,7 @@ const EntryForm = ({
 	submitHandler,
 	submitLabel,
 	recentBooks,
-	onCancel,
+	onCancelHandler,
 	onCancelLabel,
 }: GenericEntryFormProps) => {
 
@@ -53,6 +51,11 @@ const EntryForm = ({
 		methods.resetField('book_from', {defaultValue: parseInt(book.last_page) + 1});
 		methods.resetField('book_to', {defaultValue: parseInt(book.last_page) + 2});
 		methods.setValue('book_id', book.id);
+	}
+
+	const onCancel = () => {
+		methods.reset(defaultValues);
+		onCancelHandler();
 	}
 
 	/**

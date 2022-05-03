@@ -1,5 +1,5 @@
 import React from "react";
-import { UseControllerProps } from "react-hook-form";
+import { useController, UseControllerProps, useForm, useFormContext } from "react-hook-form";
 import { View } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -7,33 +7,27 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 interface TimePickerProps extends UseControllerProps {
 	mode?: string;
 	date?: Date;
-	setDate: Date;
-	updateDate: (arg: Date) => void
 
 }
-
 
 const TimePicker = ({
 	name,
-	setDate,
-	updateDate,
 
 }: TimePickerProps) => {
-	const onChange = (e: any, date: any) => {
-		updateDate(date)
+	const formContext = useFormContext();
 
+	const { field } = useController({name})
 
-}
 	return (
 		<View>
 			<DateTimePicker
 			testID="dateTimePicker"
-			value={setDate}
+			value={field.value}
 			mode={'time'}
 			is24Hour={true}
 			display={'spinner'}
 			minuteInterval={1}
-			onChange={onChange}
+			onChange={field.onChange}
 			/>
 	</View>
 );
