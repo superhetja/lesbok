@@ -137,7 +137,7 @@ const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
 				submitHandler={isEditing ? handleEditEntry : handleAddEntry}
 				submitLabel={isEditing? 'Breyta': 'Skrá'}
 				recentBooks={books}
-				onCancel={() => navigation.goBack()}
+				onCancelHandler={() => navigation.goBack()}
 				onCancelLabel='Hætta við'
 				/>
 		</Layout>

@@ -1,8 +1,6 @@
-import { TopNavigation, Text, Button } from '@ui-kitten/components';
+import { Button } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, View } from 'react-native';
-import SetNotifications from '../../components/Notifications/Notifications';
-import styles from '../styles';
+import {  View } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { allowsNotificationsAsync, cancelNotification, getAllNotifications, requestPermissionsAsync } from '../Notification/notification'
 import { NotificationList } from '../../components/Lists';
@@ -23,6 +21,7 @@ const NotificationScreen = ({navigation}: NotificationScreenProps) => {
 			const getNotifictions = async () => {
 				const n = await getAllNotifications();
 				setNotifications(n);
+				console.log(n)
 			}
 			getNotifictions();
 			setNeedRefetch(false);

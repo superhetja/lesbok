@@ -29,22 +29,19 @@ const SetNotifications = ({onSubmitCallback}: SetNotificationsProps) => {
 	})
 
 
-	const onSubmit = () => {
-		methods.handleSubmit(data => {
-
-			data.days.forEach(index => {
-				schedulePushNotification('Lesbók', 'Ertu að gleyma að lesa?', '', data.time, DAYS[index.row])
+	const onSubmit = methods.handleSubmit(async(data) => {
+			data.days.forEach(async (index) => {
+				await schedulePushNotification('Lesbók', 'Ertu að gleyma að lesa?', '', data.time, DAYS[index.row])
 			})
 			onSubmitCallback();
 		})
-	}
 
 	return (
 		<Layout style={{padding: 10}}>
 			<FormProvider {...methods}>
 					<Text category='s1'>Tími:</Text>
 					<TimePicker
-						name={"time"}
+						name="time"
 					/>
 					<Text category='s1'>Dagar:</Text>
 					<DateChecker
