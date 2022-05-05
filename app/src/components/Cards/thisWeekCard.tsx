@@ -11,7 +11,7 @@ type ThisWeekCardProps = {
 }
 
 const ThisWeekCard = ({readThisWeek}: ThisWeekCardProps) => {
-	readThisWeek=5;
+	readThisWeek = 5;
 	const [visible, setVisible] = useState(false)
 	const timeOut = () => {
 		setVisible(true);
