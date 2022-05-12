@@ -1,7 +1,6 @@
 import { ListItem } from "@ui-kitten/components";
-import { GestureResponderEvent } from "react-native";
 import { getDateFormated } from "../../utils/helpers";
-import { EditButton } from "../Buttons";
+import { IconButton } from "../Buttons";
 
 
 type EntryListItemProps = {
@@ -16,7 +15,7 @@ type EntryListItemProps = {
 }
 
 const AccessoryRight = (callback: () => void) => (
-	<EditButton onPress={callback} />
+	<IconButton icon='edit' onPress={callback} />
 )
 
 const EntryListItem = ({ title, from, to, id, date, comment='', onEdit, onCardPress }: EntryListItemProps) => {

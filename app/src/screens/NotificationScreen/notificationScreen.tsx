@@ -1,32 +1,33 @@
 import { Button } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
-import {  View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { allowsNotificationsAsync, cancelNotification, getAllNotifications, requestPermissionsAsync } from '../Notification/notification'
 import { NotificationList } from '../../components/Lists';
-import { RootStackScreenProps } from '../../navigation';
+import { GuardianStackScreenProps, SettingsStackParamList, SettingsStackScreenProps } from '../../navigation/types';
+import { useIsFocused } from '@react-navigation/native';
 
-type NotificationScreenProps = RootStackScreenProps<'Notification'>;
+type NotificationScreenProps = SettingsStackScreenProps<'Notification'>;
 
 const NotificationScreen = ({navigation}: NotificationScreenProps) => {
 	const [notifications, setNotifications] = useState<Notifications.NotificationRequest[]>([]);
 	const [needRefetch, setNeedRefetch] = useState(true);
 
+	const isFocused = useIsFocused();
+
 	/**
 	 * We want to check everytime if we need to refetch notifications!
 	 */
 	useEffect(() => {
-		if(needRefetch) {
 
 			const getNotifictions = async () => {
 				const n = await getAllNotifications();
 				setNotifications(n);
-				console.log(n)
 			}
 			getNotifictions();
 			setNeedRefetch(false);
-		}
-	})
+
+	},[isFocused, needRefetch])
 
 	/**
 	 * We only want to register once!
@@ -46,14 +47,13 @@ const NotificationScreen = ({navigation}: NotificationScreenProps) => {
 		setNeedRefetch(true);
 	}
 
-
 	return(
-		<View style={{flex:1}}>
+		<SafeAreaView style={{flex:1}}>
 			<Button onPress={() => navigation.navigate('NotificationForm')}>Skrá nýja tilkynningu</Button>
 			{notifications && notifications.length !== 0 &&
 					<NotificationList notifications={notifications} onDeleteCallback={onDeleteCallback}/>
 				}
-		</View>
+		</SafeAreaView>
 
 	)
 }

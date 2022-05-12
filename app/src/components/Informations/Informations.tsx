@@ -13,12 +13,12 @@ const Informations = () => {
 		<View style={{alignItems: 'center'}}>
 			<View style={{padding: 10}}>
 			<Text style={{fontSize: 20, fontWeight: 'bold'}}>Heimalestur</Text>
-		<Text style={{fontSize: 16, justifyContent: 'center', paddingTop: 10}}>Nemendur lesa í 15 mínútur í senn. Þau lesa eins margar blaðsíður og þau komast yfir á þessum 15 mínútum. Nauðsynlegt er að þau lesi hverja blaðsíðu 2x, sérstaklega ef þau þurfa að æfa lesskilning, orðaforða eða hraða.</Text>
+		<Text style={{fontSize: 16,  paddingTop: 10}}>Nemendur lesa í 15 mínútur í senn. Þau lesa eins margar blaðsíður og þau komast yfir á þessum 15 mínútum. Nauðsynlegt er að þau lesi hverja blaðsíðu 2x, sérstaklega ef þau þurfa að æfa lesskilning, orðaforða eða hraða.</Text>
 			</View>
 		</View>
 		<View style={{padding: 10}}>
 		<Text style={{fontSize: 20, fontWeight: 'bold'}} >Námsmat heimalesturs</Text>
-		<Text style={{fontSize: 16, justifyContent: 'center', paddingTop: 10}}>Námsmat fer eftir þeim skiptum sem nemendur lesa heima í hverjum mánuði.</Text>
+		<Text style={{fontSize: 16, paddingTop: 10}}>Námsmat fer eftir þeim skiptum sem nemendur lesa heima í hverjum mánuði.</Text>
 		<View style={{alignItems: 'center'}}>
 
 		<Text style={{color: "#3399FF", paddingTop: 10}}>21-28x: Framúrskarandi</Text>

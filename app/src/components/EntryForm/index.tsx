@@ -111,7 +111,6 @@ const EntryForm = ({isVisible, setIsVisible, selectedId, toggleModal}: EntryForm
 			})
 		} catch {
 			console.log('ERROR');
-			console.log(editResult);
 		}
 	};
 

@@ -1,11 +1,8 @@
-import { Card, Layout, Text } from "@ui-kitten/components";
-import { EntryResponse } from "../../utils/types";
-import { Dispatch } from 'react';
+import { Text } from "@ui-kitten/components";
 import { MessageSquare } from 'react-native-feather'
 import { getDateFormated } from "../../utils/helpers";
-import { format } from "prettier";
-import { GestureResponderEvent, Pressable, Touchable, View } from "react-native";
-import { EditButton } from "../Buttons";
+import { GestureResponderEvent, Pressable, View } from "react-native";
+import { IconButton } from "../Buttons";
 
 
 
@@ -15,7 +12,7 @@ type LatestEntryProp = {
 	page_to: string,
 	comment?: string,
 	date: string,
-	onEditClick: (event: GestureResponderEvent) => void
+	onEditClick?: (event: GestureResponderEvent) => void
 	onCardPress: (event: GestureResponderEvent) => void
 }
 
@@ -31,23 +28,20 @@ const LatestEntry = (
 }: LatestEntryProp ) => {
 	const formattedDate = getDateFormated(date);
 	return (
-			<Pressable onPress={onCardPress} style={{flex:1}}>
-				<View style={{flexDirection:'row', justifyContent:'space-between', marginBottom:-20}}>
+			<Pressable onPress={onCardPress} style={{flex:1, paddingVertical: 12, paddingHorizontal: 16, backgroundColor: '#fff', borderRadius: 20, marginVertical: 6}}>
+				<View style={{flexDirection:'row', justifyContent:'space-between', alignItems: 'center'}}>
+					<View>
+				<Text>{formattedDate}</Text>
 
-					<Text category="label">Seinasta færsla</Text>
-					<EditButton onPress={onEditClick} />
-				</View>
-				<View style={{justifyContent:'center', flex: 1}}>
-
-					<Text>{formattedDate}</Text>
-				<View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}}>
-					<Text category="h3">{book_name}</Text>
-					<Text style={{fontSize: 50}}>{page_from}-{page_to}</Text>
-				</View>
-				{ comment !== undefined && comment !== '' &&
-						<><MessageSquare color={'grey'} /><Text>{comment}</Text></>
-					}
+					<Text category="h5">{book_name}</Text>
 					</View>
+					{/* <Text category="label">Seinasta færsla</Text> */}
+					{/* <IconButton onPress={onEditClick} icon='edit' /> */}
+					<Text style={{fontSize:20}}>{page_from}-{page_to}</Text>
+				</View>
+				{ (comment !== '' && comment) &&
+					<><MessageSquare color={'grey'} /><Text>{comment}</Text></>
+				}
 			</Pressable>
 
 	)

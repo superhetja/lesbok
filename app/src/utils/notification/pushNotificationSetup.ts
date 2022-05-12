@@ -23,7 +23,6 @@ const pushNotificationSetupAsync = async (user, setPushToken) => {
       return;
     }
     const token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
 		// dispatch(setExpoPushToken({expoPushToken: token}));
 		setPushToken({userId: user?.id, token: token});
   } else {

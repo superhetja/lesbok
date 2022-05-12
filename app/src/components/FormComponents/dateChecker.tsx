@@ -1,4 +1,4 @@
-import {  IndexPath, Select, SelectGroup, SelectItem } from "@ui-kitten/components";
+import {  CheckBox, IndexPath, Select, SelectGroup, SelectItem } from "@ui-kitten/components";
 import React from "react";
 import { useController, UseControllerProps, useFormContext } from "react-hook-form";
 import { StyleSheet } from "react-native";
@@ -16,13 +16,24 @@ const DateChecker = ({
 
 	const { field } = useController({name, rules})
 
+
+	const onCheck = (key: number, status:boolean) => {
+		if (key < 0) {
+			field.onChange(new Array(7).fill(status))
+		} else {
+			field.value[key] = status
+			field.onChange([...field.value])
+		}
+
+	}
+
 	const displayValue = field.value.map((index: IndexPath) => {
 		return DAYS[index.row]
 	})
 
 		return (
 			<>
-			<Select
+			{/* <Select
 				multiSelect={true}
 				selectedIndex={field.value}
 				onSelect={index => field.onChange(index as IndexPath[])}
@@ -35,6 +46,24 @@ const DateChecker = ({
 
 				</SelectGroup>
 			</Select>
+			<CheckBox key={1} checked={false} onChange={(checked) => onCheck(1, checked)}>Miðvikduagur</CheckBox> */}
+				<CheckBox
+					indeterminate={true}
+					checked={!field.value.some((v :boolean) => v === false)}
+					onChange={(checked) => onCheck(-1, checked)}
+				>Alla daga
+				</CheckBox>
+				{
+					DAYS.map((day, i) => (
+						<CheckBox
+							key={i}
+							checked={field.value[i]}
+							onChange={(checked) => onCheck(i, checked)}
+						>
+							{day}
+						</CheckBox>
+					))
+				}
 			</>
 	)
 }

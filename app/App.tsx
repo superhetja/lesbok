@@ -2,10 +2,12 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store from './configureStore';
 import * as eva from '@eva-design/eva';
-import { ApplicationProvider, Button, Layout } from '@ui-kitten/components';
+import { ApplicationProvider, Button, IconRegistry, Layout } from '@ui-kitten/components';
 import { AppNavigator } from './src/navigation';
 import FlashMessage from 'react-native-flash-message';
 import * as Notifications from 'expo-notifications';
+import {default as theme} from './theme.json';
+import {default as mapping} from './mapping.json';
 
 export default function App() {
 
@@ -19,7 +21,7 @@ export default function App() {
 
 	return (
 		<Provider store={store}>
-			<ApplicationProvider {...eva} theme={eva.light}>
+			<ApplicationProvider {...eva} theme={{...eva.light, ...theme}} customMapping={mapping}>
 					<AppNavigator />
 				<FlashMessage position={'top'} />
 			</ApplicationProvider>
