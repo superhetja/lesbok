@@ -1,10 +1,13 @@
 import { Button, Layout } from "@ui-kitten/components";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { NumberInput, TextInput, DatePickerInput, AutoTextInput } from "../FormComponents";
 import { BookWithLastPage, FormDataWithDate } from "../../utils/types";
 import styles from "./styles";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { emptyValues } from "../../utils/helpers";
+
+
 // import {keyboardSize} from '../../utils/keyboardSize/keyboardSize'
 
 
@@ -34,6 +37,8 @@ const EntryForm = ({
 		}, [defaultValues])
 	});
 
+	const [entryDate, setEntryDate] = useState(new Date(defaultValues.date_of_entry));
+
 
 	/**
 	 * Reset the form values if defaultValues changes
@@ -48,8 +53,8 @@ const EntryForm = ({
 	 * @param book The selected book object
 	 */
 	const onSelectedBook = (book: BookWithLastPage) => {
-		methods.resetField('book_from', {defaultValue: parseInt(book.last_page) + 1});
-		methods.resetField('book_to', {defaultValue: parseInt(book.last_page) + 2});
+		methods.setValue('book_from', parseInt(book.last_page) + 1);
+		methods.setValue('book_to', parseInt(book.last_page) + 2);
 		methods.setValue('book_id', book.id);
 	}
 
@@ -115,11 +120,11 @@ const EntryForm = ({
 							name="comment"
 							label="Athugasemd"
 							// onPress={setKeyboardSize(useKeyboardSize)}
-
+							multiline={true}
 							/>
 						<Layout style={styles.actionWrapper}>
 							<Button onPress={onSubmit} >{submitLabel}</Button>
-							<Button onPress={onCancel} >{onCancelLabel}</Button>
+							<Button onPress={onCancel} status='basic'>{onCancelLabel}</Button>
 						</Layout>
 					</FormProvider>
 						</KeyboardAwareScrollView>

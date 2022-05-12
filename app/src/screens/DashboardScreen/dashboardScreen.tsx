@@ -28,6 +28,10 @@ const DashboardScreen = ({navigation}: DashboardScreenProps) => {
 		})
 	});
 
+	const onEntrySelect = (entryId: string) => {
+		navigation.navigate('DetailedEntry', {entryId})
+	}
+
 
 
 	/**
@@ -90,7 +94,7 @@ const DashboardScreen = ({navigation}: DashboardScreenProps) => {
 				<Layout style={{ backgroundColor: 'transparent', flex: 1, marginVertical: -6}} >
 
 				{ entry &&
-				<LatestEntriesList data={entry} />
+				<LatestEntriesList data={entry} onEntrySelect={onEntrySelect}/>
 			}
 			</Layout>
 			</Layout>

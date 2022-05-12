@@ -6,10 +6,11 @@ import BottomNavigationStack from "./bottomNavigationStack";
 import SettingsStack from "./settingsStack";
 import { GuardianStackParamList } from "./types"
 import { DetailedEntryScreen, EntryFormScreen } from "../screens";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../slices/authSlice";
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { X } from "react-native-feather";
 
 export function getHeaderTitle(route: RouteProp<GuardianStackParamList, 'Home'| 'Settings'>) {
   // If the focused route is not found, we need to assume it's the initial screen
@@ -92,19 +93,21 @@ const GuardianStack = () => {
 				<Stack.Screen
 					component={EntryFormScreen}
 					name='EntryForm'
-					options={{
+					options={({route}) => ({
 						presentation: 'containedModal',
-						title: ''
-					}}
+						title: route.params.entryId ? 'Breyta Færslu' : 'Skrá færslu',
+						headerRight: () => <></>
+					})}
 				/>
 				<Stack.Screen
 					component={DetailedEntryScreen}
 					name='DetailedEntry'
-					options={{
+					options={({navigation})=>({
 						presentation: 'modal',
 						title: '',
-						headerRight: () => <></>
-					}}
+						headerRight: () => <></>,
+						headerLeft: () => <Pressable onPress={() => navigation.goBack()}><X/></Pressable>
+					})}
 				/>
 			</Stack.Group>
 		</Stack.Navigator>

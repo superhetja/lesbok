@@ -1,4 +1,5 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from '@ui-kitten/components';
 import {
 	useController,
 	UseControllerProps,
@@ -35,7 +36,7 @@ const ControlledNumberInput = ({
 
 	return (
 		<View style={styles.container}>
-			{label && <Text style={styles.label}>{label}</Text>}
+			{label && <Text category='label'>{label}</Text>}
 			<View style={styles.container}>
 				<NumericInput
 					onChange={field.onChange}

@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput as RNTextInput, View, Text } from 'react-native';
+import { StyleSheet, TextInput as RNTextInput, TextInputProps as RNTextInputProps, View, Text } from 'react-native';
 import {
 	useController,
 	UseControllerProps,
@@ -8,7 +8,7 @@ import styles from './styles';
 import { useMemo } from 'react';
 import { Autocomplete, Input } from '@ui-kitten/components';
 
-interface TextInputProps extends UseControllerProps {
+interface TextInputProps extends UseControllerProps, RNTextInputProps {
 	placeHolder?: string;
 	defaultValue?: string;
 	label?: string;

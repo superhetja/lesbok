@@ -19,8 +19,6 @@ function providesList<R extends { id: string | number }[], T extends string>(
   resultsWithIds: R | undefined,
   tagType: T
 ) {
-	console.log('PROVIDESLIST')
-	console.log(resultsWithIds)
   return resultsWithIds
     ? [
         { type: tagType, id: 'LIST' },
@@ -99,7 +97,7 @@ export const entryApi = createApi({
 					...body,
 				},
 			}),
-			invalidatesTags: [{ type: 'Entries', id: 'LIST' }, 'ReadThisWeek'],
+			invalidatesTags: [{ type: 'Entries', id: 'LIST' }, 'ReadThisWeek', 'Score'],
 		}),
 		editEntryById: build.mutation<Entry, UpdateEntryDto>({
 			query: ({ id, ...body }) => ({
@@ -115,6 +113,7 @@ export const entryApi = createApi({
 		}),
 		getStudentScore: build.query<number,string>({
 			query: (id) => `/students/${id}/score`,
+			providesTags: (result, error, id) => [{type: 'Score', id}]
 		}),
 		getGroupById: build.query<GroupDetailedResponse, string>({
 			query: (id) => `/groups/${id}`,
@@ -122,7 +121,7 @@ export const entryApi = createApi({
 		}),
 		getStudentById: build.query<StudentResponse, string>({
 			query: (id) => `/students/${id}`,
-			providesTags: (result, error, id) => [{type: 'Score', id}]
+			// providesTags: (result, error, id) => [{type: 'Score', id}]
 		}),
 		getStudentEntries: build.query<StudentEntryResponse, string>({
 			query: (id) => `/students/${id}/entries`,

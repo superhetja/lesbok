@@ -17,8 +17,6 @@ const ListScreen = ({route, navigation}: ListScreenProps) => {
 		return ( <Text>Úpps eitthvað fór úrskeiðis</Text>)
 	}
 
-	navigation.setOptions({title: 'Færslur'})
-
 	const {data: studentEntries, isFetching, isLoading} = useGetStudentEntriesQuery(studentID);
 	const dispatch = useDispatch();
 

@@ -59,14 +59,13 @@ const AutoControlledTextInput = ({
   });
 
   const onSelect = (index : any) => {
-		onSelectCallbackFn && onSelectCallbackFn(list[index])
-		field.onChange(list[index].name)
+		onSelectCallbackFn && onSelectCallbackFn(data[index])
+		field.onChange(data[index].name)
   };
 
   const onChangeText = (query: string) => {
 		field.onChange(query)
     setData(list.filter(item => filter(item, query)));
-
   };
 
   const renderOption = (item: Book, index: number) => (

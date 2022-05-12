@@ -21,7 +21,7 @@ const ThisWeekCard = ({readThisWeek}: ThisWeekCardProps) => {
 		<>
 			<DonutChart divident={readThisWeek}/>
 			{
-				readThisWeek === 5 &&
+				readThisWeek >= 5 &&
 				<Button
 					// appearance={'ghost'}
 					style={{width: 10, height: 10, borderRadius: 50, justifyContent: 'center'}}

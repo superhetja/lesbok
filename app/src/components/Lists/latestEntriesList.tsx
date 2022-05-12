@@ -4,9 +4,10 @@ import { LatestEntry } from "../Cards"
 
 type LatestEntriesListProps = {
 	data: EntryResponse[]
+	onEntrySelect: (id: string) => void
 }
 
-export const LatestEntriesList = ({data}: LatestEntriesListProps) => {
+export const LatestEntriesList = ({data, onEntrySelect}: LatestEntriesListProps) => {
 
 	const renderItem = ({item}: {item: EntryResponse}) => {
 		return(
@@ -16,7 +17,7 @@ export const LatestEntriesList = ({data}: LatestEntriesListProps) => {
 				page_to={item.page_to}
 				comment={item.comment}
 				date={item.date_of_entry}
-				onCardPress={() => console.log('press')}
+				onCardPress={() => onEntrySelect(item.id)}
 			/>
 		)
 	}

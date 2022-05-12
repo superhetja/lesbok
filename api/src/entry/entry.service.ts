@@ -50,17 +50,19 @@ export class EntryService {
 					[Op.gt]: new Date(now.valueOf() - now.getDay() * 24 * 60 * 60 * 1000),
 				},
 			},
+			distinct: true,
+			col: 'date_of_entry',
 		});
 		return count;
 	}
 
 	async studentScore(student_id: string): Promise<number> {
-		const diff =
-			(Math.floor(
-				(new Date().valueOf() - START_OF_SCHOOL.valueOf()) / (1000 * 3600 * 24)
-			) /
-				7) *
-			5;
+		// const now = new Date();
+
+		// const diff =
+		// 	Math.floor(
+		// 		(now.valueOf() - START_OF_SCHOOL.valueOf()) / (1000 * 3600 * 24) / 7
+		// 	) * 5;
 		const score = await this.entry.count({
 			where: {
 				student_id,
@@ -68,8 +70,11 @@ export class EntryService {
 					[Op.gt]: START_OF_SCHOOL,
 				},
 			},
+			distinct: true,
+			col: 'date_of_entry',
 		});
-		return Math.ceil((score / diff) * 100);
+		// return Math.ceil((score / diff) * 100);
+		return score;
 	}
 
 	// eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars

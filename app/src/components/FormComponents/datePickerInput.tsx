@@ -1,5 +1,7 @@
 import React, { LegacyRef, useRef, useState } from 'react';
-import { Datepicker, Layout, Icon, Text } from '@ui-kitten/components';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+import { Datepicker, Layout, Icon, Text, useTheme } from '@ui-kitten/components';
 import {TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import { Calendar } from 'react-native-feather'
@@ -7,10 +9,6 @@ import {
 	useController,
 	UseControllerProps,
 	useFormContext } from 'react-hook-form';
-
-const CalendarIcon = () => (
-	<Calendar/>
-)
 
 interface DatePickerProps extends UseControllerProps {
 	defaultValue?: string;
@@ -30,11 +28,18 @@ const DatePickerInput = ({
 	label='',
 	placeHolder=''
 	}: DatePickerProps) => {
+
+	const theme = useTheme();
 	const formContext = useFormContext();
 	const [warning, setWarning] = useState('');
 	const [hasWarning, setHasWarning] = useState(false)
 	const { formState } = formContext;
 	const { field } = useController({ name, rules, defaultValue })
+
+	/**
+	 * Handler for date component
+	 * @param date
+	 */
 	const onSelect = (date: Date) => {
 		const validateDate = new Date();
 		field.onChange(date)
@@ -51,16 +56,22 @@ const DatePickerInput = ({
 
 	return(
 		<View style={styles.container}>
+			<Text category='label'>{label}</Text>
 				<Datepicker
 				style={{zIndex: 1000}}
 				placeholder={placeHolder}
 				date={new Date(field.value)}
 				onSelect={date => onSelect(date)}
-				accessoryRight={CalendarIcon}
+				accessoryRight={() => <Calendar color={theme['color-primary-default']} />}
 				max={maxDate}
 				min={minDate}
 
 				/>
+				{/* <DateTimePicker
+					value={new Date(field.value)}
+					onSelect={(e, date) => onSelect(date)}
+
+				/> */}
 				{hasWarning && (
 					<Text status='warning'>{warning}</Text>
 					)}

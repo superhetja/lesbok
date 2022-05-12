@@ -9,19 +9,10 @@ import { HomeTabScreenProps, RootStackParamList, RootStackScreenProps } from "..
 import { GuardianStackScreenProps } from "../../navigation/types";
 import { useCreateEntryForIdMutation, useEditEntryByIdMutation, useGetEntriesQuery, useGetEntryByIdQuery, useGetStudentEntriesQuery } from "../../services/backend";
 import { selectCurrentUser } from "../../slices/authSlice";
-import { getDateNow } from "../../utils/helpers";
+import { emptyValues, getDateNow } from "../../utils/helpers";
 import { BookWithLastPage, EntryResponse, FormDataWithDate } from "../../utils/types";
 
 type EntryFormScreenProps = GuardianStackScreenProps<'EntryForm'>;
-
-const emptyValues: FormDataWithDate = {
-	book_id: '',
-	book_name: '',
-	book_from: 1,
-	book_to: 1,
-	comment: '',
-	date_of_entry: getDateNow(),
-}
 
 const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
 	const user = useSelector(selectCurrentUser);
