@@ -1,7 +1,7 @@
-import { ListItem } from "@ui-kitten/components";
-import { getDateFormated } from "../../utils/helpers";
-import { IconButton } from "../Buttons";
-
+import React from 'react';
+import { ListItem } from '@ui-kitten/components';
+import { getDateFormated } from '../../utils/helpers';
+import { IconButton } from '../Buttons';
 
 type EntryListItemProps = {
 	title: string;
@@ -11,23 +11,34 @@ type EntryListItemProps = {
 	id: string;
 	date: string;
 	onEdit: () => void;
-	onCardPress: (id: string) => void
+	onCardPress: (id: string) => void;
+};
+
+function AccessoryRight(callback: () => void) {
+	return <IconButton icon="edit" onPress={callback} />;
 }
 
-const AccessoryRight = (callback: () => void) => (
-	<IconButton icon='edit' onPress={callback} />
-)
-
-const EntryListItem = ({ title, from, to, id, date, comment='', onEdit, onCardPress }: EntryListItemProps) => {
+function EntryListItem({
+	title,
+	from,
+	to,
+	id,
+	date,
+	comment = '',
+	onEdit,
+	onCardPress,
+}: EntryListItemProps) {
 	const formattedDate = getDateFormated(date);
 	return (
 		<ListItem
 			title={title}
-			description={`Dags: ${formattedDate} | Bls: ${from} - ${to} ${comment? '| ' + comment : ''}`}
+			description={`Dags: ${formattedDate} | Bls: ${from} - ${to} ${
+				comment ? `| ${comment}` : ''
+			}`}
 			accessoryRight={() => AccessoryRight(onEdit)}
 			onPress={() => onCardPress(id)}
 		/>
-	)
+	);
 }
 
 export default EntryListItem;

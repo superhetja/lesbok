@@ -1,63 +1,65 @@
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import { CompositeScreenProps, NavigatorScreenParams } from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import {
+	CompositeScreenProps,
+	NavigatorScreenParams,
+} from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
 	Guardian: NavigatorScreenParams<GuardianStackParamList>;
 	Teacher: NavigatorScreenParams<TeacherStackParamList>;
 	SignIn: undefined;
+};
 
-}
-
-export type RootStackScreenProps<T extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, T>;
-
+export type RootStackScreenProps<T extends keyof RootStackParamList> =
+	NativeStackScreenProps<RootStackParamList, T>;
 
 // NON AUTHENTICATED
 export type UnAuthenticatedStackParamList = {
 	SignIn: undefined;
-}
+};
 
-export type UnAuthenticatedStackScreenProps<T extends keyof UnAuthenticatedStackParamList> = NativeStackScreenProps<UnAuthenticatedStackParamList, T>;
+export type UnAuthenticatedStackScreenProps<
+	T extends keyof UnAuthenticatedStackParamList,
+> = NativeStackScreenProps<UnAuthenticatedStackParamList, T>;
 
 // TEACHER STACK TYPES
 export type TeacherStackParamList = {
 	Group: undefined;
 	Home: NavigatorScreenParams<HomeTabParamList>;
 	EntryForm: {
-		studentId: string,
-		entryId: string|undefined,
+		studentId: string;
+		entryId: string | undefined;
 	};
 	DetailedEntry: {
-		entryId: string,
+		entryId: string;
 	};
-}
+};
 
-export type TeacherStackScreenProps<T extends keyof TeacherStackParamList> = NativeStackScreenProps<TeacherStackParamList, T>;
-
+export type TeacherStackScreenProps<T extends keyof TeacherStackParamList> =
+	NativeStackScreenProps<TeacherStackParamList, T>;
 
 // GUARDIAN STACK TYPES
 export type GuardianStackParamList = {
 	Home: NavigatorScreenParams<HomeTabParamList>;
 	Settings: NavigatorScreenParams<SettingsStackParamList>;
 	EntryForm: {
-		studentId: string,
-		entryId: string|undefined,
+		studentId: string;
+		entryId: string | undefined;
 	};
 	DetailedEntry: {
-		entryId: string,
+		entryId: string;
 	};
+};
 
-}
-
-export type GuardianStackScreenProps<T extends keyof GuardianStackParamList> = NativeStackScreenProps<GuardianStackParamList, T>;
-
+export type GuardianStackScreenProps<T extends keyof GuardianStackParamList> =
+	NativeStackScreenProps<GuardianStackParamList, T>;
 
 // HOME STACK
 export type HomeTabParamList = {
-	Dashboard: {studentId: string};
-	EntryList: {studentId: string};
-}
+	Dashboard: { studentId: string };
+	EntryList: { studentId: string };
+};
 
 export type HomeTabScreenProps<T extends keyof HomeTabParamList> =
 	CompositeScreenProps<
@@ -65,23 +67,23 @@ export type HomeTabScreenProps<T extends keyof HomeTabParamList> =
 		GuardianStackScreenProps<keyof GuardianStackParamList>
 	>;
 
-
 // SETTINGS STACK
 export type SettingsStackParamList = {
 	Notification: undefined;
 	Information: undefined;
 	NotificationForm: undefined;
-}
+};
 
-export type SettingsStackScreenProps<T extends keyof SettingsStackParamList> = CompositeScreenProps<
+export type SettingsStackScreenProps<T extends keyof SettingsStackParamList> =
+	CompositeScreenProps<
 		NativeStackScreenProps<SettingsStackParamList, T>,
 		GuardianStackScreenProps<keyof GuardianStackParamList>
-		>
+	>;
 
 // FOR GLOBAL TYPING
 
 declare global {
 	namespace ReactNavigation {
-		interface RootParamList extends RootStackParamList {}
+		type RootParamList = RootStackParamList;
 	}
 }

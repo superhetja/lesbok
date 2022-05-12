@@ -1,5 +1,4 @@
-import { StyleSheet } from "react-native";
-
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	container: {
@@ -8,8 +7,6 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 	},
 	telephoneWrapper: {
-		// alignSelf: 'stretch',
-		// width: '100%',
 		flexDirection: 'row',
 		justifyContent: 'center',
 		backgroundColor: '#ffffff',
@@ -25,8 +22,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#ffffff',
 		padding: 20,
 		marginBottom: 20,
-	}
-
+	},
 });
 
 export default styles;

@@ -1,13 +1,14 @@
-import { Layout } from "@ui-kitten/components"
-import { RoleCard } from "../../components/Cards"
+import React from 'react';
+import { Layout } from '@ui-kitten/components';
+import { RoleCard } from '../../components/Cards';
 
-const SelectRoleScreen = ({}) => {
+function SelectRoleScreen({}) {
 	return (
 		<Layout>
-			<RoleCard role={'Teacher'}/>
-			<RoleCard role={'Foreldri'}/>
+			<RoleCard role="Teacher" />
+			<RoleCard role="Foreldri" />
 		</Layout>
-	)
+	);
 }
 
 export default SelectRoleScreen;

@@ -12,7 +12,6 @@ module.exports = {
 		 */
 
 		return queryInterface.bulkInsert('student', [
-			// TODO MAKE TEACHER KIDS
 			{
 				// Patient sero
 				id: '6543d601-0659-442c-838a-d31c0289d345',

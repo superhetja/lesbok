@@ -1,12 +1,12 @@
-import { StyleSheet, TextInput as RNTextInput, TextInputProps as RNTextInputProps, View, Text } from 'react-native';
+import { TextInputProps as RNTextInputProps, View, Text } from 'react-native';
 import {
 	useController,
 	UseControllerProps,
 	useFormContext,
 } from 'react-hook-form';
+import React from 'react';
+import { Input } from '@ui-kitten/components';
 import styles from './styles';
-import { useMemo } from 'react';
-import { Autocomplete, Input } from '@ui-kitten/components';
 
 interface TextInputProps extends UseControllerProps, RNTextInputProps {
 	placeHolder?: string;
@@ -15,7 +15,7 @@ interface TextInputProps extends UseControllerProps, RNTextInputProps {
 	disabled?: boolean;
 }
 
-const ControlledTextInput = ({
+function ControlledTextInput({
 	name,
 	placeHolder,
 	label,
@@ -23,7 +23,7 @@ const ControlledTextInput = ({
 	defaultValue,
 	disabled = false,
 	...inputProps
-}: TextInputProps) => {
+}: TextInputProps) {
 	const formContext = useFormContext();
 	const { formState } = formContext;
 
@@ -51,9 +51,9 @@ const ControlledTextInput = ({
 			</View>
 		</View>
 	);
-};
+}
 
-const TextInput = (props: TextInputProps) => {
+function TextInput(props: TextInputProps) {
 	const { name } = props;
 
 	const formContext = useFormContext();
@@ -70,6 +70,6 @@ const TextInput = (props: TextInputProps) => {
 	}
 
 	return <ControlledTextInput {...props} />;
-};
+}
 
 export default TextInput;

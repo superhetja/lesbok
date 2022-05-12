@@ -6,6 +6,7 @@
     "prettier",
     "plugin:prettier/recommended"
   ],
+
   "plugins": ["@typescript-eslint", "react", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

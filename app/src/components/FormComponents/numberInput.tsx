@@ -4,11 +4,10 @@ import {
 	useController,
 	UseControllerProps,
 	useFormContext,
-	useWatch,
 } from 'react-hook-form';
 import NumericInput from 'react-native-numeric-input';
+import React from 'react';
 import styles from './styles';
-import { useEffect } from 'react';
 
 interface NumericInputProps extends UseControllerProps {
 	minVal?: number;
@@ -18,16 +17,15 @@ interface NumericInputProps extends UseControllerProps {
 	label: string;
 }
 
-
-const ControlledNumberInput = ({
+function ControlledNumberInput({
 	name,
 	rules,
 	minVal,
 	maxVal,
 	defaultValue = 0,
 	label = '',
-}: NumericInputProps) => {
-	//hook will allow us to access the form's context, its methods, and state
+}: NumericInputProps) {
+	// hook will allow us to access the form's context, its methods, and state
 	const formContext = useFormContext();
 	const { formState } = formContext;
 
@@ -50,9 +48,9 @@ const ControlledNumberInput = ({
 			</View>
 		</View>
 	);
-};
+}
 
-const NumberInput = (props: NumericInputProps) => {
+function NumberInput(props: NumericInputProps) {
 	const { name } = props;
 	const formContext = useFormContext();
 
@@ -65,6 +63,6 @@ const NumberInput = (props: NumericInputProps) => {
 	}
 
 	return <ControlledNumberInput {...props} />;
-};
+}
 
 export default NumberInput;

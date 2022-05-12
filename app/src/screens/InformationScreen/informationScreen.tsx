@@ -1,14 +1,13 @@
-import React from "react"
-import { SafeAreaView } from "react-native";
-import Informations from "../../components/Informations/Informations"
+import React from 'react';
+import { SafeAreaView } from 'react-native';
+import Informations from '../../components/Informations/Informations';
 
-
-const InformationScreen = () => {
-	return(
+function InformationScreen() {
+	return (
 		<SafeAreaView>
-			<Informations/>
+			<Informations />
 		</SafeAreaView>
-	)
+	);
 }
 
 export default InformationScreen;

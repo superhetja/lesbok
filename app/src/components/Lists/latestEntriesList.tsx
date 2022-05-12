@@ -1,6 +1,7 @@
-import { FlatList } from "react-native"
-import { EntryResponse } from "../../utils/types"
-import { LatestEntry } from "../Cards"
+import React from 'react';
+import { FlatList } from 'react-native';
+import { EntryResponse } from '../../utils/types';
+import { LatestEntry } from '../Cards';
 
 type LatestEntriesListProps = {
 	data: EntryResponse[]
@@ -9,8 +10,8 @@ type LatestEntriesListProps = {
 
 export const LatestEntriesList = ({data, onEntrySelect}: LatestEntriesListProps) => {
 
-	const renderItem = ({item}: {item: EntryResponse}) => {
-		return(
+	const renderItem = ({ item }: { item: EntryResponse }) => {
+		return (
 			<LatestEntry
 				book_name={item.book.name}
 				page_from={item.page_from}
@@ -19,14 +20,16 @@ export const LatestEntriesList = ({data, onEntrySelect}: LatestEntriesListProps)
 				date={item.date_of_entry}
 				onCardPress={() => onEntrySelect(item.id)}
 			/>
-		)
-	}
+		);
+	};
 
 	return (
 		<FlatList
-			contentContainerStyle={{paddingBottom: 40}}
+			contentContainerStyle={{ paddingBottom: 40 }}
 			data={data}
 			renderItem={renderItem}
 		/>
-	)
+	);
 }
+
+export default LatestEntriesList;

@@ -1,5 +1,3 @@
-import { IndexPath } from "@ui-kitten/components";
-
 export enum Gender {
 	MALE = 'Male',
 	FEMALE = 'Female',
@@ -28,18 +26,17 @@ export interface Entry {
 	book: {
 		id: string;
 		title: string;
-	}
+	};
 }
 
 export type UserResponse = {
 	id: string;
 	name: string;
 	national_id: string;
-  email: string;
-  created: string;
-  modified: string;
-
-}
+	email: string;
+	created: string;
+	modified: string;
+};
 
 export interface EntryWithUser extends EntryResponse {
 	user: UserResponse;
@@ -56,12 +53,12 @@ export type FormDataWithDate = {
 	comment?: string;
 	date_of_entry: string;
 	book_id: string;
-}
+};
 
 export type NotificationData = {
 	time: Date;
 	days: boolean[];
-}
+};
 
 export interface Book {
 	id: string;
@@ -75,7 +72,7 @@ export type User = {
 	name: string;
 	email: string;
 	national_id: string;
-}
+};
 
 export interface StudentResponse {
 	id: string;
@@ -112,17 +109,17 @@ export type AccessResponse = {
 	role: Roles;
 	created: Date;
 	modified: Date;
-}
+};
 
 export type UserGroupResponse = {
 	id: string;
 	name: string;
 	school_id: string;
 	description: string;
-	Access : AccessResponse;
+	Access: AccessResponse;
 	created: Date;
 	modified: Date;
-}
+};
 
 export type GroupDetailedResponse = {
 	id: string;
@@ -132,7 +129,7 @@ export type GroupDetailedResponse = {
 	students: StudentResponse[];
 	created: Date;
 	modified: Date;
-}
+};
 
 export type UserDetailResponse = {
 	id: string;
@@ -143,9 +140,9 @@ export type UserDetailResponse = {
 	modified: Date;
 	children: StudentResponse[];
 	groups: UserGroupResponse[];
-}
+};
 
 export type StudentEntryResponse = {
 	id: string;
 	entries: EntryResponse[];
-}
+};

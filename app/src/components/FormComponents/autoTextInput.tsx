@@ -1,18 +1,23 @@
+/* eslint-disable react/require-default-props */
 import React, { useState, useEffect } from 'react';
 import { Keyboard, KeyboardEventName, Platform, View } from 'react-native';
 import { Autocomplete, AutocompleteItem, Text } from '@ui-kitten/components';
+import {
+	UseControllerProps,
+	useFormContext,
+	useController,
+} from 'react-hook-form';
 import styles from './styles';
-import { UseControllerProps, useFormContext, useController } from 'react-hook-form';
 import { Book, BookWithLastPage } from '../../utils/types';
 
 const showEvent: KeyboardEventName = Platform.select({
 	android: 'keyboardDidShow',
-  default: 'keyboardWillShow',
+	default: 'keyboardWillShow',
 });
 
 const hideEvent: KeyboardEventName = Platform.select({
 	android: 'keyboardDidHide',
-  default: 'keyboardWillHide',
+	default: 'keyboardWillHide',
 });
 
 interface AutoTextInputProps extends UseControllerProps {
@@ -23,7 +28,7 @@ interface AutoTextInputProps extends UseControllerProps {
 	onSelectCallbackFn?: (book: BookWithLastPage) => void;
 }
 
-const AutoControlledTextInput = ({
+function AutoControlledTextInput({
 	name,
 	list,
 	placeHolder,
@@ -32,50 +37,48 @@ const AutoControlledTextInput = ({
 	label,
 	onSelectCallbackFn,
 	...inputProps
-}: AutoTextInputProps) => {
+}: AutoTextInputProps) {
 	const formContext = useFormContext();
 	const { formState } = formContext;
 
-	const { field } = useController({name, rules});
-	const { field: from_field } = useController({name: 'book_from'});
+	const { field } = useController({ name, rules });
+	const { field: from_field } = useController({ name: 'book_from' });
 
-	const filter = (item: Book, query: string) => item.name.toLowerCase().includes(query.toLowerCase());
-  const [data, setData] = useState(list);
-  const [placement, setPlacement] = useState('bottom');
+	const filter = (item: Book, query: string) =>
+		item.name.toLowerCase().includes(query.toLowerCase());
+	const [data, setData] = useState(list);
+	const [placement, setPlacement] = useState('bottom');
 
-  useEffect(() => {
-    const keyboardShowListener = Keyboard.addListener(showEvent, () => {
-      setPlacement('top');
-    });
+	useEffect(() => {
+		const keyboardShowListener = Keyboard.addListener(showEvent, () => {
+			setPlacement('top');
+		});
 
-    const keyboardHideListener = Keyboard.addListener(hideEvent, () => {
-      setPlacement('bottom');
-    });
+		const keyboardHideListener = Keyboard.addListener(hideEvent, () => {
+			setPlacement('bottom');
+		});
 
-    return () => {
-      keyboardShowListener.remove();
-      keyboardHideListener.remove();
-    };
-  });
+		return () => {
+			keyboardShowListener.remove();
+			keyboardHideListener.remove();
+		};
+	});
 
-  const onSelect = (index : any) => {
-		onSelectCallbackFn && onSelectCallbackFn(data[index])
-		field.onChange(data[index].name)
-  };
+	const onSelect = (index: any) => {
+		onSelectCallbackFn && onSelectCallbackFn(data[index]);
+		field.onChange(data[index].name);
+	};
 
-  const onChangeText = (query: string) => {
-		field.onChange(query)
-    setData(list.filter(item => filter(item, query)));
-  };
+	const onChangeText = (query: string) => {
+		field.onChange(query);
+		setData(list.filter(item => filter(item, query)));
+	};
 
-  const renderOption = (item: Book, index: number) => (
-    <AutocompleteItem
-      key={index}
-      title={item.name}
-    />
-  );
+	const renderOption = (item: Book, index: number) => (
+		<AutocompleteItem key={index} title={item.name} />
+	);
 
-  return (
+	return (
 		<View style={styles.container}>
 			<Autocomplete
 				label={label}
@@ -89,13 +92,13 @@ const AutoControlledTextInput = ({
 				{data.map(renderOption)}
 			</Autocomplete>
 			{formState?.errors && (
-					<Text style={styles.error}>{formState?.errors[name]?.message}</Text>
-				)}
+				<Text style={styles.error}>{formState?.errors[name]?.message}</Text>
+			)}
 		</View>
-  );
-};
+	);
+}
 
-const AutoTextInput = (props: AutoTextInputProps) => {
+function AutoTextInput(props: AutoTextInputProps) {
 	const { name } = props;
 
 	const formContext = useFormContext();
@@ -112,7 +115,6 @@ const AutoTextInput = (props: AutoTextInputProps) => {
 	}
 
 	return <AutoControlledTextInput {...props} />;
-};
-
+}
 
 export default AutoTextInput;

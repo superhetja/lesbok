@@ -1,1 +1,1 @@
-export {default as Rewards} from './Rewards';
+export { default as Rewards } from './Rewards';
