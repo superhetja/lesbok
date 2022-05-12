@@ -1,14 +1,15 @@
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { BottomNavigation as UIKBottomNavigation, BottomNavigationTab, Layout } from "@ui-kitten/components"
-import { Home, List, User } from "react-native-feather";
+import { Home, List } from "react-native-feather";
 import { AddButton } from "../Buttons";
-import { useDispatch, useSelector } from "react-redux";
-import { clearSelectedEntry, selectCurrentStudent, selectedEntryId, setCurrentStudent } from "../../slices/globalSlice";
+import { useSelector } from "react-redux";
+import { selectCurrentStudent } from "../../slices/globalSlice";
 import styles from "./styles";
 
 
 const BottomNavigation = ({ navigation, state }:BottomTabBarProps) => {
 	const student = useSelector(selectCurrentStudent);
+
 
 	return (
 		<Layout>
@@ -23,9 +24,8 @@ const BottomNavigation = ({ navigation, state }:BottomTabBarProps) => {
 					// get the student id from route
 					onSelect={index => navigation.navigate(state.routeNames[index], state.routes[state.index].params)}
 				>
-					<BottomNavigationTab icon={() => (<Home />)} />
-					<BottomNavigationTab icon={() => (<List />)} />
-					{/* <BottomNavigationTab icon={() => (<User />)} /> */}
+					<BottomNavigationTab icon={(props) => (<Home {...props} />)} />
+					<BottomNavigationTab icon={(props) => (<List {...props} />)} />
 				</UIKBottomNavigation>
 			</Layout>
 		</Layout>

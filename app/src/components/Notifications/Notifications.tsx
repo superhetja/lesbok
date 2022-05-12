@@ -6,6 +6,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import TimePicker from "../FormComponents/timePicker";
 import { NotificationData } from "../../utils/types";
 import { DAYS } from "../../utils/constants";
+import { showMessage } from "react-native-flash-message";
 
 type SetNotificationsProps = {
 	onSubmitCallback: () => void
@@ -17,21 +18,27 @@ const SetNotifications = ({onSubmitCallback}: SetNotificationsProps) => {
 		defaultValues: {
 			time: new Date(),
 			days: [
-				new IndexPath(0, 0),
-				new IndexPath(1, 0),
-				new IndexPath(2, 0),
-				new IndexPath(3, 0),
-				new IndexPath(4, 0),
-				new IndexPath(5, 0),
-				new IndexPath(6, 0),
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true
 			]
 		}
 	})
 
 
 	const onSubmit = methods.handleSubmit(async(data) => {
-			data.days.forEach(async (index) => {
-				await schedulePushNotification('Lesbók', 'Ertu að gleyma að lesa?', '', data.time, DAYS[index.row])
+			data.days.forEach(async (value, index) => {
+				if (value) {
+					await schedulePushNotification('Lesbók', 'Ertu að gleyma að lesa?', '', data.time, DAYS[index])
+				}
+			})
+			showMessage({
+				message: 'Áminning hefur verið skráð',
+				type: 'success'
 			})
 			onSubmitCallback();
 		})

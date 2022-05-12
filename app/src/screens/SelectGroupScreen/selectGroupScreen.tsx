@@ -16,7 +16,7 @@ const SelectGroupScreen = ({navigation}: SelectGroupScreenProps) => {
 		dispatch(setCurrentStudent({studentId: id}))
 		navigation.navigate('Home', {
 			screen: 'Dashboard',
-			params: {studentId: id, name: name}
+			params: {studentId: id}
 		});
 	}
 

@@ -1,7 +1,9 @@
+import { createEntityAdapter } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { ScreenContext } from 'react-native-screens';
 import { RootState } from '../../configureStore';
 import { BASE_URL } from '../utils/constants';
-import { Entry, EntryResponse, EntryWithUser, GroupDetailedResponse, StudentEntryResponse, StudentResponse, User, UserDetailResponse } from '../utils/types';
+import { Entry, EntryResponse, EntryWithUser, GroupDetailedResponse, StudentEntryResponse, StudentResponse, StudentResponseWithScore, User, UserDetailResponse } from '../utils/types';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
 
 export interface UserResponse {
@@ -26,6 +28,7 @@ function providesList<R extends { id: string | number }[], T extends string>(
       ]
     : [{ type: tagType, id: 'LIST' }]
 }
+
 
 // Create our baseQuery instance
 // const baseQuery = fetchBaseQuery({
@@ -59,7 +62,7 @@ const baseQuery = () => {
 export const entryApi = createApi({
 	reducerPath: 'entryApi',
 	baseQuery: baseQuery(),
-	tagTypes: ['Entries', 'ReadThisWeek', 'Groups'],
+	tagTypes: ['Entries', 'ReadThisWeek', 'Groups', 'Score'],
 	endpoints: (build) => ({
 		login: build.mutation<{user:UserDetailResponse, token: string}, LoginRequest>({
 			query: (credentials) => ({
@@ -104,21 +107,22 @@ export const entryApi = createApi({
 				method: 'PUT',
 				body,
 			}),
-			invalidatesTags: (result, error, {id}) => [{type: 'Entries', id}]
+			invalidatesTags: (result, error, {id}) => [{type: 'Entries', id}, {type: 'Score', id}, {type: 'ReadThisWeek', id}]
 		}),
-		getReadThisWeek: build.query<number, void>({
-			query: () => '/entries/thisWeek/e4e59bbc-5567-4dc8-a4a4-35c879166aed',
-			providesTags: ['ReadThisWeek']
+		getReadThisWeek: build.query<number, string>({
+			query: (id) => `/students/${id}/read_week`,
+			providesTags: (result, error, id) => [{type: 'ReadThisWeek', id}]
 		}),
-		getStudentScore: build.query<number,void>({
-			query: () => '/entries/score/e4e59bbc-5567-4dc8-a4a4-35c879166aed',
+		getStudentScore: build.query<number,string>({
+			query: (id) => `/students/${id}/score`,
 		}),
 		getGroupById: build.query<GroupDetailedResponse, string>({
 			query: (id) => `/groups/${id}`,
 			providesTags: (result, error, id) => [{ type: 'Groups', id}]
 		}),
 		getStudentById: build.query<StudentResponse, string>({
-			query: (id) => `/students/${id}`
+			query: (id) => `/students/${id}`,
+			providesTags: (result, error, id) => [{type: 'Score', id}]
 		}),
 		getStudentEntries: build.query<StudentEntryResponse, string>({
 			query: (id) => `/students/${id}/entries`,

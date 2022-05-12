@@ -1,6 +1,6 @@
 import { GestureResponderEvent, Pressable, Text, } from "react-native";
 import { selectEntry } from "../../slices/globalSlice";
-import { List } from "@ui-kitten/components";
+import { Divider, List } from "@ui-kitten/components";
 import EntryListItem from "./entryListItem";
 import styles from './styles';
 import { EntryResponse } from "../../utils/types";
@@ -25,6 +25,7 @@ const EntryList = ({
 				entries &&
 				<List
 				data={entries}
+				ItemSeparatorComponent={Divider}
 				renderItem={({item}) => (
 					<EntryListItem
 					title={item.book.name}

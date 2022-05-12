@@ -10,3 +10,4 @@ export {default as NotificationScreen} from './NotificationScreen/notificationSc
 export {default as SelectGroupScreen} from './SelectGroupScreen/selectGroupScreen';
 export {default as DetailedEntryScreen} from './DetailedEntryScreen/detailedEntryScreen';
 export {default as NotificationFormScreen } from './NotificationFormScreen/notificationFormScreen';
+export {default as SelectRoleScreen } from './SelectRoleScreen/selectRoleScreen';

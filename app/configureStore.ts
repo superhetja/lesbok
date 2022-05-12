@@ -16,6 +16,8 @@ const store = configureStore({
 	// and other useful features of `rtk-query`.
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(entryApi.middleware),
+
+	devTools: window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

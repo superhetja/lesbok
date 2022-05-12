@@ -1,8 +1,8 @@
 import { View } from "react-native";
 import SetNotifications from "../../components/Notifications/Notifications";
-import { RootStackScreenProps } from "../../navigation";
+import { SettingsStackScreenProps } from "../../navigation/types";
 
-type NotificationFormScreenProps = RootStackScreenProps<'NotificationForm'>;
+type NotificationFormScreenProps = SettingsStackScreenProps<'NotificationForm'>;
 
 
 const NotificationFormScreen = ({navigation}: NotificationFormScreenProps) => {

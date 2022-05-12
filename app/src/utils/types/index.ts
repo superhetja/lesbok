@@ -60,7 +60,7 @@ export type FormDataWithDate = {
 
 export type NotificationData = {
 	time: Date;
-	days: IndexPath[];
+	days: boolean[];
 }
 
 export interface Book {
@@ -77,7 +77,7 @@ export type User = {
 	national_id: string;
 }
 
-export type StudentResponse = {
+export interface StudentResponse {
 	id: string;
 	name: string;
 	national_id: string;
@@ -85,6 +85,10 @@ export type StudentResponse = {
 	gender: Gender;
 	created: Date;
 	modified: Date;
+}
+
+export interface StudentResponseWithScore {
+	score: number;
 }
 
 export interface EntryResponse {

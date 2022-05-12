@@ -72,7 +72,7 @@ const EntryForm = ({
 	const today = new Date();
 	return (
 		<>
-				<Layout style={{...styles.container}}>
+			<Layout style={{...styles.container}}>
 					<KeyboardAwareScrollView>
 
 					<FormProvider {...methods}>

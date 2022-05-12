@@ -42,8 +42,6 @@ const ControlledNumberInput = ({
 					value={field.value}
 					minValue={minVal}
 					maxValue={maxVal}
-
-
 				/>
 				{formState.errors && (
 					<Text style={styles.error}>{formState?.errors[name]?.message}</Text>
