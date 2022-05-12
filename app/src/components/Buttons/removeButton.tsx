@@ -1,19 +1,20 @@
-import { Button } from "@ui-kitten/components"
-import { GestureResponderEvent } from "react-native"
-import { Trash } from "react-native-feather"
+import React from 'react';
+import { Button } from '@ui-kitten/components';
+import { GestureResponderEvent } from 'react-native';
+import { Trash } from 'react-native-feather';
 
 type RemoveButtonProps = {
-	onPress: (event: GestureResponderEvent) => void
-}
+	onPress: (event: GestureResponderEvent) => void;
+};
 
-const RemoveButton = ({ onPress }: RemoveButtonProps) => {
+function RemoveButton({ onPress }: RemoveButtonProps) {
 	return (
 		<Button
-			appearance='ghost'
+			appearance="ghost"
 			onPress={onPress}
-			accessoryLeft={() => (<Trash/>)}
+			accessoryLeft={() => <Trash />}
 		/>
-	)
+	);
 }
 
 export default RemoveButton;

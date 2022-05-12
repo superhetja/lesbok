@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	input: {
@@ -13,10 +13,9 @@ const styles = StyleSheet.create({
 		padding: 20,
 	},
 	actionWrapper: {
-		// alignSelf: 'stretch',
 		flexDirection: 'row',
-		justifyContent: 'space-around'
-	}
+		justifyContent: 'space-around',
+	},
 });
 
 export default styles;

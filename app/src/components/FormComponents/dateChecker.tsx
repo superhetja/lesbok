@@ -1,80 +1,62 @@
-import {  CheckBox, IndexPath, Select, SelectGroup, SelectItem } from "@ui-kitten/components";
-import React from "react";
-import { useController, UseControllerProps, useFormContext } from "react-hook-form";
-import { StyleSheet } from "react-native";
-import { DAYS } from "../../utils/constants";
-import { NotificationData } from "../../utils/types";
+import { CheckBox, IndexPath } from '@ui-kitten/components';
+import React from 'react';
+import {
+	useController,
+	UseControllerProps,
+	useFormContext,
+} from 'react-hook-form';
+import { StyleSheet } from 'react-native';
+import { DAYS } from '../../utils/constants';
 
-interface DateCheckerProps extends UseControllerProps {
-}
+type DateCheckerProps = UseControllerProps;
 
-const DateChecker = ({
-	name,
-	rules
-}: DateCheckerProps) => {
+function DateChecker({ name, rules }: DateCheckerProps) {
 	const formContext = useFormContext();
 
-	const { field } = useController({name, rules})
+	const { field } = useController({ name, rules });
 
-
-	const onCheck = (key: number, status:boolean) => {
+	const onCheck = (key: number, status: boolean) => {
 		if (key < 0) {
-			field.onChange(new Array(7).fill(status))
+			field.onChange(new Array(7).fill(status));
 		} else {
-			field.value[key] = status
-			field.onChange([...field.value])
+			field.value[key] = status;
+			field.onChange([...field.value]);
 		}
-
-	}
+	};
 
 	const displayValue = field.value.map((index: IndexPath) => {
-		return DAYS[index.row]
-	})
+		return DAYS[index.row];
+	});
 
-		return (
-			<>
-			{/* <Select
-				multiSelect={true}
-				selectedIndex={field.value}
-				onSelect={index => field.onChange(index as IndexPath[])}
-				value={displayValue.join(', ')}
+	return (
+		<>
+			<CheckBox
+				indeterminate
+				checked={!field.value.some((v: boolean) => v === false)}
+				onChange={checked => onCheck(-1, checked)}
 			>
-				<SelectGroup title='Endurtaka alla daga'>
-					{DAYS.map(day => (
-						<SelectItem title={day} key={day}/>
-					))}
-
-				</SelectGroup>
-			</Select>
-			<CheckBox key={1} checked={false} onChange={(checked) => onCheck(1, checked)}>Miðvikduagur</CheckBox> */}
+				Alla daga
+			</CheckBox>
+			{DAYS.map((day, i) => (
 				<CheckBox
-					indeterminate={true}
-					checked={!field.value.some((v :boolean) => v === false)}
-					onChange={(checked) => onCheck(-1, checked)}
-				>Alla daga
+					key={i}
+					checked={field.value[i]}
+					onChange={checked => onCheck(i, checked)}
+				>
+					{day}
 				</CheckBox>
-				{
-					DAYS.map((day, i) => (
-						<CheckBox
-							key={i}
-							checked={field.value[i]}
-							onChange={(checked) => onCheck(i, checked)}
-						>
-							{day}
-						</CheckBox>
-					))
-				}
-			</>
-	)
+			))}
+		</>
+	);
 }
 
 export default DateChecker;
 export const styles = StyleSheet.create({
-  group: {
-    marginVertical: 4,
-  },
-  option: {
-    marginVertical: 4,
-    marginHorizontal: 12,
-  },
+	group: {
+		marginVertical: 4,
+	},
+	option: {
+		marginVertical: 4,
+		marginHorizontal: 12,
+	},
 });

@@ -1,146 +1,142 @@
-import Constants from "expo-constants";
-import * as Notifications from "expo-notifications";
-import React, { useState, useEffect, useRef, SetStateAction } from "react";
-import {  Platform, View } from "react-native";
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+import React, { useState, useEffect, useRef, SetStateAction } from 'react';
+import { Platform, View } from 'react-native';
 import { Subscription } from 'expo-modules-core';
-import { DAYS } from "../../utils/constants";
+import { DAYS } from '../../utils/constants';
 
 Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
+	handleNotification: async () => ({
+		shouldShowAlert: true,
+		shouldPlaySound: true,
+		shouldSetBadge: true,
+	}),
 });
 
 export default function Notification() {
-  const [expoPushToken, setExpoPushToken] = useState("");
-  const [notification, setNotification] = useState<Notifications.Notification>();
-  const notificationListener = useRef<Subscription>();
-  const responseListener = useRef<Subscription>();
+	const [expoPushToken, setExpoPushToken] = useState('');
+	const [notification, setNotification] =
+		useState<Notifications.Notification>();
+	const notificationListener = useRef<Subscription>();
+	const responseListener = useRef<Subscription>();
 
-  useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-		{
-			if (token){
-				return setExpoPushToken(token)
-			}}
-    );
-
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-      	setNotification(notification)
+	useEffect(() => {
+		registerForPushNotificationsAsync().then(token => {
+			if (token) {
+				return setExpoPushToken(token);
 			}
-      );
+		});
 
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
+		notificationListener.current =
+			Notifications.addNotificationReceivedListener(notification => {
+				setNotification(notification);
+			});
 
-    return () => {
-			if(notificationListener.current !== undefined && responseListener.current !== undefined) {
+		responseListener.current =
+			Notifications.addNotificationResponseReceivedListener(response => {
+				console.log(response);
+			});
 
+		return () => {
+			if (
+				notificationListener.current !== undefined &&
+				responseListener.current !== undefined
+			) {
 				Notifications.removeNotificationSubscription(
-					notificationListener.current
+					notificationListener.current,
 				);
 				Notifications.removeNotificationSubscription(responseListener.current);
 			}
-    };
-  }, []);
-	return (
-		null
-	);
+		};
+	}, []);
+	return null;
 }
 
 export async function schedulePushNotification(
-  className: string,
-  slot: string,
-  type: string,
-  time: Date,
-  day: string
+	className: string,
+	slot: string,
+	type: string,
+	time: Date,
+	day: string,
 ) {
-  time = new Date(time.getTime() - 5 * 60000);
-  const weekday = DAYS.indexOf(day) + 1;
-  const hours = time.getHours();
-  const minutes = time.getMinutes() + 5;
-	console.log(day, ' ', hours, ' ', minutes)
-  const id = await Notifications.scheduleNotificationAsync({
-    content: {
-      title: className + " " + type,
-      body: slot,
-      sound: 'default',
-    },
-    trigger: {
-      weekday: weekday,
-      hour: hours,
-      minute: minutes,
-      repeats: true,
-    },
-  });
-  console.log("notification id on scheduling",id)
-  return id;
+	time = new Date(time.getTime() - 5 * 60000);
+	const weekday = DAYS.indexOf(day) + 1;
+	const hours = time.getHours();
+	const minutes = time.getMinutes() + 5;
+	const id = await Notifications.scheduleNotificationAsync({
+		content: {
+			title: `${className} ${type}`,
+			body: slot,
+			sound: 'default',
+		},
+		trigger: {
+			weekday,
+			hour: hours,
+			minute: minutes,
+			repeats: true,
+		},
+	});
+	return id;
 }
 
 async function registerForPushNotificationsAsync() {
-  let token;
-	console.log('scheduled')
-  if (Constants.isDevice) {
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== "granted") {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== "granted") {
-      alert("Failed to get push token for push notification!");
-      return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
-  } else {
-    alert("Must use physical device for Push Notifications");
-  }
+	let token;
+	if (Constants.isDevice) {
+		const { status: existingStatus } =
+			await Notifications.getPermissionsAsync();
+		let finalStatus = existingStatus;
+		if (existingStatus !== 'granted') {
+			const { status } = await Notifications.requestPermissionsAsync();
+			finalStatus = status;
+		}
+		if (finalStatus !== 'granted') {
+			alert('Failed to get push token for push notification!');
+			return;
+		}
+		token = (await Notifications.getExpoPushTokenAsync()).data;
+		console.log(token);
+	} else {
+		alert('Must use physical device for Push Notifications');
+	}
 
-  if (Platform.OS === "android") {
-    Notifications.setNotificationChannelAsync("default", {
-      name: "default",
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      sound: 'true',
-      lightColor: "#FF231F7C",
-      lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
-      bypassDnd: true,
-    });
-  }
+	if (Platform.OS === 'android') {
+		Notifications.setNotificationChannelAsync('default', {
+			name: 'default',
+			importance: Notifications.AndroidImportance.MAX,
+			vibrationPattern: [0, 250, 250, 250],
+			sound: 'true',
+			lightColor: '#FF231F7C',
+			lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
+			bypassDnd: true,
+		});
+	}
 
-  return token;
+	return token;
 }
 
 export async function requestPermissionsAsync() {
-  return await Notifications.requestPermissionsAsync({
-    ios: {
-      allowAlert: true,
-      allowBadge: true,
-      allowSound: true,
-      allowAnnouncements: true,
-    },
-  });
+	return Notifications.requestPermissionsAsync({
+		ios: {
+			allowAlert: true,
+			allowBadge: true,
+			allowSound: true,
+			allowAnnouncements: true,
+		},
+	});
 }
-
 
 export async function getAllNotifications() {
-	return await Notifications.getAllScheduledNotificationsAsync();
+	return Notifications.getAllScheduledNotificationsAsync();
 }
 
-export async function cancelNotification(notifId: string){
-  await Notifications.cancelScheduledNotificationAsync(notifId);
+export async function cancelNotification(notifId: string) {
+	await Notifications.cancelScheduledNotificationAsync(notifId);
 }
 
 export async function allowsNotificationsAsync() {
-  const settings = await Notifications.getPermissionsAsync();
-  return (
-    settings.granted || settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
-  );
+	const settings = await Notifications.getPermissionsAsync();
+	return (
+		settings.granted ||
+		settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
+	);
 }

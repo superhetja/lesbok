@@ -1,36 +1,36 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import BottomNavigation from "../components/Navigations/bottomNavigation";
-import { DashboardScreen, ListScreen } from "../screens";
-import { HomeTabParamList } from "./types";
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import BottomNavigation from '../components/Navigations/bottomNavigation';
+import { DashboardScreen, ListScreen } from '../screens';
+import { HomeTabParamList } from './types';
 
 const { Navigator, Screen } = createBottomTabNavigator<HomeTabParamList>();
 
-const BottomNavigationStack = () => {
+function BottomNavigationStack() {
 	// route.params.params.name = child[0].name;
 
-	return(
+	return (
 		<Navigator
 			tabBar={props => <BottomNavigation {...props} />}
 			screenOptions={{
-				headerShown: false
+				headerShown: false,
 			}}
 		>
 			<Screen
-				name='Dashboard'
+				name="Dashboard"
 				component={DashboardScreen}
-				options={({route}) => ({
-				})}
-				initialParams={{studentId: 'any'}}
+				options={({ route }) => ({})}
+				initialParams={{ studentId: 'any' }}
 			/>
 			<Screen
-				name='EntryList'
+				name="EntryList"
 				component={ListScreen}
-				options= {{
-					title: 'Færslur'
+				options={{
+					title: 'Færslur',
 				}}
 			/>
-  	</Navigator>
-	)
+		</Navigator>
+	);
 }
 
 export default BottomNavigationStack;

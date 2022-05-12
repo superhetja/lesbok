@@ -1,3 +1,3 @@
-import Informations from "./Informations";
+import Informations from './Informations';
 
-export {Informations};
+export { Informations };

@@ -1,17 +1,17 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems:'stretch',
-		paddingBottom: 20
+		alignItems: 'stretch',
+		paddingBottom: 20,
 	},
 	row: {
 		flex: 1,
 		flexDirection: 'row',
 		backgroundColor: 'transparent',
-		margin: 12
+		margin: 12,
 	},
 	column: {
 		borderRadius: 20,
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	centerModal: {
-		justifyContent:'center',
+		justifyContent: 'center',
 		padding: 50,
 		marginLeft: 50,
 		marginRight: 50,
@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
 			width: 0,
 			height: 2,
 		},
-		shadowOpacity: 0.80,
-		shadowRadius: 120
-	}
+		shadowOpacity: 0.8,
+		shadowRadius: 120,
+	},
 });
 
 export default styles;

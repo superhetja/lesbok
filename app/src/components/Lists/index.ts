@@ -1,11 +1,11 @@
-import EntryList from "./entryList";
-import EntryListItem from "./entryListItem";
+import EntryList from './entryList';
+import EntryListItem from './entryListItem';
 
-export {EntryList};
+export { EntryList };
 
-export {EntryListItem};
+export { EntryListItem };
 
-export {default as NotificationList} from './notificationList';
+export { default as NotificationList } from './notificationList';
 
 export { LatestEntriesList } from './latestEntriesList';
 export { StudentList } from './studentList';
