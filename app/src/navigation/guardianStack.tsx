@@ -1,16 +1,22 @@
-import { RouteProp, useNavigation } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { MenuItem } from "@ui-kitten/components";
-import {SettingsMenu, SwitchChildMenu} from "../components/Navigations";
-import BottomNavigationStack from "./bottomNavigationStack";
-import SettingsStack from "./settingsStack";
-import { GuardianStackParamList } from "./types"
-import { DetailedEntryScreen, EntryFormScreen } from "../screens";
-import { Pressable, View } from "react-native";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../slices/authSlice";
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-import { X } from "react-native-feather";
+/* eslint-disable @typescript-eslint/no-shadow */
+import React from 'react';
+import {
+	RouteProp,
+	useNavigation,
+	getFocusedRouteNameFromRoute,
+} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { MenuItem } from '@ui-kitten/components';
+import { View } from 'react-native';
+import { useSelector } from 'react-redux';
+import { SettingsMenu, SwitchChildMenu } from '../components/Navigations';
+import BottomNavigationStack from './bottomNavigationStack';
+import SettingsStack from './settingsStack';
+import { GuardianStackParamList, RootStackScreenProps } from './types';
+import { DetailedEntryScreen, EntryFormScreen } from '../screens';
+import { selectCurrentUser } from '../slices/authSlice';
+import { EventHandlerType } from '../utils/types';
+import { IconButton } from '../components/Buttons';
 
 export function getHeaderTitle(
 	route: RouteProp<GuardianStackParamList, 'Home' | 'Settings'>,
@@ -38,10 +44,12 @@ export function getHeaderTitle(
 const Stack = createNativeStackNavigator<GuardianStackParamList>();
 
 function GuardianStack() {
-	const navigation = useNavigation();
+	// const navigation = useNavigation();
 	const user = useSelector(selectCurrentUser);
 
-	const renderSettningsMenu = () => {
+	const renderSettningsMenu = (
+		navigation: RootStackScreenProps<'Guardian'>['navigation'],
+	) => {
 		return (
 			<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 				<SettingsMenu>
@@ -71,14 +79,21 @@ function GuardianStack() {
 		);
 	};
 
+	const renderCloseButton = (onPress: EventHandlerType) => (
+		<IconButton icon="close" onPress={onPress} />
+	);
+
 	return (
 		<Stack.Navigator
 			screenOptions={{
-				headerRight: renderSettningsMenu,
 				headerTransparent: true,
 			}}
 		>
-			<Stack.Group>
+			<Stack.Group
+				screenOptions={({ navigation }) => ({
+					headerRight: () => renderSettningsMenu(navigation),
+				})}
+			>
 				<Stack.Screen
 					component={BottomNavigationStack}
 					name="Home"
@@ -91,26 +106,24 @@ function GuardianStack() {
 						title: getHeaderTitle(route),
 					})}
 				/>
-				<Stack.Screen
-					component={EntryFormScreen}
-					name='EntryForm'
-					options={({route}) => ({
-						presentation: 'containedModal',
-						title: route.params.entryId ? 'Breyta Færslu' : 'Skrá færslu',
-						headerRight: () => <></>
-					})}
-				/>
-				<Stack.Screen
-					component={DetailedEntryScreen}
-					name='DetailedEntry'
-					options={({navigation})=>({
-						presentation: 'modal',
-						title: '',
-						headerRight: () => <></>,
-						headerLeft: () => <Pressable onPress={() => navigation.goBack()}><X/></Pressable>
-					})}
-				/>
 			</Stack.Group>
+			<Stack.Screen
+				component={EntryFormScreen}
+				name="EntryForm"
+				options={({ route }) => ({
+					presentation: 'containedModal',
+					title: route.params.entryId ? 'Breyta Færslu' : 'Skrá færslu',
+				})}
+			/>
+			<Stack.Screen
+				component={DetailedEntryScreen}
+				name="DetailedEntry"
+				options={({ navigation }) => ({
+					presentation: 'modal',
+					title: '',
+					headerLeft: () => renderCloseButton(() => navigation.goBack()),
+				})}
+			/>
 		</Stack.Navigator>
 	);
 }

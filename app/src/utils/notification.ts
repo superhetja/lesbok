@@ -3,7 +3,7 @@ import * as Notifications from 'expo-notifications';
 import React, { useState, useEffect, useRef, SetStateAction } from 'react';
 import { Platform, View } from 'react-native';
 import { Subscription } from 'expo-modules-core';
-import { DAYS } from '../../utils/constants';
+import { DAYS } from './constants';
 
 Notifications.setNotificationHandler({
 	handleNotification: async () => ({

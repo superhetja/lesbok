@@ -8,9 +8,9 @@ import {
 	cancelNotification,
 	getAllNotifications,
 	requestPermissionsAsync,
-} from '../Notification/notification';
-import { NotificationList } from '../../components/Lists';
-import { SettingsStackScreenProps } from '../../navigation/types';
+} from '../utils/notification';
+import { NotificationList } from '../components/Lists';
+import { SettingsStackScreenProps } from '../navigation/types';
 
 type NotificationScreenProps = SettingsStackScreenProps<'Notification'>;
 
@@ -55,7 +55,7 @@ function NotificationScreen({ navigation }: NotificationScreenProps) {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			<Button onPress={() => navigation.navigate('NotificationForm')}>
-				Skrá nýja tilkynningu
+				Skrá nýja áminningu
 			</Button>
 			{notifications && notifications.length !== 0 && (
 				<NotificationList

@@ -8,22 +8,21 @@ export type Props = {
 	style?: StyleProp<ViewStyle>;
 };
 
-const AddButton: React.FC<Props> = ({ onPress, style = {} }) => {
+export function AddButton({ onPress, style = {} }: Props) {
 	const theme = useTheme();
+
+	const renderIcon = () => (
+		<PlusCircle color={theme['color-primary-default']} width={60} height={60} />
+	);
+
 	return (
 		<Button
 			style={style}
 			appearance="outline"
 			onPress={e => onPress(e)}
-			accessoryLeft={() => (
-				<PlusCircle
-					color={theme['color-primary-default']}
-					width={60}
-					height={60}
-				/>
-			)}
+			accessoryLeft={renderIcon}
 		/>
 	);
-};
+}
 
 export default AddButton;

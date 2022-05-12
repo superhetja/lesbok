@@ -3,20 +3,20 @@ import React, { useMemo } from 'react';
 import { SafeAreaView } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import { useSelector } from 'react-redux';
-import EntryForm from '../../components/EntryForm/entryForm';
-import { GuardianStackScreenProps } from '../../navigation/types';
+import EntryForm from '../components/EntryForm/entryForm';
+import { GuardianStackScreenProps } from '../navigation/types';
 import {
 	useCreateEntryForIdMutation,
 	useEditEntryByIdMutation,
 	useGetEntriesQuery,
-} from '../../services/backend';
-import { selectCurrentUser } from '../../slices/authSlice';
-import { getDateNow } from '../../utils/helpers';
+} from '../services/backend';
+import { selectCurrentUser } from '../slices/authSlice';
+import { getDateNow } from '../utils/helpers';
 import {
 	BookWithLastPage,
 	EntryResponse,
 	FormDataWithDate,
-} from '../../utils/types';
+} from '../utils/types';
 
 type EntryFormScreenProps = GuardianStackScreenProps<'EntryForm'>;
 
@@ -40,8 +40,8 @@ function EntryFormScreen({ route, navigation }: EntryFormScreenProps) {
 					return entry
 						? {
 								book_name: entry.book.name,
-								book_from: parseInt(entry.page_from),
-								book_to: parseInt(entry.page_to),
+								book_from: parseInt(entry.page_from, 10),
+								book_to: parseInt(entry.page_to, 10),
 								comment: entry.comment,
 								book_id: entry.book.id,
 								date_of_entry: entry.date_of_entry, // ATHUGA

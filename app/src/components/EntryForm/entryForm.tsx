@@ -34,8 +34,9 @@ function EntryForm({
 		}, [defaultValues]),
 	});
 
-	const [entryDate, setEntryDate] = useState(new Date(defaultValues.date_of_entry));
-
+	const [entryDate, setEntryDate] = useState(
+		new Date(defaultValues.date_of_entry),
+	);
 
 	/**
 	 * Reset the form values if defaultValues changes
@@ -50,8 +51,8 @@ function EntryForm({
 	 * @param book The selected book object
 	 */
 	const onSelectedBook = (book: BookWithLastPage) => {
-		methods.setValue('book_from', parseInt(book.last_page) + 1);
-		methods.setValue('book_to', parseInt(book.last_page) + 2);
+		methods.setValue('book_from', parseInt(book.last_page, 10) + 1);
+		methods.setValue('book_to', parseInt(book.last_page, 10) + 2);
 		methods.setValue('book_id', book.id);
 	};
 
@@ -112,8 +113,10 @@ function EntryForm({
 						// onPress={setKeyboardSize(useKeyboardSize)}
 					/>
 					<Layout style={styles.actionWrapper}>
-						<Button onPress={onSubmit} >{submitLabel}</Button>
-						<Button onPress={onCancel} status='basic'>{onCancelLabel}</Button>
+						<Button onPress={onSubmit}>{submitLabel}</Button>
+						<Button onPress={onCancel} status="basic">
+							{onCancelLabel}
+						</Button>
 					</Layout>
 				</FormProvider>
 			</KeyboardAwareScrollView>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout, Text } from '@ui-kitten/components';
-import { DetailedEntry } from '../../components/Cards';
-import { GuardianStackScreenProps } from '../../navigation/types';
-import { useGetEntryByIdQuery } from '../../services/backend';
+import { DetailedEntry } from '../components/Cards';
+import { GuardianStackScreenProps } from '../navigation/types';
+import { useGetEntryByIdQuery } from '../services/backend';
 
 type DetailedEntryScreenProps = GuardianStackScreenProps<'DetailedEntry'>;
 

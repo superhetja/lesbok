@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable camelcase */
 import React from 'react';
 import { Text } from '@ui-kitten/components';
@@ -11,7 +12,6 @@ type LatestEntryProp = {
 	page_to: string;
 	comment?: string;
 	date: string;
-	onEditClick?: (event: GestureResponderEvent) => void;
 	onCardPress: (event: GestureResponderEvent) => void;
 };
 
@@ -19,9 +19,9 @@ function LatestEntry({
 	book_name,
 	page_from,
 	page_to,
-	comment,
 	date,
 	onCardPress,
+	comment,
 }: LatestEntryProp) {
 	const formattedDate = getDateFormated(date);
 	return (
@@ -48,8 +48,6 @@ function LatestEntry({
 
 					<Text category="h5">{book_name}</Text>
 				</View>
-				{/* <Text category="label">Seinasta færsla</Text> */}
-				{/* <IconButton onPress={onEditClick} icon='edit' /> */}
 				<Text style={{ fontSize: 20 }}>
 					{page_from}-{page_to}
 				</Text>

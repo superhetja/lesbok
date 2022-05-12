@@ -16,6 +16,9 @@ function ThisWeekCard({ readThisWeek }: ThisWeekCardProps) {
 			setVisible(false);
 		}, 6000);
 	};
+
+	const renderStarIcon = () => <Star color="black" />;
+
 	return (
 		<>
 			<DonutChart divident={readThisWeek} />
@@ -30,7 +33,7 @@ function ThisWeekCard({ readThisWeek }: ThisWeekCardProps) {
 					}}
 					status="success"
 					onPress={() => timeOut()}
-					accessoryLeft={() => <Star color="black" />}
+					accessoryLeft={() => renderStarIcon()}
 				/>
 			)}
 			{visible && <Rewards />}

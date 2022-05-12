@@ -42,7 +42,6 @@ function AutoControlledTextInput({
 	const { formState } = formContext;
 
 	const { field } = useController({ name, rules });
-	const { field: from_field } = useController({ name: 'book_from' });
 
 	const filter = (item: Book, query: string) =>
 		item.name.toLowerCase().includes(query.toLowerCase());

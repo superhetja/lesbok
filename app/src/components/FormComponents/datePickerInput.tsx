@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Datepicker, Text } from '@ui-kitten/components';
+import { Datepicker, Text, useTheme } from '@ui-kitten/components';
 import { View } from 'react-native';
 import { Calendar } from 'react-native-feather';
 import {
@@ -23,16 +23,15 @@ function DatePickerInput({
 	defaultValue,
 	minDate,
 	maxDate,
-	label='',
-	placeHolder=''
-	}: DatePickerProps) => {
-
+	label = '',
+	placeHolder = '',
+}: DatePickerProps) {
 	const theme = useTheme();
 	const formContext = useFormContext();
 	const [warning, setWarning] = useState('');
 	const [hasWarning, setHasWarning] = useState(false);
 	const { formState } = formContext;
-	const { field } = useController({ name, rules, defaultValue })
+	const { field } = useController({ name, rules, defaultValue });
 
 	/**
 	 * Handler for date component
@@ -53,29 +52,28 @@ function DatePickerInput({
 		}
 	};
 
+	const renderIcon = () => <Calendar color={theme['color-primary-default']} />;
+
 	return (
 		<View style={styles.container}>
-			<Text category='label'>{label}</Text>
-				<Datepicker
-				style={{zIndex: 1000}}
+			<Text category="label">{label}</Text>
+			<Datepicker
+				style={{ zIndex: 1000 }}
 				placeholder={placeHolder}
 				date={new Date(field.value)}
 				onSelect={date => onSelect(date)}
-				accessoryRight={() => <Calendar color={theme['color-primary-default']} />}
+				accessoryRight={renderIcon}
 				max={maxDate}
 				min={minDate}
-
-				/>
-				{/* <DateTimePicker
+			/>
+			{/* <DateTimePicker
 					value={new Date(field.value)}
 					onSelect={(e, date) => onSelect(date)}
 
 				/> */}
-				{hasWarning && (
-					<Text status='warning'>{warning}</Text>
-					)}
-			</View>
-			)
-		}
+			{hasWarning && <Text status="warning">{warning}</Text>}
+		</View>
+	);
+}
 
 export default DatePickerInput;

@@ -4,12 +4,14 @@ import { EntryResponse } from '../../utils/types';
 import { LatestEntry } from '../Cards';
 
 type LatestEntriesListProps = {
-	data: EntryResponse[]
-	onEntrySelect: (id: string) => void
-}
+	data: EntryResponse[];
+	onEntrySelect: (id: string) => void;
+};
 
-export const LatestEntriesList = ({data, onEntrySelect}: LatestEntriesListProps) => {
-
+export function LatestEntriesList({
+	data,
+	onEntrySelect,
+}: LatestEntriesListProps) {
 	const renderItem = ({ item }: { item: EntryResponse }) => {
 		return (
 			<LatestEntry
@@ -31,5 +33,3 @@ export const LatestEntriesList = ({data, onEntrySelect}: LatestEntriesListProps)
 		/>
 	);
 }
-
-export default LatestEntriesList;
