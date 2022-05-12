@@ -1,6 +1,5 @@
 # Lesbók
 
-Eitthvað um lesbókina!
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -19,6 +18,9 @@ You can setup this project locally
    ```sh
    docker-compose up -d
    ```
+4. Next you need to open the api container CLI in docker and there run ```npx sequelize-cli db:seed:all```
+5. then you need to locate the app folder ( cd app ) and run ```npm install``` 
+6. Finally run ```npm start```
 
 ### Teardown
 
@@ -68,21 +70,6 @@ Dev tools are at
 
 Metro is at:
 - exp://<\<HOST LOCAL IP\>>:19000
-
-#### Extra tools
-
-dump_database.sh
-- Dumps the database to ./dumps folder with default name and timestamp
-   ```sh
-   ./dump_database.sh
-   ```
-
-import_database.sh
-- Imports sql file to the database. Takes 1 argument $database_path
-   ```sh
-   ./import_database.sh ./dumps/dump_2022-02-20__14.03.sql
-   ```
----
 
 ## Tests
 - We test with Jest
@@ -159,11 +146,8 @@ The program architecture is setup like this
 ```
 ---
 
-## Notes
 
 ### Vocabulary
-
-
 
 
 | Program  | Icelandic    | Meaning                                                            |
@@ -204,3 +188,9 @@ npx sequelize-cli model:generate --name User --attributes firstName:string,lastN
 ```
 
 npx sequelize-cli model:generate --name School --attributes name:string,active:boolean,phoneNumber:string,email:string,location:string
+
+
+### Other
+
+Disclaimer! 
+This project was only tested in iphone simulator and will probably not work right opened in android!
