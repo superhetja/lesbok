@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { GroupModule } from 'group/group.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { SchoolModule } from './school/school.module';
 import { EntryModule } from './entry/entry.module';
 import { SequelizeConfigService } from './sequelizeConfig.service';
@@ -14,6 +15,7 @@ import { LoginModule } from './login/login.module';
 		SequelizeModule.forRootAsync({
 			useClass: SequelizeConfigService,
 		}),
+		EventEmitterModule.forRoot(),
 		SchoolModule,
 		EntryModule,
 		GroupModule,

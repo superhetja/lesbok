@@ -8,6 +8,7 @@ import {
 	Post,
 	Put,
 } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateEntryDto, UpdateEntryDto } from './dto';
 import { Entry } from './entry.model';
@@ -16,7 +17,10 @@ import { EntryService } from './entry.service';
 @Controller('entries')
 @ApiTags('entries')
 export default class EntryController {
-	constructor(private readonly entryService: EntryService) {}
+	constructor(
+		private readonly entryService: EntryService,
+		private eventEmitter: EventEmitter2
+	) {}
 
 	@Get()
 	@ApiOkResponse({
@@ -48,7 +52,9 @@ export default class EntryController {
 		description: 'Creates a new entry',
 	})
 	async createEntry(@Body() createEntryInput: CreateEntryDto): Promise<Entry> {
-		return await this.entryService.create(createEntryInput);
+		const entry = await this.entryService.create(createEntryInput);
+		this.eventEmitter.emit('entry.create', entry);
+		return entry;
 	}
 
 	@Put(':id')
