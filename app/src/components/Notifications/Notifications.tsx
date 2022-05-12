@@ -1,106 +1,62 @@
-import { Layout, Button } from "@ui-kitten/components"
+import { Layout, Button, Text, IndexPath } from "@ui-kitten/components"
 import { schedulePushNotification } from "../../screens/Notification/notification"
-import React, { useState } from "react";
+import React from "react";
 import DateChecker from "../FormComponents/dateChecker";
 import { FormProvider, useForm } from "react-hook-form";
 import TimePicker from "../FormComponents/timePicker";
 import { NotificationData } from "../../utils/types";
+import { DAYS } from "../../utils/constants";
+import { showMessage } from "react-native-flash-message";
 
-const SetNotifications = () => {
-	const [time, setTime] = useState(new Date())
-	const [monday, setMonday] = useState(true);
-  const [tuesday, setTuesday] = useState(true);
-	const [wednsday, setWednsday] = useState(true);
-	const [thursday, setThursday] = useState(true);
-	const [friday, setFriday] = useState(true);
-	const [saturday, setSaturday] = useState(true);
-	const [sunday, setSunday] = useState(true);
-	const {...methods} = useForm<NotificationData>()
+type SetNotificationsProps = {
+	onSubmitCallback: () => void
+}
 
-	const updateTime = (updateTime: Date): void => {
-		setTime(updateTime)
-	}
-	const updateMonday = (arg: boolean): void => {
-		setMonday(arg)
-	}
-	const updateTuesday = (arg: boolean): void => {
-		setTuesday(arg)
-	}
-	const updateWednsday = (arg: boolean): void => {
-		setWednsday(arg)
-	}
-	const updateThursday = (arg: boolean): void => {
-		setThursday(arg)
-	}
-	const updateFriday = (arg: boolean): void => {
-		setFriday(arg)
-	}
-	const updateSaturday = (arg: boolean): void => {
-		setSaturday(arg)
-	}
-	const updateSunday = (arg: boolean): void => {
-		setSunday(arg)
-	}
+const SetNotifications = ({onSubmitCallback}: SetNotificationsProps) => {
 
-	const onSubmit = () => {
-		if (monday === true) {
-			schedulePushNotification('Lesbók', 'Ertu að gleyma að lesa?', '', time, 'Monday')
+	const {...methods} = useForm<NotificationData>({
+		defaultValues: {
+			time: new Date(),
+			days: [
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true
+			]
 		}
-		if (tuesday === true) {
-			schedulePushNotification('Lesbók', 'Ertu að gleyma að lesa?', '', time, 'Tuesday')
-		}
-		if (wednsday === true) {
-			schedulePushNotification('Lesbók', 'Ertu að gleyma að lesa?', '', time, 'Wednesday')
-		}
-		if (thursday === true) {
-			schedulePushNotification('Lesbók', 'Ertu að gleyma að lesa?', '', time, 'Thursday')
-		}
-		if (friday === true) {
-			schedulePushNotification('Lesbók', 'Ertu að gleyma að lesa?', '', time, 'Friday')
-		}
-		if (saturday === true) {
-			schedulePushNotification('Lesbók', 'Ertu að gleyma að lesa?', '', time, 'Saturday')
-		}
-		if (sunday === true) {
-			schedulePushNotification('Lesbók', 'Ertu að gleyma að lesa?', '', time, 'Sunday')
-		}
-	}
+	})
+
+
+	const onSubmit = methods.handleSubmit(async(data) => {
+			data.days.forEach(async (value, index) => {
+				if (value) {
+					await schedulePushNotification('Lesbók', 'Ertu að gleyma að lesa?', '', data.time, DAYS[index])
+				}
+			})
+			showMessage({
+				message: 'Áminning hefur verið skráð',
+				type: 'success'
+			})
+			onSubmitCallback();
+		})
 
 	return (
-		<Layout style={{padding: 10, paddingTop: 100}}>
-
-		<FormProvider {...methods}>
-				<TimePicker
-					name={"time"}
-					setDate={time}
-					updateDate={updateTime}
-				/>
-				<DateChecker
-					name="dates"
-					monday={monday}
-					tuesday={tuesday}
-					wednsday={wednsday}
-					thursday={thursday}
-					friday={friday}
-					saturday={saturday}
-					sunday={sunday}
-					setMonday={updateMonday}
-					setTuesday={updateTuesday}
-					setWednsday={updateWednsday}
-					setThursday={updateThursday}
-					setFriday={updateFriday}
-					setSaturday={updateSaturday}
-					setSunday={updateSunday}
-
+		<Layout style={{padding: 10}}>
+			<FormProvider {...methods}>
+					<Text category='s1'>Tími:</Text>
+					<TimePicker
+						name="time"
 					/>
-
-		</FormProvider>
-		<Layout style={{paddingTop: 10}} >
-
-			<Button onPress={onSubmit}>Setja áminningar</Button>
+					<Text category='s1'>Dagar:</Text>
+					<DateChecker
+						name="days"
+					/>
+				<Button onPress={onSubmit}>Setja áminningar</Button>
+			</FormProvider>
 		</Layout>
-		</Layout>
-
 	)
 }
 

@@ -1,12 +1,13 @@
 import React from "react"
+import { SafeAreaView } from "react-native";
 import Informations from "../../components/Informations/Informations"
-import {SafeAreaView} from 'react-native';
-import styles from '../styles'
 
 
 const InformationScreen = () => {
 	return(
+		<SafeAreaView>
 			<Informations/>
+		</SafeAreaView>
 	)
 }
 

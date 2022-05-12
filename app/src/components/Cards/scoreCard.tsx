@@ -7,11 +7,10 @@ type ScoreCardProps = {
 
 const ScoreCard = ({score}: ScoreCardProps) => {
 	return (
-
 		<View style={{flex: 1}}>
-			<Text>Einkunn:</Text>
+			<Text category='label'>Samtals skráningar:</Text>
 			<View style={{flex: 1, justifyContent:'center', alignItems: 'center'}}>
-				<Text style={{fontSize: 54}} category='h1'>{score}%</Text>
+				<Text style={{fontSize: 40}} category='h1'>{score}</Text>
 			</View>
 		</View>
 	)

@@ -1,3 +1,5 @@
+import { IndexPath } from "@ui-kitten/components";
+
 export enum Gender {
 	MALE = 'Male',
 	FEMALE = 'Female',
@@ -29,6 +31,20 @@ export interface Entry {
 	}
 }
 
+export type UserResponse = {
+	id: string;
+	name: string;
+	national_id: string;
+  email: string;
+  created: string;
+  modified: string;
+
+}
+
+export interface EntryWithUser extends EntryResponse {
+	user: UserResponse;
+}
+
 export interface BookWithLastPage extends Book {
 	last_page: string;
 }
@@ -44,13 +60,7 @@ export type FormDataWithDate = {
 
 export type NotificationData = {
 	time: Date;
-	monday: boolean;
-	tuesday: boolean;
-	wednsday: boolean;
-	thursday: boolean;
-	friday: boolean;
-	saturday: boolean;
-	sunday: boolean
+	days: boolean[];
 }
 
 export interface Book {
@@ -67,7 +77,7 @@ export type User = {
 	national_id: string;
 }
 
-export type StudentResponse = {
+export interface StudentResponse {
 	id: string;
 	name: string;
 	national_id: string;
@@ -75,6 +85,10 @@ export type StudentResponse = {
 	gender: Gender;
 	created: Date;
 	modified: Date;
+}
+
+export interface StudentResponseWithScore {
+	score: number;
 }
 
 export interface EntryResponse {

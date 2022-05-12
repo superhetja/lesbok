@@ -1,0 +1,52 @@
+{
+  "strict": {
+    "text-subtitle-1-font-size": 15,
+    "text-subtitle-1-font-weight": "300"
+  },
+	"components": {
+		"IconButton" : {
+			"meta": {
+				"parameters": {
+					"width": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          },
+          "color": {
+            "type": "number"
+          }
+				},
+				"variantGroups": {
+					"status": {
+						"basic": {
+							"default": false
+						}
+					}
+				},
+				"states": {},
+				"appearances": {
+					"ghost": {
+						"default" : true
+					}
+				}
+			},
+			"appearances": {
+				"ghost": {
+					"mapping": {
+						"width": 24,
+						"height": 24,
+						"color": "color-primary-default"
+					},
+					"variantGroups": {
+						"status": {
+							"basic": {
+								"color": "color-basic-600"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

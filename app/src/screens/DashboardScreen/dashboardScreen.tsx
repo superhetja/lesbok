@@ -1,68 +1,75 @@
-import { Text, Layout, Spinner } from "@ui-kitten/components";
-import { useDispatch } from "react-redux";
-import LatestEntry from "../../components/Cards/latestEntry";
+import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
+import { useDispatch, useSelector } from "react-redux";
 import ScoreCard from "../../components/Cards/scoreCard";
-import { useGetReadThisWeekQuery, useGetStudentScoreQuery, useGetStudentByIdQuery, useGetStudentEntriesQuery } from "../../services/backend";
+import { useGetReadThisWeekQuery, useGetStudentScoreQuery, useGetStudentByIdQuery, useGetStudentEntriesQuery, useSetExpoPushTokenMutation } from "../../services/backend";
 import styles from "../styles";
 import { View } from "react-native";
 import ThisWeekCard from "../../components/Cards/thisWeekCard";
 import { HomeTabScreenProps } from "../../navigation";
+import { selectCurrentStudent, selectCurrentStudentOrFirst } from "../../slices/globalSlice";
+import { LatestEntriesList } from "../../components/Lists";
+import { HasReadTodayCard } from "../../components/Cards";
+import { useEffect, useState } from "react";
+import { isToday } from "../../utils/helpers";
 
 type DashboardScreenProps = HomeTabScreenProps<'Dashboard'>;
 
-const DashboardScreen = ({route, navigation}: DashboardScreenProps) => {
+const DashboardScreen = ({navigation}: DashboardScreenProps) => {
+	// start by checking if we have any as student ID. used as initial value!
+	const studentID = useSelector(selectCurrentStudent);
+	const [hasRead, setHasRead] = useState(false);
+
+	if ( !studentID ) return <Text>Úps eitthvað fór úrskeiðis</Text>
 	// Get the student
-	const {data: student, isLoading: isLoadingStudent, isFetching: isFetchingStudent } = useGetStudentByIdQuery(route.params.studentId);
-	const { entry } = useGetStudentEntriesQuery(route.params.studentId, {
+	const {data: student, isLoading: isLoadingStudent, isFetching: isFetchingStudent } = useGetStudentByIdQuery(studentID);
+	const { entry } = useGetStudentEntriesQuery(studentID, {
 		selectFromResult: ({ data }) => ({
-			entry: (data!== undefined && data.entries[0]) ?? null
+			entry: (data!== undefined && data.entries.slice(0,5)) ?? null
 		})
 	});
 
-	console.log(entry? 'true': 'false')
 
-	const {data: readThisWeek, isLoading: loadingRead} = useGetReadThisWeekQuery();
-	const {data: score, isLoading: loadingScore} = useGetStudentScoreQuery();
-	// const { entry } = useGetEntriesQuery(undefined, {
-	// 	selectFromResult: ({ data }) => ({
-	// 		entry: (data!== undefined && data[0]) ?? []
-	// 	})
-	// });
-	const dispatch = useDispatch();
+
+	/**
+	 * check if student has read today!
+	 */
+	useEffect(() => {
+		if( entry && entry.length > 0) {
+			const lastEntryDate = new Date(entry[0].date_of_entry);
+			if (isToday(lastEntryDate)) {
+				setHasRead(true)
+			}
+		} else {
+			setHasRead(false)
+		}
+	}, [entry])
+
+	const {data: readThisWeek, isLoading: loadingRead} = useGetReadThisWeekQuery(studentID);
+	const {data: score, isLoading: loadingScore} = useGetStudentScoreQuery(studentID);
 
 	if(isLoadingStudent || isFetchingStudent ) return <Spinner/>;
 
 	return(
 		<Layout level='3' style={styles.container}>
-			<Layout style={[styles.row, {flex: 2}]}>
-			<View style={{padding: 16, justifyContent:'flex-end', marginBottom: 16}}>
-				{
-					( isLoadingStudent || isFetchingStudent ) ?
-					<Spinner/>
-					:
-					student &&
-					<Text style={{fontSize: 26}}>{student?.name}</Text>
-				}
-			</View>
-			</Layout>
-			<Layout style={[styles.row, {flex: 4}]}>
-				<Layout style={{...styles.column}} >
 
-				{ entry &&
-				<LatestEntry
-					book_name={entry.book.name}
-					page_from={entry.page_from}
-					page_to={entry.page_to}
-					comment={entry.comment}
-					date={entry.date_of_entry}
-					onEditClick={() => navigation.navigate('EntryForm', {studentId: route.params.studentId, entryId: entry ? entry.id : ''})}
-					onCardPress={() => navigation.navigate('DetailedEntry')}
-					/>
-			}
+			<Layout style={[styles.row, {flex: 2}]}>
+				<View style={{padding: 16, justifyContent:'flex-end', marginBottom: 16}}>
+					{
+						( isLoadingStudent || isFetchingStudent ) ?
+						<Spinner/>
+						:
+						student &&
+						<Text style={{fontSize: 26}}>{student?.name}</Text>
+					}
+				</View>
 			</Layout>
+			<Layout style={{...styles.row}}>
+				<Layout style={{...styles.column, justifyContent:'center'}}>
+					<HasReadTodayCard hasRead={hasRead}/>
+				</Layout>
 			</Layout>
 			<Layout style={[styles.row, {flex: 3}]}>
-				<Layout style={[styles.column, {marginRight: 6}]}>
+				<Layout style={[styles.column, {marginRight: 6, zIndex: 100}]}>
 					{ loadingRead
 						? <Spinner />
 						: typeof(readThisWeek) === 'number' ?
@@ -70,14 +77,22 @@ const DashboardScreen = ({route, navigation}: DashboardScreenProps) => {
 						: <Text>Error</Text>
 					}
 				</Layout>
-				<Layout style={[styles.column, {marginLeft: 6}]}>
+				<Layout style={[styles.column, {justifyContent: 'center', alignItems: 'center'}]}>
 					{loadingScore
 						? <Spinner />
 						: score ?
 						<ScoreCard score={score} />
-						: <Text>ERROR</Text>
+						: <Text style={{fontSize: 72}} category={'h1'}>B+</Text>
 					}
 				</Layout>
+			</Layout>
+			<Layout style={[styles.row, {flex: 4}]}>
+				<Layout style={{ backgroundColor: 'transparent', flex: 1, marginVertical: -6}} >
+
+				{ entry &&
+				<LatestEntriesList data={entry} />
+			}
+			</Layout>
 			</Layout>
 		</Layout>
 	)

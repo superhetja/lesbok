@@ -1,4 +1,4 @@
-import { Button } from '@ui-kitten/components';
+import { Button, useTheme } from '@ui-kitten/components';
 import React from 'react';
 import { GestureResponderEvent, Pressable, StyleProp, ViewStyle } from 'react-native';
 import { PlusCircle } from 'react-native-feather';
@@ -9,8 +9,9 @@ export type Props = {
 };
 
 const AddButton: React.FC<Props> = ({ onPress, style={} }) => {
+	const theme = useTheme();
 	return (
-		<Button style={style} appearance='outline' onPress={(e) => onPress(e)} accessoryLeft={() => (<PlusCircle width={60} height={60}/> )} />
+		<Button style={style} appearance='outline' onPress={(e) => onPress(e)} accessoryLeft={() => (<PlusCircle color={theme['color-primary-default']} width={60} height={60}/> )} />
 	);
 }
 

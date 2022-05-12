@@ -1,19 +1,69 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Menu, Layout, MenuItem, Spinner, Text } from "@ui-kitten/components"
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { Pressable, SafeAreaView, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { NodeBuilderFlags } from "typescript";
+import { StudentList } from "../../components/Lists";
 import { RootStackScreenProps } from "../../navigation";
-import { useGetGroupByIdQuery } from "../../services/backend";
-import { setCurrentStudent } from "../../slices/globalSlice";
-import { StudentResponse } from "../../utils/types";
+import { TeacherStackScreenProps } from "../../navigation/types";
+import { useGetAllStudentsScoreQuery, useGetGroupByIdQuery, useGetReadThisWeekQuery, useGetStudentScoreQuery } from "../../services/backend";
+import { selectCurrentGroup, setCurrentStudent } from "../../slices/globalSlice";
+import { GroupDetailedResponse, StudentResponse, StudentResponseWithScore } from "../../utils/types";
 
-type GroupScreenProps = RootStackScreenProps<'Group'>;
+const SORT = {
+	NAME_ASC: 0,
+	NAME_DESC: 1,
+	WEEK_ASC: 2,
+	WEEK_DESC: 3,
+	MONTH_ASC: 4,
+	MONTH_DESC: 5,
+}
+
+type GroupScreenProps = TeacherStackScreenProps<'Group'>;
 
 const GroupScreen = ({ route, navigation }: GroupScreenProps) => {
+	const [skip, setSkip] = useState(true)
+	const groupId = useSelector(selectCurrentGroup);
+	const [students, setStudents] = useState<StudentResponse[]>([])
 	const {
 		data: group,
 		isFetching,
 		isLoading,
-	} = useGetGroupByIdQuery(route.params.groupId);
+	} = useGetGroupByIdQuery(groupId);
+
+	const [sort, setSort] = useState(SORT.NAME_ASC)
+
+	// sort students by name
+	useEffect(() => {
+		const sortStudents = (group: GroupDetailedResponse) => {
+			setSkip(false)
+			const studentsToSort = [...group.students];
+			switch (sort) {
+				case SORT.NAME_ASC:
+					studentsToSort.sort((a, b) => a.name.localeCompare(b.name, 'is'));
+					break;
+				case SORT.NAME_DESC:
+					studentsToSort.sort((a, b) => b.name.localeCompare(a.name, 'is'));
+					break;
+				case SORT.MONTH_ASC:
+
+				default:
+					break;
+			}
+			setStudents(studentsToSort)
+		}
+
+
+
+		if(group) {
+			sortStudents(group)
+			navigation.setOptions({title: group.name})
+		}
+	}, [group, sort])
+
+
+
 	const dispatch = useDispatch();
 
 	const onChildPress = (id: string) => {
@@ -24,23 +74,45 @@ const GroupScreen = ({ route, navigation }: GroupScreenProps) => {
 		});
 	}
 
+	const onSortPress = (sorter: 'name'|'week'|'month') => {
+		let s;
+		switch (sorter) {
+			case 'name':
+				s = sort === SORT.NAME_ASC ? SORT.NAME_DESC : SORT.NAME_ASC;
+				break;
+			case 'week':
+				s = sort === SORT.WEEK_ASC ? SORT.WEEK_DESC : SORT.WEEK_ASC;
+				break;
+			case 'month':
+				s = sort === SORT.MONTH_ASC ? SORT.MONTH_DESC : SORT.MONTH_ASC;
+				break;
+		}
+		setSort(s);
+	}
+
 
 	return (
-		<Layout level='3'>
+		<SafeAreaView>
+			<View style={{backgroundColor: '#fff', borderRadius: 20, flexDirection: 'row', justifyContent: 'space-between', margin: 8, padding: 12}}>
+				<Pressable onPress={() => onSortPress('name')}><Text style={{}}>Nafn</Text></Pressable>
+				<Pressable><Text onPress={() => onSortPress('week')}>Vikan</Text></Pressable>
+				<Pressable><Text onPress={() => onSortPress('month')}>Heild</Text></Pressable>
+			</View>
 			{ (isLoading || isFetching) &&
 				<Spinner />
 			}
-			{ group ?
-			 <Menu>
-				{
-					group.students.map(s =>
-						<MenuItem title={s.name} key={s.id} onPress={() => onChildPress(s.id)}/>
-					)
-				}
-			 </Menu>
+			{ students ?
+				<StudentList students={students} onPress={onChildPress}/>
+			//  <Menu>
+			// 	{
+			// 		students.map(s =>
+			// 			<MenuItem title={s.name} key={s.id} onPress={() => onChildPress(s.id, s.name)} accessoryRight={() => (<Text>100%</Text>)}/>
+			// 		)
+			// 	}
+			//  </Menu>
 			: <Text>Engir nemendur í hópi!</Text>
 			}
-		</Layout>
+		</SafeAreaView>
 	)
 }
 

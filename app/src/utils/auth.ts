@@ -9,8 +9,6 @@ const authorizationEndpoint = 'https://dev-d0p3lcib.us.auth0.com/authorize';
 const useProxy = Platform.select({ web: false, default: true });
 const redirectUri = AuthSession.makeRedirectUri({ useProxy });
 
-console.log(redirectUri);
-
 export function Authorize() {
 	return {
 		proxy: useProxy,

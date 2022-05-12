@@ -1,8 +1,9 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Student, StudentService } from 'student';
-import { CreateUserDto, UpdateUserDto } from './dto';
+import { CreateUserDto, SetUserPushTokenDto, UpdateUserDto } from './dto';
 import { User } from './models';
+import { Notifications } from './models/notification.model';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -43,5 +44,13 @@ export class UserController {
 	@Get(':id')
 	async getUserById(@Param('id') id: string): Promise<User> {
 		return this.userService.findById(id);
+	}
+
+	@Post(':id/push_token')
+	async setUserPushToken(
+		@Param('id') id: string,
+		@Body() token: SetUserPushTokenDto
+	): Promise<Notifications> {
+		return this.userService.setUserPushToken(id, token.expoPushToken);
 	}
 }

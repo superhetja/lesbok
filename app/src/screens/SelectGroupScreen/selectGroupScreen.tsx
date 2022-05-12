@@ -12,7 +12,7 @@ const SelectGroupScreen = ({navigation}: SelectGroupScreenProps) => {
 	const userChildren = useSelector(selectUserChildren);
 	const dispatch = useDispatch();
 
-	const selectMenuItem = (id: string) => {
+	const selectMenuItem = (id: string, name: string) => {
 		dispatch(setCurrentStudent({studentId: id}))
 		navigation.navigate('Home', {
 			screen: 'Dashboard',
@@ -30,7 +30,7 @@ const SelectGroupScreen = ({navigation}: SelectGroupScreenProps) => {
 		<Layout level='3'>
 			{
 				userChildren?.map(child => (
-					<MenuItem title={child.name} key={child.id} onPress={() => selectMenuItem(child.id)} />
+					<MenuItem title={child.name} key={child.id} onPress={() => selectMenuItem(child.id, child.name)} />
 				))
 			}
 			{

@@ -1,11 +1,9 @@
 import { Button, Layout } from "@ui-kitten/components";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { NumberInput, TextInput, DatePickerInput, AutoTextInput } from "../FormComponents";
-import BottomOverlay from "../Overlays/bottomOverlay";
 import { BookWithLastPage, FormDataWithDate } from "../../utils/types";
 import styles from "./styles";
-import { ScrollView } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 // import {keyboardSize} from '../../utils/keyboardSize/keyboardSize'
 
@@ -17,9 +15,18 @@ type GenericEntryFormProps = {
 	submitHandler: (entry: FormDataWithDate) => Promise<void>;
 	submitLabel: string;
 	recentBooks: BookWithLastPage[]
+	onCancelLabel?: string;
+	onCancelHandler: () => void
 }
 
-const EntryForm = ({defaultValues, submitHandler, submitLabel, recentBooks}: GenericEntryFormProps) => {
+const EntryForm = ({
+	defaultValues,
+	submitHandler,
+	submitLabel,
+	recentBooks,
+	onCancelHandler,
+	onCancelLabel,
+}: GenericEntryFormProps) => {
 
 	const {...methods} = useForm<FormDataWithDate>({
 		defaultValues: useMemo(() => {
@@ -46,6 +53,11 @@ const EntryForm = ({defaultValues, submitHandler, submitLabel, recentBooks}: Gen
 		methods.setValue('book_id', book.id);
 	}
 
+	const onCancel = () => {
+		methods.reset(defaultValues);
+		onCancelHandler();
+	}
+
 	/**
 	 * Handle the submit of the book entry.
 	 * Resets the form data and sends the data to submitHandler
@@ -60,7 +72,7 @@ const EntryForm = ({defaultValues, submitHandler, submitLabel, recentBooks}: Gen
 	const today = new Date();
 	return (
 		<>
-				<Layout style={{...styles.container}}>
+			<Layout style={{...styles.container}}>
 					<KeyboardAwareScrollView>
 
 					<FormProvider {...methods}>
@@ -107,7 +119,7 @@ const EntryForm = ({defaultValues, submitHandler, submitLabel, recentBooks}: Gen
 							/>
 						<Layout style={styles.actionWrapper}>
 							<Button onPress={onSubmit} >{submitLabel}</Button>
-							{/* <Button onPress={toggleModal} >Hætta við</Button> */}
+							<Button onPress={onCancel} >{onCancelLabel}</Button>
 						</Layout>
 					</FormProvider>
 						</KeyboardAwareScrollView>

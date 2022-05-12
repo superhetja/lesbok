@@ -6,8 +6,9 @@ import { FormDataWithDate } from '../utils/types';
 interface GlobalState {
   selectedEntryId: string;
 	formData: FormDataWithDate;
-	currentStudent: string;
+	currentStudent: string|false;
 	currentGroup: string;
+	expoPushToken: string;
 }
 
 const emptyValues: FormDataWithDate = {
@@ -22,8 +23,9 @@ const emptyValues: FormDataWithDate = {
 const initialState = {
 	selectedEntryId: '',
 	formData: emptyValues,
-	currentStudent: '',
+	currentStudent: false,
 	currentGroup: '',
+	expoPushToken: '',
 } as GlobalState;
 
 const globalSlice = createSlice({
@@ -47,8 +49,10 @@ const globalSlice = createSlice({
 		},
 		setCurrentGroup(state, action: PayloadAction<{groupId: string}>){
 			state.currentGroup = action.payload.groupId;
+		},
+		setExpoPushToken(state, action: PayloadAction<{expoPushToken: string}>){
+			state.expoPushToken = action.payload.expoPushToken;
 		}
-
   },
 })
 
@@ -58,13 +62,17 @@ const globalSlice = createSlice({
 export const selectedEntryId = (state: RootState) => state.global.selectedEntryId;
 export const selectedEntryValues = (state: RootState) => state.global.formData;
 export const selectCurrentStudent = (state: RootState) => state.global.currentStudent;
+export const selectCurrentStudentOrFirst = (state: RootState) => state.global.currentStudent ?? state.auth.user?.children?.[0].id
 export const selectCurrentGroup = (state: RootState) => state.global.currentGroup;
+export const selectExpoPushToken = (state: RootState) => state.global.expoPushToken;
 
 export const {
 	selectEntry,
 	clearSelectedEntry,
 	updateForm,
 	setCurrentGroup,
-	setCurrentStudent } = globalSlice.actions
+	setCurrentStudent,
+	setExpoPushToken
+ } = globalSlice.actions
 
 export default globalSlice.reducer

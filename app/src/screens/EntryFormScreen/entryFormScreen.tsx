@@ -1,17 +1,18 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { Layout, Button } from "@ui-kitten/components";
 import { useMemo } from "react";
-import { View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import { useSelector } from "react-redux";
 import EntryForm from "../../components/EntryForm/entryForm";
 import { HomeTabScreenProps, RootStackParamList, RootStackScreenProps } from "../../navigation";
+import { GuardianStackScreenProps } from "../../navigation/types";
 import { useCreateEntryForIdMutation, useEditEntryByIdMutation, useGetEntriesQuery, useGetEntryByIdQuery, useGetStudentEntriesQuery } from "../../services/backend";
 import { selectCurrentUser } from "../../slices/authSlice";
 import { getDateNow } from "../../utils/helpers";
 import { BookWithLastPage, EntryResponse, FormDataWithDate } from "../../utils/types";
 
-type EntryFormScreenProps = RootStackScreenProps<'EntryForm'>;
+type EntryFormScreenProps = GuardianStackScreenProps<'EntryForm'>;
 
 const emptyValues: FormDataWithDate = {
 	book_id: '',
@@ -93,6 +94,10 @@ const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
 		try {
 			await addEntry(obj).unwrap();
 			navigation.goBack();
+			showMessage({
+				message: "Færsla hefur verið skráð.",
+				type: "success"
+			})
 		} catch (error) {
 
 			console.log('ERROR');
@@ -121,7 +126,7 @@ const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
 			await editEntry(obj).unwrap();
 			navigation.goBack();
 			showMessage({
-				message: "Bók skráð.",
+				message: "Færslu hefur verið breytt.",
 				type: "success"
 			})
 		} catch {
@@ -131,15 +136,16 @@ const EntryFormScreen = ({route, navigation}: EntryFormScreenProps) => {
 	};
 
 	return(
-		<Layout>
+		<SafeAreaView>
 			<EntryForm
 				defaultValues={entryValues}
 				submitHandler={isEditing ? handleEditEntry : handleAddEntry}
 				submitLabel={isEditing? 'Breyta': 'Skrá'}
 				recentBooks={books}
+				onCancelHandler={() => navigation.goBack()}
+				onCancelLabel='Hætta við'
 				/>
-			<Button onPress={() => navigation.goBack()}>Hætta við</Button>
-		</Layout>
+		</SafeAreaView>
 	)
 }
 

@@ -5,6 +5,7 @@ import {
 	CreatedAt,
 	DataType,
 	HasMany,
+	HasOne,
 	Model,
 	Table,
 	UpdatedAt,
@@ -14,6 +15,7 @@ import { UserStudent } from './userStudent.model';
 import { Entry } from '../../entry/entry.model';
 import { Group } from '../../group/group.model';
 import { Access } from './access.model';
+import { Notifications } from './notification.model';
 
 @Table({
 	tableName: 'user',
@@ -69,4 +71,7 @@ export class User extends Model {
 
 	@HasMany(() => Access)
 	access: Access[];
+
+	@HasOne(() => Notifications)
+	notification: Notifications;
 }

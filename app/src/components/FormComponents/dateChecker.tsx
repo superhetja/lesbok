@@ -1,129 +1,69 @@
-import { CheckBox, DatepickerProps } from "@ui-kitten/components";
-import React, { useEffect, useState } from "react";
-import { UseControllerProps } from "react-hook-form";
+import {  CheckBox, IndexPath, Select, SelectGroup, SelectItem } from "@ui-kitten/components";
+import React from "react";
+import { useController, UseControllerProps, useFormContext } from "react-hook-form";
 import { StyleSheet } from "react-native";
-import { Bool } from "reselect/es/types";
+import { DAYS } from "../../utils/constants";
+import { NotificationData } from "../../utils/types";
 
 interface DateCheckerProps extends UseControllerProps {
-	monday: boolean;
-	tuesday: boolean;
-	wednsday: boolean;
-	thursday: boolean;
-	friday: boolean;
-	saturday: boolean;
-	sunday: boolean;
-	setMonday: (arg: boolean) => void;
-	setTuesday: (arg: boolean) => void;
-	setWednsday: (arg: boolean)=> void;
-	setThursday: (arg: boolean)=> void;
-	setFriday: (arg: boolean)=> void;
-	setSaturday: (arg: boolean)=> void;
-	setSunday: (arg: boolean)=> void;
 }
 
 const DateChecker = ({
-	monday,
-	tuesday,
-	wednsday,
-	thursday,
-	friday,
-	saturday,
-	sunday,
-	setMonday,
-	setTuesday,
-	setWednsday,
-	setThursday,
-	setFriday,
-	setSaturday,
-	setSunday,
+	name,
+	rules
 }: DateCheckerProps) => {
-	const [allChecked, setAllChecked] = useState(true);
-	const [indeterminate, setIndeterminate] = useState(false);
-  // const [monday, setMonday] = useState(true);
-  // const [tuesday, setTuesday] = useState(true);
-	// const [wednsday, setWednsday] = useState(true);
-	// const [thursday, setThursday] = useState(true);
-	// const [friday, setFriday] = useState(true);
-	// const [saturday, setSaturday] = useState(true);
-	// const [sunday, setSunday] = useState(true);
+	const formContext = useFormContext();
 
-	const onGroupCheckedChange = (checked: boolean) => {
-    setMonday(checked);
-    setTuesday(checked);
-    setWednsday(checked);
-		setThursday(checked);
-    setFriday(checked);
-    setSaturday(checked);
-		setSunday(checked);
-		setAllChecked(checked)
-  };
+	const { field } = useController({name, rules})
 
-	useEffect(() => {
-		const someChecked = (sunday || monday ||tuesday || wednsday ||thursday ||friday ||saturday)
-			// const everyChecked = states.every((item: any) => item === true);
-			const everyChecked = (sunday && monday && tuesday && wednsday && thursday && friday && saturday)
-			if (someChecked && !everyChecked) {
-				setAllChecked(true);
-				setIndeterminate(true);
-			} else if (!someChecked && !everyChecked) {
-				setAllChecked(false);
-				setIndeterminate(false);
-			} else if (everyChecked) {
-				setAllChecked(true);
-				setIndeterminate(false);
-			}
-	}, [monday, tuesday, wednsday, thursday, friday, saturday, sunday])
+
+	const onCheck = (key: number, status:boolean) => {
+		if (key < 0) {
+			field.onChange(new Array(7).fill(status))
+		} else {
+			field.value[key] = status
+			field.onChange([...field.value])
+		}
+
+	}
+
+	const displayValue = field.value.map((index: IndexPath) => {
+		return DAYS[index.row]
+	})
+
 		return (
 			<>
-		  <CheckBox
-        style={styles.group}
-        checked={allChecked}
-        indeterminate={indeterminate}
-        onChange={onGroupCheckedChange}>
-        Dagar
-      </CheckBox>
-      <CheckBox
-        style={styles.option}
-        checked={monday}
-        onChange={setMonday}>
-        Mánudagur
-      </CheckBox>
-			<CheckBox
-        style={styles.option}
-        checked={tuesday}
-        onChange={setTuesday}>
-        Þriðjudagur
-      </CheckBox>
-			<CheckBox
-        style={styles.option}
-        checked={wednsday}
-        onChange={setWednsday}>
-        Miðvikudagur
-      </CheckBox>
-			<CheckBox
-        style={styles.option}
-        checked={thursday}
-        onChange={setThursday}>
-        Fimmtudagur
-      </CheckBox>
-			<CheckBox
-        style={styles.option}
-        checked={friday}
-        onChange={setFriday}>
-        Föstudagur
-      </CheckBox>
-			<CheckBox
-        style={styles.option}
-        checked={saturday}
-        onChange={setSaturday}>
-        Laugardagur
-      </CheckBox>
-			<CheckBox
-        style={styles.option}
-        checked={sunday}
-        onChange={setSunday}>
-        Sunnudagur
-      </CheckBox>
+			{/* <Select
+				multiSelect={true}
+				selectedIndex={field.value}
+				onSelect={index => field.onChange(index as IndexPath[])}
+				value={displayValue.join(', ')}
+			>
+				<SelectGroup title='Endurtaka alla daga'>
+					{DAYS.map(day => (
+						<SelectItem title={day} key={day}/>
+					))}
+
+				</SelectGroup>
+			</Select>
+			<CheckBox key={1} checked={false} onChange={(checked) => onCheck(1, checked)}>Miðvikduagur</CheckBox> */}
+				<CheckBox
+					indeterminate={true}
+					checked={!field.value.some((v :boolean) => v === false)}
+					onChange={(checked) => onCheck(-1, checked)}
+				>Alla daga
+				</CheckBox>
+				{
+					DAYS.map((day, i) => (
+						<CheckBox
+							key={i}
+							checked={field.value[i]}
+							onChange={(checked) => onCheck(i, checked)}
+						>
+							{day}
+						</CheckBox>
+					))
+				}
 			</>
 	)
 }
