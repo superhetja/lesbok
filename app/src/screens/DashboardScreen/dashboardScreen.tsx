@@ -67,12 +67,12 @@ const DashboardScreen = ({route, navigation}: DashboardScreenProps) => {
 						: <Text>Error</Text>
 					}
 				</Layout>
-				<Layout style={[styles.column, {marginLeft: 6}]}>
+				<Layout style={[styles.column, {justifyContent: 'center', alignItems: 'center'}]}>
 					{loadingScore
 						? <Spinner />
 						: score ?
 						<ScoreCard score={score} />
-						: <Text>ERROR</Text>
+						: <Text style={{fontSize: 72}} category={'h1'}>B+</Text>
 					}
 				</Layout>
 			</Layout>
