@@ -7,12 +7,12 @@ export type Props = {
 	onPress: (event: GestureResponderEvent) => void;
 };
 
-const EditButton= ({ onPress }: Props) => {
+function EditButton({ onPress }: Props) {
 	return (
 		<Button
-			appearance='ghost'
+			appearance="ghost"
 			onPress={onPress}
-			accessoryLeft={() => (<Edit2/>)}
+			accessoryLeft={() => <Edit2 />}
 		/>
 	);
 }

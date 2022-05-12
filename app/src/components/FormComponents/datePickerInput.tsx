@@ -1,71 +1,69 @@
-import React, { LegacyRef, useRef, useState } from 'react';
-import { Datepicker, Layout, Icon, Text } from '@ui-kitten/components';
-import {TouchableOpacity, View } from 'react-native';
-import styles from './styles';
-import { Calendar } from 'react-native-feather'
+import React, { useState } from 'react';
+import { Datepicker, Text } from '@ui-kitten/components';
+import { View } from 'react-native';
+import { Calendar } from 'react-native-feather';
 import {
 	useController,
 	UseControllerProps,
-	useFormContext } from 'react-hook-form';
+	useFormContext,
+} from 'react-hook-form';
+import styles from './styles';
 
-const CalendarIcon = () => (
-	<Calendar/>
-)
+function CalendarIcon() {
+	return <Calendar />;
+}
 
 interface DatePickerProps extends UseControllerProps {
 	defaultValue?: string;
 	minDate?: Date;
 	maxDate?: Date;
-	label: string
+	label: string;
 	placeHolder: string;
 }
 
-
-const DatePickerInput = ({
+function DatePickerInput({
 	name,
 	rules,
 	defaultValue,
 	minDate,
 	maxDate,
-	label='',
-	placeHolder=''
-	}: DatePickerProps) => {
+	label = '',
+	placeHolder = '',
+}: DatePickerProps) {
 	const formContext = useFormContext();
 	const [warning, setWarning] = useState('');
-	const [hasWarning, setHasWarning] = useState(false)
+	const [hasWarning, setHasWarning] = useState(false);
 	const { formState } = formContext;
-	const { field } = useController({ name, rules, defaultValue })
+	const { field } = useController({ name, rules, defaultValue });
 	const onSelect = (date: Date) => {
 		const validateDate = new Date();
-		field.onChange(date)
-		if (maxDate){
+		field.onChange(date);
+		if (maxDate) {
 			if (date <= new Date(validateDate.setDate(maxDate.getDate() - 8))) {
-				setWarning('Kennari fær tilkynningu ef skráð er meira en 7 dagar aftur í tímann')
-				setHasWarning(true)
-			}
-			else {
-				setHasWarning(false)
+				setWarning(
+					'Kennari fær tilkynningu ef skráð er meira en 7 dagar aftur í tímann',
+				);
+				setHasWarning(true);
+			} else {
+				setHasWarning(false);
 			}
 		}
-		}
+	};
 
-	return(
+	return (
 		<View style={styles.container}>
-				<Datepicker
-				style={{zIndex: 1000}}
+			<Datepicker
+				style={{ zIndex: 1000 }}
 				placeholder={placeHolder}
 				date={new Date(field.value)}
 				onSelect={date => onSelect(date)}
 				accessoryRight={CalendarIcon}
 				max={maxDate}
 				min={minDate}
-
-				/>
-				{hasWarning && (
-					<Text status='warning'>{warning}</Text>
-					)}
-			</View>
-			)
-		}
+			/>
+			{hasWarning && <Text status="warning">{warning}</Text>}
+		</View>
+	);
+}
 
 export default DatePickerInput;

@@ -1,1 +1,1 @@
-export {default as BottomOverlay} from './bottomOverlay'
+export { default as BottomOverlay } from './bottomOverlay';

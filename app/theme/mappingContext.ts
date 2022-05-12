@@ -3,4 +3,5 @@ import { ThemeStyleType } from '@eva-design/dss';
 
 const defaultValue: ThemeStyleType = {};
 
-export const MappingContext: React.Context<ThemeStyleType> = React.createContext(defaultValue);
+export const MappingContext: React.Context<ThemeStyleType> =
+	React.createContext(defaultValue);

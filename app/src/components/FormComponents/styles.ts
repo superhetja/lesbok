@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
 	input: {
 		height: 40,
 		borderWidth: 1,
-		alignSelf: 'stretch'
+		alignSelf: 'stretch',
 	},
 	container: {
 		backgroundColor: '#ffffff',
@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
 		backgroundColor: '#ffffff',
 		padding: 10,
 		zIndex: 10000,
-
 	},
 });
 

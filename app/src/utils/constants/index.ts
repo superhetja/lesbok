@@ -4,7 +4,6 @@ export const BASE_URL = 'http://localhost:3000/';
 // export const BASE_URL = '85.220.119.43:1584';
 export const ENTRY_URL = `${BASE_URL}/entry`;
 
-
 export const DAYS = [
 	'Sunnudagur',
 	'Mánudagur',
@@ -13,5 +12,4 @@ export const DAYS = [
 	'Fimmdagur',
 	'Föstudagur',
 	'Laugardagur',
-]
-
+];

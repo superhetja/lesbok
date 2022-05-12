@@ -1,12 +1,10 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	backdrop: {
 		backgroundColor: 'rgba(0, 0, 0, 0.5)',
 	},
-	modal: {
-		
-	}
-})
+	modal: {},
+});
 
-export default styles
+export default styles;

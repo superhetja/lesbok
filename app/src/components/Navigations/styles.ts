@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	navigationWrapper: {
@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
 		bottom: 60,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: 'transparent'
-	}
-})
+		backgroundColor: 'transparent',
+	},
+});
 
 export default styles;
