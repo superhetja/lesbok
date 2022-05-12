@@ -5,9 +5,13 @@ import { LatestEntry } from '../Cards';
 
 type LatestEntriesListProps = {
 	data: EntryResponse[];
+	onEntrySelect: (id: string) => void;
 };
 
-export function LatestEntriesList({ data }: LatestEntriesListProps) {
+export function LatestEntriesList({
+	data,
+	onEntrySelect,
+}: LatestEntriesListProps) {
 	const renderItem = ({ item }: { item: EntryResponse }) => {
 		return (
 			<LatestEntry
@@ -16,7 +20,7 @@ export function LatestEntriesList({ data }: LatestEntriesListProps) {
 				page_to={item.page_to}
 				comment={item.comment}
 				date={item.date_of_entry}
-				onCardPress={() => console.log('press')}
+				onCardPress={() => onEntrySelect(item.id)}
 			/>
 		);
 	};
@@ -29,5 +33,3 @@ export function LatestEntriesList({ data }: LatestEntriesListProps) {
 		/>
 	);
 }
-
-export default LatestEntriesList;

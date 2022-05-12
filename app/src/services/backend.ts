@@ -91,7 +91,7 @@ export const entryApi = createApi({
 					...body,
 				},
 			}),
-			invalidatesTags: [{ type: 'Entries', id: 'LIST' }, 'ReadThisWeek'],
+			invalidatesTags: [{ type: 'Entries', id: 'LIST' }, 'ReadThisWeek', 'Score'],
 		}),
 		editEntryById: build.mutation<Entry, UpdateEntryDto>({
 			query: ({ id, ...body }) => ({
@@ -109,16 +109,17 @@ export const entryApi = createApi({
 			query: id => `/students/${id}/read_week`,
 			providesTags: (result, error, id) => [{ type: 'ReadThisWeek', id }],
 		}),
-		getStudentScore: build.query<number, string>({
-			query: id => `/students/${id}/score`,
+		getStudentScore: build.query<number,string>({
+			query: (id) => `/students/${id}/score`,
+			providesTags: (result, error, id) => [{type: 'Score', id}]
 		}),
 		getGroupById: build.query<GroupDetailedResponse, string>({
 			query: id => `/groups/${id}`,
 			providesTags: (result, error, id) => [{ type: 'Groups', id }],
 		}),
 		getStudentById: build.query<StudentResponse, string>({
-			query: id => `/students/${id}`,
-			providesTags: (result, error, id) => [{ type: 'Score', id }],
+			query: (id) => `/students/${id}`,
+			// providesTags: (result, error, id) => [{type: 'Score', id}]
 		}),
 		getStudentEntries: build.query<StudentEntryResponse, string>({
 			query: id => `/students/${id}/entries`,

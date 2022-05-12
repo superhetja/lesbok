@@ -8,6 +8,7 @@ import {
 import { View } from 'react-native';
 import { DAYS } from '../../utils/constants';
 import { IconButton } from '../Buttons';
+import { EventHandlerType } from '../../utils/types';
 
 interface WeeklyNotificationRequest extends NotificationRequest {
 	trigger: WeeklyNotificationTrigger | CalendarNotificationTrigger;
@@ -27,6 +28,10 @@ function NotificationList({
 	notifications,
 	onDeleteCallback,
 }: NotificationListProp) {
+	const renderRemoveButton = (onPress: EventHandlerType) => (
+		<IconButton icon="remove" onPress={onPress} />
+	);
+
 	const renderItem = ({ item, index }: RenderItemProp) => {
 		const date =
 			item.trigger.type === 'weekly'
@@ -36,12 +41,9 @@ function NotificationList({
 			<ListItem
 				title={`${DAYS[date?.weekday - 1]} | ${date.hour}:${date.minute}`}
 				description={item?.content?.body ?? undefined}
-				accessoryRight={() => (
-					<IconButton
-						icon="remove"
-						onPress={() => onDeleteCallback(item.identifier)}
-					/>
-				)}
+				accessoryRight={() =>
+					renderRemoveButton(() => onDeleteCallback(item.identifier))
+				}
 			/>
 		);
 	};

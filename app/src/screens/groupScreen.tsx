@@ -2,14 +2,11 @@ import { Spinner, Text } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { StudentList } from '../../components/Lists';
-import { TeacherStackScreenProps } from '../../navigation/types';
-import { useGetGroupByIdQuery } from '../../services/backend';
-import {
-	selectCurrentGroup,
-	setCurrentStudent,
-} from '../../slices/globalSlice';
-import { GroupDetailedResponse, StudentResponse } from '../../utils/types';
+import { StudentList } from '../components/Lists';
+import { TeacherStackScreenProps } from '../navigation/types';
+import { useGetGroupByIdQuery } from '../services/backend';
+import { selectCurrentGroup, setCurrentStudent } from '../slices/globalSlice';
+import { GroupDetailedResponse, StudentResponse } from '../utils/types';
 
 const SORT = {
 	NAME_ASC: 0,
@@ -32,6 +29,7 @@ function GroupScreen({ route, navigation }: GroupScreenProps) {
 
 	// sort students by name
 	useEffect(() => {
+		// eslint-disable-next-line @typescript-eslint/no-shadow
 		const sortStudents = (group: GroupDetailedResponse) => {
 			setSkip(false);
 			const studentsToSort = [...group.students];
@@ -53,7 +51,7 @@ function GroupScreen({ route, navigation }: GroupScreenProps) {
 			sortStudents(group);
 			navigation.setOptions({ title: group.name });
 		}
-	}, [group, sort]);
+	}, [group, sort, navigation]);
 
 	const dispatch = useDispatch();
 
@@ -76,6 +74,9 @@ function GroupScreen({ route, navigation }: GroupScreenProps) {
 				break;
 			case 'month':
 				s = sort === SORT.MONTH_ASC ? SORT.MONTH_DESC : SORT.MONTH_ASC;
+				break;
+			default:
+				s = 0;
 				break;
 		}
 		setSort(s);

@@ -3,13 +3,13 @@ import { Button } from '@ui-kitten/components';
 import { View } from 'react-native';
 
 type RoleCardProps = {
-	role: string;
+	roleTitle: string;
 };
 
-function RoleCard({ role }: RoleCardProps) {
+function RoleCard({ roleTitle }: RoleCardProps) {
 	return (
 		<View>
-			<Button size="giant">{role}</Button>
+			<Button size="giant">{roleTitle}</Button>
 		</View>
 	);
 }

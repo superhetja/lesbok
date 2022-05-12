@@ -1,10 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
-import {
-	IndexPath,
-	MenuItem,
-	OverflowMenu,
-	useTheme,
-} from '@ui-kitten/components';
+import { IndexPath, MenuItem, OverflowMenu } from '@ui-kitten/components';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../slices/authSlice';
@@ -15,9 +9,7 @@ function SettingsMenu({ children }) {
 		undefined,
 	);
 	const [visible, setVisible] = useState(false);
-	const navigation = useNavigation();
 	const dispatch = useDispatch();
-	const theme = useTheme();
 
 	const onItemSelect = (index: any) => {
 		setSelectedIndex(index);

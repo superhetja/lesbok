@@ -22,6 +22,26 @@ export default class GroupController {
 	@Get(':id')
 	async findGroupById(@Param('id') id: string): Promise<Group> {
 		return this.groupService.findById(id);
+		// .then((group) =>
+		// 	Promise.all(
+		// 		group.students.map((s) =>
+		// 			this.entryService
+		// 				.studentScore(s.id)
+		// 				.then((score) => ({ ...s, score }))
+		// 		)
+		// 	).then((data) => {
+		// 		const groupWithScore = { ...group, students: data };
+		// 		console.log(groupWithScore);
+		// 		return groupWithScore as GroupWithStudentScore;
+		// 	})
+		// );
+		// group.students.forEach(async (s) => {
+		// 	const score = await this.entryService.studentScore(s.id);
+		// 	const week = await this.entryService.readThisWeek(s.id);
+		// 	studentsWithScore.push({ ...s, score, read_this_week: week });
+		// });
+		// group.students = studentsWithScore;
+		// return group;
 	}
 
 	@Put(':id')

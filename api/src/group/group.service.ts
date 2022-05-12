@@ -1,5 +1,6 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { Sequelize } from 'sequelize-typescript';
 import { Student } from 'student';
 import { CreateGroupDto, UpdateGroupDto } from './dto';
 import { Group } from './group.model';
@@ -7,7 +8,8 @@ import { Group } from './group.model';
 export class GroupService {
 	constructor(
 		@InjectModel(Group)
-		private group: typeof Group
+		private group: typeof Group,
+		private sequelize: Sequelize
 	) {}
 
 	async findAll(): Promise<Group[]> {
@@ -17,7 +19,12 @@ export class GroupService {
 	async findById(id: string): Promise<Group> {
 		const group = this.group.findOne({
 			where: { id },
-			include: [{ model: Student, as: 'students' }],
+			include: [
+				{
+					model: Student,
+					as: 'students',
+				},
+			],
 		});
 		if (!group) {
 			throw new NotFoundException(`Group ${id} does not exist`);

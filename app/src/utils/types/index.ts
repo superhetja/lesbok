@@ -1,3 +1,5 @@
+import { GestureResponderEvent } from 'react-native';
+
 export enum Gender {
 	MALE = 'Male',
 	FEMALE = 'Female',
@@ -146,3 +148,5 @@ export type StudentEntryResponse = {
 	id: string;
 	entries: EntryResponse[];
 };
+
+export type EventHandlerType = (e: GestureResponderEvent) => void;

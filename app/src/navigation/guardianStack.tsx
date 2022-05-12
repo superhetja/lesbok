@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import React from 'react';
 import {
 	RouteProp,
@@ -11,9 +12,11 @@ import { useSelector } from 'react-redux';
 import { SettingsMenu, SwitchChildMenu } from '../components/Navigations';
 import BottomNavigationStack from './bottomNavigationStack';
 import SettingsStack from './settingsStack';
-import { GuardianStackParamList } from './types';
+import { GuardianStackParamList, RootStackScreenProps } from './types';
 import { DetailedEntryScreen, EntryFormScreen } from '../screens';
 import { selectCurrentUser } from '../slices/authSlice';
+import { EventHandlerType } from '../utils/types';
+import { IconButton } from '../components/Buttons';
 
 export function getHeaderTitle(
 	route: RouteProp<GuardianStackParamList, 'Home' | 'Settings'>,
@@ -41,10 +44,12 @@ export function getHeaderTitle(
 const Stack = createNativeStackNavigator<GuardianStackParamList>();
 
 function GuardianStack() {
-	const navigation = useNavigation();
+	// const navigation = useNavigation();
 	const user = useSelector(selectCurrentUser);
 
-	const renderSettningsMenu = () => {
+	const renderSettningsMenu = (
+		navigation: RootStackScreenProps<'Guardian'>['navigation'],
+	) => {
 		return (
 			<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 				<SettingsMenu>
@@ -74,14 +79,21 @@ function GuardianStack() {
 		);
 	};
 
+	const renderCloseButton = (onPress: EventHandlerType) => (
+		<IconButton icon="close" onPress={onPress} />
+	);
+
 	return (
 		<Stack.Navigator
 			screenOptions={{
-				headerRight: renderSettningsMenu,
 				headerTransparent: true,
 			}}
 		>
-			<Stack.Group>
+			<Stack.Group
+				screenOptions={({ navigation }) => ({
+					headerRight: () => renderSettningsMenu(navigation),
+				})}
+			>
 				<Stack.Screen
 					component={BottomNavigationStack}
 					name="Home"
@@ -94,24 +106,24 @@ function GuardianStack() {
 						title: getHeaderTitle(route),
 					})}
 				/>
-				<Stack.Screen
-					component={EntryFormScreen}
-					name="EntryForm"
-					options={{
-						presentation: 'containedModal',
-						title: '',
-					}}
-				/>
-				<Stack.Screen
-					component={DetailedEntryScreen}
-					name="DetailedEntry"
-					options={{
-						presentation: 'modal',
-						title: '',
-						headerRight: () => <></>,
-					}}
-				/>
 			</Stack.Group>
+			<Stack.Screen
+				component={EntryFormScreen}
+				name="EntryForm"
+				options={({ route }) => ({
+					presentation: 'containedModal',
+					title: route.params.entryId ? 'Breyta Færslu' : 'Skrá færslu',
+				})}
+			/>
+			<Stack.Screen
+				component={DetailedEntryScreen}
+				name="DetailedEntry"
+				options={({ navigation }) => ({
+					presentation: 'modal',
+					title: '',
+					headerLeft: () => renderCloseButton(() => navigation.goBack()),
+				})}
+			/>
 		</Stack.Navigator>
 	);
 }

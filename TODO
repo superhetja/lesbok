@@ -1,2 +1,27 @@
-Setja bekk í haus hjá kennaraview
-Setja nafn á nemanda í haus
+- [x] Laga add Entry view
+- [] Setja einkunnir í nemndalista hjá kennaraview
+- [x] Setja Dashboard eða ehv í kennaraviewið
+- [x] Raða nemendum eftir nafni
+- [] Bæta við sort til að raða nemendum efitr einkunn
+- [] setja lesið í mánuðinum, í staðin fyrir einkunn
+- [] setja inn breytuna fyrir hasRead!
+- [] Skrifa leikrit til að sína appið!
+
+
+Saga:
+Foreldir opnar smáforritið,
+skráir sig inn
+og skráir inn nýja lestrar færslu.
+Furðudýr 21-24.
+Við það breytist lestur vikunnar of fjöldi skipta í mánuðinum.
+Foreldið stillir svo áminningu í forritinu sem minnir foreldrana á að láta barnið lesa
+Stillir eina áminningu klukkan 17 á mán, mið og fös
+og aðra klukkan 19 á þri og fim.
+Foreldrið á annað barn og getur skipt yfir í hitt barnið.
+
+Seinna þennan sama dag er hitt foreldrið að velta fyrir sér hvort barnið eigi eftir að lesa.
+Það opnar appið og sér strax að barnið hefur þegar lokið heimalestri í dag.
+
+Kennari inná appið og fer yfir stöðu nemenda.
+Hann sér lista af öllum nemendum í bekknum hans
+

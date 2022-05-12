@@ -1,12 +1,12 @@
 import { Spinner, Text } from '@ui-kitten/components';
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import EntryList from '../../components/Lists/entryList';
-import { HomeTabScreenProps } from '../../navigation';
-import { useGetStudentEntriesQuery } from '../../services/backend';
-import { selectCurrentStudent } from '../../slices/globalSlice';
-import styles from '../styles';
+import { useSelector } from 'react-redux';
+import EntryList from '../components/Lists/entryList';
+import { HomeTabScreenProps } from '../navigation';
+import { useGetStudentEntriesQuery } from '../services/backend';
+import { selectCurrentStudent } from '../slices/globalSlice';
+import styles from './styles';
 
 type ListScreenProps = HomeTabScreenProps<'EntryList'>;
 
@@ -16,14 +16,12 @@ function ListScreen({ route, navigation }: ListScreenProps) {
 		return <Text>Úpps eitthvað fór úrskeiðis</Text>;
 	}
 
-	navigation.setOptions({ title: 'Færslur' });
-
 	const {
 		data: studentEntries,
 		isFetching,
 		isLoading,
+		// eslint-disable-next-line react-hooks/rules-of-hooks
 	} = useGetStudentEntriesQuery(studentID);
-	const dispatch = useDispatch();
 
 	const onEditEntry = (entryId: string) => {
 		navigation.navigate('EntryForm', {

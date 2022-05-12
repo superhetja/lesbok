@@ -1,3 +1,6 @@
+import { Group } from 'group';
+import { Student } from 'student';
+
 export interface School {
 	id: string;
 	name: string;
@@ -10,4 +13,12 @@ export interface School {
 export interface Book {
 	id: string;
 	name: string;
+}
+
+interface StudentWithScore extends Student {
+	score: number;
+}
+
+export interface GroupWithStudentScore extends Group {
+	students: StudentWithScore[];
 }

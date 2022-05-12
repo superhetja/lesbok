@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import { Divider, List } from '@ui-kitten/components';
 import React from 'react';
 import EntryListItem from './entryListItem';

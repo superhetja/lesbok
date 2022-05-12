@@ -7,10 +7,15 @@ import {
 	NotificationFormScreen,
 } from '../screens';
 import { SettingsStackParamList } from './types';
+import { EventHandlerType } from '../utils/types';
 
 const Stack = createNativeStackNavigator<SettingsStackParamList>();
 
 function SettingsStack() {
+	const renderCloseButton = (onPress: EventHandlerType) => (
+		<IconButton icon="close" onPress={onPress} />
+	);
+
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
 			<Stack.Screen name="Information" component={InformationScreen} />
@@ -22,9 +27,7 @@ function SettingsStack() {
 					presentation: 'modal',
 					headerShown: true,
 					title: 'Skrá nýja áminningu',
-					headerLeft: () => (
-						<IconButton icon="close" onPress={() => navigation.goBack()} />
-					),
+					headerLeft: () => renderCloseButton(() => navigation.goBack()),
 				})}
 			/>
 		</Stack.Navigator>

@@ -1,3 +1,5 @@
+import { FormDataWithDate } from "./types";
+
 export function getDateNow() {
 	const date = new Date();
 	return date.toISOString().split('T')[0];

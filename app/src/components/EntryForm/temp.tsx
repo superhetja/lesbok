@@ -1,5 +1,5 @@
 import { Button, Layout } from '@ui-kitten/components';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
@@ -10,13 +10,14 @@ import {
 } from '../FormComponents';
 import { BookWithLastPage, FormDataWithDate } from '../../utils/types';
 import styles from './styles';
+// import {keyboardSize} from '../../utils/keyboardSize/keyboardSize'
 
 type GenericEntryFormProps = {
 	defaultValues: FormDataWithDate;
 	submitHandler: (entry: FormDataWithDate) => Promise<void>;
 	submitLabel: string;
 	recentBooks: BookWithLastPage[];
-	onCancelLabel?: string;
+	onCancelLabel: string;
 	onCancelHandler: () => void;
 };
 
@@ -34,16 +35,12 @@ function EntryForm({
 		}, [defaultValues]),
 	});
 
-	const [entryDate, setEntryDate] = useState(
-		new Date(defaultValues.date_of_entry),
-	);
-
 	/**
 	 * Reset the form values if defaultValues changes
 	 */
 	useEffect(() => {
 		methods.reset(defaultValues);
-	}, [defaultValues]);
+	}, [defaultValues, methods]);
 
 	/**
 	 * Sets the from value to last entry of the read book + 1 and from value to + 2
@@ -51,8 +48,12 @@ function EntryForm({
 	 * @param book The selected book object
 	 */
 	const onSelectedBook = (book: BookWithLastPage) => {
-		methods.setValue('book_from', parseInt(book.last_page, 10) + 1);
-		methods.setValue('book_to', parseInt(book.last_page, 10) + 2);
+		methods.resetField('book_from', {
+			defaultValue: parseInt(book.last_page, 10) + 1,
+		});
+		methods.resetField('book_to', {
+			defaultValue: parseInt(book.last_page, 10) + 2,
+		});
 		methods.setValue('book_id', book.id);
 	};
 
@@ -114,9 +115,7 @@ function EntryForm({
 					/>
 					<Layout style={styles.actionWrapper}>
 						<Button onPress={onSubmit}>{submitLabel}</Button>
-						<Button onPress={onCancel} status="basic">
-							{onCancelLabel}
-						</Button>
+						<Button onPress={onCancel}>{onCancelLabel}</Button>
 					</Layout>
 				</FormProvider>
 			</KeyboardAwareScrollView>

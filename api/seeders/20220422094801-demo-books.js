@@ -53,6 +53,12 @@ module.exports = {
 				created: new Date(),
 				modified: new Date(),
 			},
+			{
+				id: '5015dcbf-71ed-4ae9-b713-adaf2b60aa6f',
+				name: 'Láki Máni og letikeppurinn',
+				created: new Date(),
+				modified: new Date(),
+			}
 		]);
 	},
 

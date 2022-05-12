@@ -42,7 +42,6 @@ function AutoControlledTextInput({
 	const { formState } = formContext;
 
 	const { field } = useController({ name, rules });
-	const { field: from_field } = useController({ name: 'book_from' });
 
 	const filter = (item: Book, query: string) =>
 		item.name.toLowerCase().includes(query.toLowerCase());
@@ -65,8 +64,8 @@ function AutoControlledTextInput({
 	});
 
 	const onSelect = (index: any) => {
-		onSelectCallbackFn && onSelectCallbackFn(list[index]);
-		field.onChange(list[index].name);
+		onSelectCallbackFn && onSelectCallbackFn(data[index]);
+		field.onChange(data[index].name);
 	};
 
 	const onChangeText = (query: string) => {

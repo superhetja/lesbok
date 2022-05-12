@@ -2,7 +2,7 @@ import { Layout, Button, Text } from '@ui-kitten/components';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { showMessage } from 'react-native-flash-message';
-import { schedulePushNotification } from '../../screens/Notification/notification';
+import { schedulePushNotification } from '../../utils/notification';
 import DateChecker from '../FormComponents/dateChecker';
 import TimePicker from '../FormComponents/timePicker';
 import { NotificationData } from '../../utils/types';

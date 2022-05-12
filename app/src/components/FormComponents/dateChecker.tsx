@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import { CheckBox, IndexPath } from '@ui-kitten/components';
 import React from 'react';
 import {

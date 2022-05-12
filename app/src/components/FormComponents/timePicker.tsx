@@ -7,10 +7,7 @@ import {
 import { View } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-interface TimePickerProps extends UseControllerProps {
-	mode?: string;
-	date?: Date;
-}
+interface TimePickerProps extends UseControllerProps {}
 
 function TimePicker({ name }: TimePickerProps) {
 	const formContext = useFormContext();

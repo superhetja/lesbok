@@ -1,21 +1,22 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Text, Layout, Spinner } from '@ui-kitten/components';
 import { useSelector } from 'react-redux';
 import { View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import ScoreCard from '../../components/Cards/scoreCard';
+import ScoreCard from '../components/Cards/scoreCard';
 import {
 	useGetReadThisWeekQuery,
 	useGetStudentScoreQuery,
 	useGetStudentByIdQuery,
 	useGetStudentEntriesQuery,
-} from '../../services/backend';
-import styles from '../styles';
-import ThisWeekCard from '../../components/Cards/thisWeekCard';
-import { HomeTabScreenProps } from '../../navigation';
-import { selectCurrentStudent } from '../../slices/globalSlice';
-import { LatestEntriesList } from '../../components/Lists';
-import { HasReadTodayCard } from '../../components/Cards';
-import { isToday } from '../../utils/helpers';
+} from '../services/backend';
+import styles from './styles';
+import ThisWeekCard from '../components/Cards/thisWeekCard';
+import { HomeTabScreenProps } from '../navigation';
+import { selectCurrentStudent } from '../slices/globalSlice';
+import { LatestEntriesList } from '../components/Lists';
+import { HasReadTodayCard } from '../components/Cards';
+import { isToday } from '../utils/helpers';
 
 type DashboardScreenProps = HomeTabScreenProps<'Dashboard'>;
 
@@ -36,6 +37,10 @@ function DashboardScreen({ navigation }: DashboardScreenProps) {
 			entry: (data !== undefined && data.entries.slice(0, 5)) ?? null,
 		}),
 	});
+
+	const onEntrySelect = (entryId: string) => {
+		navigation.navigate('DetailedEntry', { entryId });
+	};
 
 	/**
 	 * check if student has read today!
@@ -111,7 +116,9 @@ function DashboardScreen({ navigation }: DashboardScreenProps) {
 						marginVertical: -6,
 					}}
 				>
-					{entry && <LatestEntriesList data={entry} />}
+					{entry && (
+						<LatestEntriesList data={entry} onEntrySelect={onEntrySelect} />
+					)}
 				</Layout>
 			</Layout>
 		</Layout>

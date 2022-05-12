@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import SetNotifications from '../../components/Notifications/Notifications';
-import { SettingsStackScreenProps } from '../../navigation/types';
+import SetNotifications from '../components/Notifications/Notifications';
+import { SettingsStackScreenProps } from '../navigation/types';
 
 type NotificationFormScreenProps = SettingsStackScreenProps<'NotificationForm'>;
 
