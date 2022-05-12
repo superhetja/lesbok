@@ -160,7 +160,13 @@ module.exports = {
 			},
 			{
 				user_id: '241bbcdd-415e-4ba8-9cf3-765c36b69fd2',
-				student_id: 'a06a4dc5-4906-4769-8bf7-20c0fa652f06',
+				student_id: 'ce0cdf14-18c7-4ba4-bd08-796f75d0b108',
+				created: new Date(),
+				modified: new Date(),
+			},
+			{
+				user_id: '241bbcdd-415e-4ba8-9cf3-765c36b69fd2',
+				student_id: '6543d601-0659-442c-838a-d31c0289d345',
 				created: new Date(),
 				modified: new Date(),
 			},
