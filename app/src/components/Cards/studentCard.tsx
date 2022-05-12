@@ -44,14 +44,26 @@ export function StudentCard({
 			}}
 			onPress={onPress}
 		>
-			<Text category="s1">{name}</Text>
-			<View>
+			<Text style={{ flex: 4 }} category="s1">
+				{name}
+			</Text>
+			<View
+				style={{
+					flexDirection: 'row',
+					flex: 1,
+					justifyContent: 'space-between',
+				}}
+			>
 				{isLoadingWeek || isFetchingWeek ? (
 					<Spinner />
 				) : (
-					<Text>{weekReading}</Text>
+					<Text style={{ marginHorizontal: 4 }}>{weekReading}</Text>
 				)}
-				{isLoadingScore || isFetchingScore ? <Spinner /> : <Text>{score}</Text>}
+				{isLoadingScore || isFetchingScore ? (
+					<Spinner />
+				) : (
+					<Text style={{ marginHorizontal: 4 }}>{score}</Text>
+				)}
 			</View>
 		</Pressable>
 	);

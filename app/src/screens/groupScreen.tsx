@@ -97,12 +97,14 @@ function GroupScreen({ route, navigation }: GroupScreenProps) {
 				<Pressable onPress={() => onSortPress('name')}>
 					<Text style={{}}>Nafn</Text>
 				</Pressable>
-				<Pressable>
-					<Text onPress={() => onSortPress('week')}>Vikan</Text>
-				</Pressable>
-				<Pressable>
-					<Text onPress={() => onSortPress('month')}>Heild</Text>
-				</Pressable>
+				<View style={{flexDirection: 'row'}}>
+					<Pressable style={{marginHorizontal: 4}}>
+						<Text onPress={() => onSortPress('week')}>Vikan</Text>
+					</Pressable>
+					<Pressable style={{marginHorizontal: 4}}>
+						<Text onPress={() => onSortPress('month')}>Heild</Text>
+					</Pressable>
+				</View>
 			</View>
 			{(isLoading || isFetching) && <Spinner />}
 			{students ? (
